@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    restart: "no"
+  
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - .:/app
+    restart: always
+
+networks:
+  traefik-proxy:
+    external: true
