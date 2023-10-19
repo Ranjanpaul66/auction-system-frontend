@@ -44,7 +44,7 @@ const DashboardPage = () => {
     </>
 }
 
-const DashboardWrapper = () => {
+const Dashboard = () => {
     return (
         <>
             <PageTitle breadcrumbs={[]}>Dashboard</PageTitle>
@@ -53,4 +53,4 @@ const DashboardWrapper = () => {
     )
 }
 
-export {DashboardWrapper}
+export {Dashboard}

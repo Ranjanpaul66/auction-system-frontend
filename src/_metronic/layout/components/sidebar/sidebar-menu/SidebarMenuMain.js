@@ -9,9 +9,8 @@ const SidebarMenuMain = () => {
                 to='/dashboard'
                 icon='element-11'
                 title="Dashboard"
-                fontIcon='bi-app-indicator'
             />
-            {/*<SidebarMenuItem to='/builder' icon='switch' title='Layout Builder' fontIcon='bi-layers'/>*/}
+            <SidebarMenuItem to='/products' icon='crown' title='Products'/>
         </>
     )
 }
