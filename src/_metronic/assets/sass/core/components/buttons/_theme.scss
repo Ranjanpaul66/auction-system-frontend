@@ -18,14 +18,14 @@
   $bg-color-active: null;
 
   @include button-custom-variant(
-    $color,
-    $icon-color,
-    $border-color,
-    $bg-color,
-    $color-active,
-    $icon-color-active,
-    $border-color-active,
-    $bg-color-active
+                  $color,
+                  $icon-color,
+                  $border-color,
+                  $bg-color,
+                  $color-active,
+                  $icon-color-active,
+                  $border-color-active,
+                  $bg-color-active
   );
 }
 
@@ -44,14 +44,14 @@
     $bg-color-active: var(--#{$prefix}#{$name}-active);
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 
@@ -69,14 +69,14 @@
       $bg-color-active: var(--#{$prefix}#{$name});
 
       @include button-custom-variant(
-        $color,
-        $icon-color,
-        $border-color,
-        $bg-color,
-        $color-active,
-        $icon-color-active,
-        $border-color-active,
-        $bg-color-active
+                      $color,
+                      $icon-color,
+                      $border-color,
+                      $bg-color,
+                      $color-active,
+                      $icon-color-active,
+                      $border-color-active,
+                      $bg-color-active
       );
     }
   }
@@ -94,14 +94,14 @@
     $bg-color-active: null;
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 
@@ -118,14 +118,14 @@
     $bg-color-active: var(--#{$prefix}#{$name});
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 
@@ -143,14 +143,14 @@
       $bg-color-active: var(--#{$prefix}#{$name}-light);
 
       @include button-custom-variant(
-        $color,
-        $icon-color,
-        $border-color,
-        $bg-color,
-        $color-active,
-        $icon-color-active,
-        $border-color-active,
-        $bg-color-active
+                      $color,
+                      $icon-color,
+                      $border-color,
+                      $bg-color,
+                      $color-active,
+                      $icon-color-active,
+                      $border-color-active,
+                      $bg-color-active
       );
     }
   }
@@ -168,14 +168,14 @@
     $bg-color-active: var(--#{$prefix}#{$name}-light);
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 }
@@ -195,14 +195,14 @@
     $bg-color-active: null;
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 
@@ -219,14 +219,14 @@
     $bg-color-active: null;
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 
@@ -243,14 +243,14 @@
     $bg-color-active: null;
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 
@@ -267,14 +267,14 @@
     $bg-color-active: null;
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 
@@ -291,14 +291,14 @@
     $bg-color-active: null;
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 
@@ -315,14 +315,14 @@
     $bg-color-active: null;
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 }
@@ -342,14 +342,14 @@
     $bg-color-active: get($value, active);
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 
@@ -366,14 +366,14 @@
     $border-color-active: get($value, base);
 
     @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
+                    $color,
+                    $icon-color,
+                    $border-color,
+                    $bg-color,
+                    $color-active,
+                    $icon-color-active,
+                    $border-color-active,
+                    $bg-color-active
     );
   }
 }
@@ -381,14 +381,14 @@
 @include color-mode(dark) {
   .btn.btn-dark {
     @include button-custom-variant(
-      $color: $gray-800-dark,
-      $icon-color: $gray-800-dark,
-      $border-color: null,
-      $bg-color: $gray-400-dark,
-      $color-active: lighten($gray-800-dark, 3%),
-      $icon-color-active: lighten($gray-800-dark, 3%),
-      $border-color-active: null,
-      $bg-color-active: lighten($gray-400-dark, 3%)
+            $color: $gray-800-dark,
+            $icon-color: $gray-800-dark,
+            $border-color: null,
+            $bg-color: $gray-400-dark,
+            $color-active: lighten($gray-800-dark, 3%),
+            $icon-color-active: lighten($gray-800-dark, 3%),
+            $border-color-active: null,
+            $bg-color-active: lighten($gray-400-dark, 3%)
     );
   }
 }

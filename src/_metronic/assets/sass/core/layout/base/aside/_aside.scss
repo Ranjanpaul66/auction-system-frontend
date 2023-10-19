@@ -44,7 +44,7 @@
 
   [data-kt-app-aside-stacked='true'] {
     --#{$prefix}app-aside-width: calc(
-      var(--#{$prefix}app-aside-primary-width) + var(--#{$prefix}app-aside-secondary-width)
+            var(--#{$prefix}app-aside-primary-width) + var(--#{$prefix}app-aside-secondary-width)
     );
   }
 
@@ -176,13 +176,13 @@
   .app-aside {
     // Header
     [data-kt-app-aside-fixed='true'][data-kt-app-header-fixed='true']:not([data-kt-app-aside-push-header='true'])
-      & {
+    & {
       top: var(--#{$prefix}app-header-height);
     }
 
     // Toolbar
     [data-kt-app-aside-fixed='true'][data-kt-app-header-fixed='true'][data-kt-app-toolbar-fixed='true']:not([data-kt-app-aside-push-toolbar='true'])
-      & {
+    & {
       top: calc(var(--#{$prefix}app-header-height) + var(--#{$prefix}app-toolbar-height, 0px));
     }
   }
@@ -244,7 +244,7 @@
     }
 
     [data-kt-app-aside-hoverable-mobile='true'][data-kt-app-aside-minimize-mobile='on']
-      &:hover:not(.animating) {
+    &:hover:not(.animating) {
       transition: $app-aside-base-transition;
       width: var(--#{$prefix}app-aside-width-actual);
       box-shadow: var(--#{$prefix}app-aside-minimize-hover-box-shadow-mobile);

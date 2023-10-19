@@ -238,7 +238,7 @@ body {
 
   .fc-list,
     //.fc-scroller,
-    .fc-list-table {
+  .fc-list-table {
     @include border-radius($border-radius);
   }
 

@@ -73,8 +73,8 @@
       margin: 0;
 
       @include scrollbar-color(
-        var(--#{$prefix}prismjs-scrollbar-color),
-        var(--#{$prefix}prismjs-scrollbar-color-hover)
+                      var(--#{$prefix}prismjs-scrollbar-color),
+                      var(--#{$prefix}prismjs-scrollbar-color-hover)
       );
 
       code[class*='language-'] {

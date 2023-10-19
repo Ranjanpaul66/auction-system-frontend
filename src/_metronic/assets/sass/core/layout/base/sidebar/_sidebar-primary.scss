@@ -91,7 +91,7 @@
 
     // Hover minimized
     [data-kt-app-sidebar-primary-hoverable='true'][data-kt-app-sidebar-primary-minimize='on']
-      &:hover:not(.animating) {
+    &:hover:not(.animating) {
       transition: $app-sidebar-primary-base-transition;
       width: var(--#{$prefix}app-sidebar-primary-width-actual);
       box-shadow: var(--#{$prefix}app-sidebar-primary-minimize-hover-box-shadow);
@@ -102,13 +102,13 @@
   .app-sidebar-primary {
     // Header
     [data-kt-app-sidebar-fixed='true'][data-kt-app-header-fixed='true'][data-kt-app-sidebar-primary-below-header='true']
-      & {
+    & {
       top: var(--#{$prefix}app-header-height);
     }
 
     // Toolbar
     [data-kt-app-sidebar-fixed='true'][data-kt-app-header-fixed='true'][data-kt-app-toolbar-fixed='true'][data-kt-app-sidebar-primary-below-toolbar='true']
-      & {
+    & {
       top: calc(var(--#{$prefix}app-header-height) + var(--#{$prefix}app-toolbar-height, 0));
     }
   }
@@ -204,7 +204,7 @@
     }
 
     [data-kt-app-sidebar-primary-hoverable-mobile='true'][data-kt-app-sidebar-primary-minimize-mobile='on']
-      &:hover:not(.animating) {
+    &:hover:not(.animating) {
       transition: $app-sidebar-primary-base-transition;
       width: var(--#{$prefix}app-sidebar-primary-width-actual);
       box-shadow: var(--#{$prefix}app-sidebar-primary-minimize-hover-box-shadow-mobile);

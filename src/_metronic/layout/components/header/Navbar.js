@@ -27,7 +27,7 @@ const Navbar = () => {
                     data-kt-menu-attach='parent'
                     data-kt-menu-placement='bottom-end'
                 >
-                    <KTIcon iconName='profile-circle' className="fs-2x" />
+                    <KTIcon iconName='profile-circle' className="fs-2x"/>
                 </div>
                 <HeaderUserMenu/>
             </div>

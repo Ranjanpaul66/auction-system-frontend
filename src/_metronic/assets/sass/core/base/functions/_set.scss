@@ -14,10 +14,10 @@
   // Just merge and return
   @if length($keys) == 1 {
     @return map-merge(
-      $map,
-      (
-        $keys: $value,
-      )
+                    $map,
+                    (
+                            $keys: $value,
+                    )
     );
   }
 
@@ -41,10 +41,10 @@
     $current-key: nth($keys, $i);
     $current-val: if($i == length($maps), $value, $result);
     $result: map-merge(
-      $current-map,
-      (
-        $current-key: $current-val,
-      )
+                    $current-map,
+                    (
+                            $current-key: $current-val,
+                    )
     );
   }
 

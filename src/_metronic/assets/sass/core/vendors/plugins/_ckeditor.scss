@@ -27,6 +27,7 @@
     @include border-top-radius($border-radius !important);
     @include border-bottom-radius(0 !important);
   }
+
   .ck-content {
     @include border-bottom-radius($border-radius !important);
     @include border-top-radius(0 !important);

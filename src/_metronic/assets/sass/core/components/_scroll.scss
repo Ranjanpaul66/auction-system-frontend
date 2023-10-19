@@ -29,8 +29,8 @@
 
     // Default color
     @include scrollbar-color(
-      var(--#{$prefix}scrollbar-color),
-      var(--#{$prefix}scrollbar-hover-color)
+                    var(--#{$prefix}scrollbar-color),
+                    var(--#{$prefix}scrollbar-hover-color)
     );
   }
 }

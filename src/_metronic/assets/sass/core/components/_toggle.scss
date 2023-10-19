@@ -4,14 +4,14 @@
 
 .toggle {
   &.collapsible:not(.collapsed), // Integration with Bootstrap Collapse
-    &.active {
+  &.active {
     .toggle-off {
       display: none;
     }
   }
 
   &.collapsible.collapsed, // Integration with Bootstrap Collapse
-    &:not(.collapsible):not(.active) {
+  &:not(.collapsible):not(.active) {
     .toggle-on {
       display: none;
     }

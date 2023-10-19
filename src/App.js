@@ -6,15 +6,17 @@ import {Logout} from "./components/auth/Logout";
 import {AuthRoutes} from "./components/auth/AuthRoutes";
 import {AccountRoutes} from "./components/account/AccountRoutes";
 import {MasterApp} from "./_metronic/layout/MasterApp";
+import {ComingSoon} from "./components/ComingSoon";
 
 function App() {
     const currentUser = true;
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<MasterApp />}>
+                <Route element={<MasterApp/>}>
                     <Route path='error/*' element={<ErrorsPage/>}/>
                     <Route path='logout' element={<Logout/>}/>
+                    <Route path='coming-soon' element={<ComingSoon/>}/>
                     {currentUser ? (
                         <>
                             <Route path='/*' element={<AccountRoutes/>}/>

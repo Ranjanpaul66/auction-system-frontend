@@ -10,8 +10,8 @@
     .scroll-y,
     .hover-scroll-overlay-y {
       @include scrollbar-color(
-        transparent,
-        var(--#{$prefix}app-sidebar-light-scrollbar-color-hover)
+                      transparent,
+                      var(--#{$prefix}app-sidebar-light-scrollbar-color-hover)
       );
     }
 
@@ -33,43 +33,43 @@
         }
 
         @include menu-link-default-state(
-          $title-color: var(--#{$prefix}app-sidebar-light-menu-link-color),
-          $icon-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $bullet-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $arrow-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $bg-color: null
+                $title-color: var(--#{$prefix}app-sidebar-light-menu-link-color),
+                $icon-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $bullet-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $arrow-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $bg-color: null
         );
 
         @include menu-link-hover-state(
-          $title-color: var(--#{$prefix}app-sidebar-light-menu-link-color),
-          $icon-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $bullet-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $arrow-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $bg-color: null
+                $title-color: var(--#{$prefix}app-sidebar-light-menu-link-color),
+                $icon-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $bullet-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $arrow-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $bg-color: null
         );
 
         @include menu-link-show-state(
-          $title-color: var(--#{$prefix}app-sidebar-light-menu-link-color),
-          $icon-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $bullet-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $arrow-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $bg-color: null
+                $title-color: var(--#{$prefix}app-sidebar-light-menu-link-color),
+                $icon-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $bullet-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $arrow-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $bg-color: null
         );
 
         @include menu-link-here-state(
-          $title-color: var(--#{$prefix}app-sidebar-light-menu-link-color),
-          $icon-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $bullet-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $arrow-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
-          $bg-color: null
+                $title-color: var(--#{$prefix}app-sidebar-light-menu-link-color),
+                $icon-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $bullet-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $arrow-color: var(--#{$prefix}app-sidebar-light-menu-link-icon-color),
+                $bg-color: null
         );
 
         @include menu-link-active-state(
-          $title-color: var(--#{$prefix}primary),
-          $icon-color: var(--#{$prefix}primary),
-          $bullet-color: var(--#{$prefix}primary),
-          $arrow-color: var(--#{$prefix}primary),
-          $bg-color: var(--#{$prefix}app-sidebar-light-menu-link-bg-color-active)
+                $title-color: var(--#{$prefix}primary),
+                $icon-color: var(--#{$prefix}primary),
+                $bullet-color: var(--#{$prefix}primary),
+                $arrow-color: var(--#{$prefix}primary),
+                $bg-color: var(--#{$prefix}app-sidebar-light-menu-link-bg-color-active)
         );
 
         .menu-sub {

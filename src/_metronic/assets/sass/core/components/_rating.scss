@@ -58,5 +58,6 @@ label.rating-label:hover ~ .rating-label {
   & > .svg-icon {
     color: var(--#{$prefix}rating-color-default);
   }
+
   color: var(--#{$prefix}rating-color-default);
 }

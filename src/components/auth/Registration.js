@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
-import {initPasswordShowHide, setTitle} from "../utils";
+
+import {initPasswordShowHide, setTitle} from "./AuthHelpers";
 
 
 export function Registration() {

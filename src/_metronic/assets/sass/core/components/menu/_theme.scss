@@ -8,11 +8,11 @@
     .menu-item {
       //$title-color, $icon-color, $bullet-color, $arrow-color, $bg-color
       @include menu-link-default-state(
-        var(--#{$prefix}#{$name}),
-        var(--#{$prefix}#{$name}),
-        var(--#{$prefix}#{$name}),
-        var(--#{$prefix}#{$name}),
-        null
+                      var(--#{$prefix}#{$name}),
+                      var(--#{$prefix}#{$name}),
+                      var(--#{$prefix}#{$name}),
+                      var(--#{$prefix}#{$name}),
+                      null
       );
     }
   }
@@ -50,11 +50,11 @@
 .menu-hover-bg {
   .menu-item {
     @include menu-link-hover-state(
-      var(--#{$prefix}menu-link-color-hover),
-      var(--#{$prefix}menu-link-color-hover),
-      var(--#{$prefix}menu-link-color-hover),
-      var(--#{$prefix}menu-link-color-hover),
-      var(--#{$prefix}menu-link-bg-color-hover)
+                    var(--#{$prefix}menu-link-color-hover),
+                    var(--#{$prefix}menu-link-color-hover),
+                    var(--#{$prefix}menu-link-color-hover),
+                    var(--#{$prefix}menu-link-color-hover),
+                    var(--#{$prefix}menu-link-bg-color-hover)
     );
   }
 }
@@ -62,11 +62,11 @@
 .menu-here-bg {
   .menu-item {
     @include menu-link-here-state(
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-bg-color-here)
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-bg-color-here)
     );
   }
 }
@@ -74,11 +74,11 @@
 .menu-root-here-bg {
   > .menu-item {
     @include menu-link-here-state(
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-bg-color-here)
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-bg-color-here)
     );
   }
 }
@@ -88,11 +88,11 @@
   .menu-root-here-bg-desktop {
     > .menu-item {
       @include menu-link-here-state(
-        var(--#{$prefix}menu-link-color-here),
-        var(--#{$prefix}menu-link-color-here),
-        var(--#{$prefix}menu-link-color-here),
-        var(--#{$prefix}menu-link-color-here),
-        var(--#{$prefix}menu-link-bg-color-here)
+                      var(--#{$prefix}menu-link-color-here),
+                      var(--#{$prefix}menu-link-color-here),
+                      var(--#{$prefix}menu-link-color-here),
+                      var(--#{$prefix}menu-link-color-here),
+                      var(--#{$prefix}menu-link-bg-color-here)
       );
     }
   }
@@ -101,11 +101,11 @@
 .menu-show-bg {
   .menu-item {
     @include menu-link-show-state(
-      var(--#{$prefix}menu-link-color-show),
-      var(--#{$prefix}menu-link-color-show),
-      var(--#{$prefix}menu-link-color-show),
-      var(--#{$prefix}menu-link-color-show),
-      var(--#{$prefix}menu-link-bg-color-show)
+                    var(--#{$prefix}menu-link-color-show),
+                    var(--#{$prefix}menu-link-color-show),
+                    var(--#{$prefix}menu-link-color-show),
+                    var(--#{$prefix}menu-link-color-show),
+                    var(--#{$prefix}menu-link-bg-color-show)
     );
   }
 }
@@ -113,11 +113,11 @@
 .menu-active-bg {
   .menu-item {
     @include menu-link-active-state(
-      var(--#{$prefix}menu-link-color-active),
-      var(--#{$prefix}menu-link-color-active),
-      var(--#{$prefix}menu-link-color-active),
-      var(--#{$prefix}menu-link-color-active),
-      var(--#{$prefix}menu-link-bg-color-active)
+                    var(--#{$prefix}menu-link-color-active),
+                    var(--#{$prefix}menu-link-color-active),
+                    var(--#{$prefix}menu-link-color-active),
+                    var(--#{$prefix}menu-link-color-active),
+                    var(--#{$prefix}menu-link-bg-color-active)
     );
   }
 }
@@ -125,35 +125,35 @@
 .menu-state-bg {
   .menu-item {
     @include menu-link-hover-state(
-      var(--#{$prefix}menu-link-color-hover),
-      var(--#{$prefix}menu-link-color-hover),
-      var(--#{$prefix}menu-link-color-hover),
-      var(--#{$prefix}menu-link-color-hover),
-      var(--#{$prefix}menu-link-bg-color-hover)
+                    var(--#{$prefix}menu-link-color-hover),
+                    var(--#{$prefix}menu-link-color-hover),
+                    var(--#{$prefix}menu-link-color-hover),
+                    var(--#{$prefix}menu-link-color-hover),
+                    var(--#{$prefix}menu-link-bg-color-hover)
     );
 
     @include menu-link-here-state(
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-bg-color-here)
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-bg-color-here)
     );
 
     @include menu-link-show-state(
-      var(--#{$prefix}menu-link-color-show),
-      var(--#{$prefix}menu-link-color-show),
-      var(--#{$prefix}menu-link-color-show),
-      var(--#{$prefix}menu-link-color-show),
-      var(--#{$prefix}menu-link-bg-color-show)
+                    var(--#{$prefix}menu-link-color-show),
+                    var(--#{$prefix}menu-link-color-show),
+                    var(--#{$prefix}menu-link-color-show),
+                    var(--#{$prefix}menu-link-color-show),
+                    var(--#{$prefix}menu-link-bg-color-show)
     );
 
     @include menu-link-active-state(
-      var(--#{$prefix}menu-link-color-active),
-      var(--#{$prefix}menu-link-color-active),
-      var(--#{$prefix}menu-link-color-active),
-      var(--#{$prefix}menu-link-color-active),
-      var(--#{$prefix}menu-link-bg-color-active)
+                    var(--#{$prefix}menu-link-color-active),
+                    var(--#{$prefix}menu-link-color-active),
+                    var(--#{$prefix}menu-link-color-active),
+                    var(--#{$prefix}menu-link-color-active),
+                    var(--#{$prefix}menu-link-bg-color-active)
     );
   }
 }
@@ -161,35 +161,35 @@
 .menu-state-color {
   .menu-item {
     @include menu-link-hover-state(
-      var(--#{$prefix}menu-link-color-hover),
-      var(--#{$prefix}menu-link-color-hover),
-      var(--#{$prefix}menu-link-color-hover),
-      var(--#{$prefix}menu-link-color-hover),
-      null
+                    var(--#{$prefix}menu-link-color-hover),
+                    var(--#{$prefix}menu-link-color-hover),
+                    var(--#{$prefix}menu-link-color-hover),
+                    var(--#{$prefix}menu-link-color-hover),
+                    null
     );
 
     @include menu-link-here-state(
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      var(--#{$prefix}menu-link-color-here),
-      null
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    var(--#{$prefix}menu-link-color-here),
+                    null
     );
 
     @include menu-link-show-state(
-      var(--#{$prefix}menu-link-color-show),
-      var(--#{$prefix}menu-link-color-show),
-      var(--#{$prefix}menu-link-color-show),
-      var(--#{$prefix}menu-link-color-show),
-      null
+                    var(--#{$prefix}menu-link-color-show),
+                    var(--#{$prefix}menu-link-color-show),
+                    var(--#{$prefix}menu-link-color-show),
+                    var(--#{$prefix}menu-link-color-show),
+                    null
     );
 
     @include menu-link-active-state(
-      var(--#{$prefix}menu-link-color-active),
-      var(--#{$prefix}menu-link-color-active),
-      var(--#{$prefix}menu-link-color-active),
-      var(--#{$prefix}menu-link-color-active),
-      null
+                    var(--#{$prefix}menu-link-color-active),
+                    var(--#{$prefix}menu-link-color-active),
+                    var(--#{$prefix}menu-link-color-active),
+                    var(--#{$prefix}menu-link-color-active),
+                    null
     );
   }
 }
@@ -198,11 +198,11 @@
 .menu-hover-bg-primary {
   .menu-item {
     @include menu-link-hover-state(
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary)
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary)
     );
   }
 }
@@ -210,11 +210,11 @@
 .menu-show-bg-primary {
   .menu-item {
     @include menu-link-show-state(
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary)
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary)
     );
   }
 }
@@ -222,11 +222,11 @@
 .menu-here-bg-primary {
   .menu-item {
     @include menu-link-here-state(
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary)
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary)
     );
   }
 }
@@ -234,11 +234,11 @@
 .menu-active-bg-primary {
   .menu-item {
     @include menu-link-active-state(
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary)
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary)
     );
   }
 }
@@ -246,43 +246,43 @@
 .menu-state-bg-primary {
   .menu-item {
     @include menu-link-hover-state(
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary)
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary)
     );
 
     @include menu-link-show-state(
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary)
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary)
     );
 
     @include menu-link-here-state(
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary)
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary)
     );
 
     @include menu-link-active-state(
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary)
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary)
     );
 
     @include menu-link-show-state(
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary-inverse),
-      var(--#{$prefix}primary)
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary-inverse),
+                    var(--#{$prefix}primary)
     );
   }
 }
@@ -291,11 +291,11 @@
 .menu-show-bg-light-primary {
   .menu-item {
     @include menu-link-show-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary-light)
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary-light)
     );
   }
 }
@@ -303,11 +303,11 @@
 .menu-here-bg-light-primary {
   .menu-item {
     @include menu-link-here-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary-light)
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary-light)
     );
   }
 }
@@ -315,11 +315,11 @@
 .menu-hover-bg-light-primary {
   .menu-item {
     @include menu-link-hover-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary-light)
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary-light)
     );
   }
 }
@@ -327,11 +327,11 @@
 .menu-active-bg-light-primary {
   .menu-item {
     @include menu-link-active-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary-light)
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary-light)
     );
   }
 }
@@ -339,32 +339,32 @@
 .menu-state-bg-light-primary {
   .menu-item {
     @include menu-link-show-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary-light)
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary-light)
     );
     @include menu-link-here-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary-light)
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary-light)
     );
     @include menu-link-hover-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary-light)
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary-light)
     );
     @include menu-link-active-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary-light)
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary-light)
     );
   }
 }
@@ -373,11 +373,11 @@
 .menu-hover-primary {
   .menu-item {
     @include menu-link-hover-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      null
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    null
     );
   }
 }
@@ -385,11 +385,11 @@
 .menu-show-primary {
   .menu-item {
     @include menu-link-show-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      null
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    null
     );
   }
 }
@@ -397,11 +397,11 @@
 .menu-here-primary {
   .menu-item {
     @include menu-link-here-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      null
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    null
     );
   }
 }
@@ -409,11 +409,11 @@
 .menu-active-primary {
   .menu-item {
     @include menu-link-active-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      null
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    null
     );
   }
 }
@@ -421,32 +421,32 @@
 .menu-state-primary {
   .menu-item {
     @include menu-link-hover-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      null
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    null
     );
     @include menu-link-show-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      null
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    null
     );
     @include menu-link-here-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      null
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    null
     );
     @include menu-link-active-state(
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      var(--#{$prefix}primary),
-      null
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    var(--#{$prefix}primary),
+                    null
     );
   }
 }
@@ -454,32 +454,32 @@
 .menu-state-dark {
   .menu-item {
     @include menu-link-hover-state(
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      null
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    null
     );
     @include menu-link-show-state(
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      null
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    null
     );
     @include menu-link-here-state(
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      null
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    null
     );
     @include menu-link-active-state(
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      var(--#{$prefix}dark),
-      null
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    var(--#{$prefix}dark),
+                    null
     );
   }
 }

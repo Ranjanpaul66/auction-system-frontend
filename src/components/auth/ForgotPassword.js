@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
-import {setTitle} from "../utils";
+
+import {setTitle} from "./AuthHelpers";
 
 export function ForgotPassword() {
     const [loading, setLoading] = useState(false)

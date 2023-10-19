@@ -8,43 +8,43 @@
     // General
     .menu-item {
       @include menu-link-default-state(
-        $title-color: var(--#{$prefix}gray-700),
-        $icon-color: var(--#{$prefix}gray-500),
-        $bullet-color: var(--#{$prefix}gray-500),
-        $arrow-color: var(--#{$prefix}gray-500),
-        $bg-color: null
+              $title-color: var(--#{$prefix}gray-700),
+              $icon-color: var(--#{$prefix}gray-500),
+              $bullet-color: var(--#{$prefix}gray-500),
+              $arrow-color: var(--#{$prefix}gray-500),
+              $bg-color: null
       );
 
       @include menu-link-hover-state(
-        $title-color: var(--#{$prefix}primary),
-        $icon-color: var(--#{$prefix}primary),
-        $bullet-color: var(--#{$prefix}primary),
-        $arrow-color: var(--#{$prefix}primary),
-        $bg-color: null
+              $title-color: var(--#{$prefix}primary),
+              $icon-color: var(--#{$prefix}primary),
+              $bullet-color: var(--#{$prefix}primary),
+              $arrow-color: var(--#{$prefix}primary),
+              $bg-color: null
       );
 
       @include menu-link-show-state(
-        $title-color: var(--#{$prefix}primary),
-        $icon-color: var(--#{$prefix}primary),
-        $bullet-color: var(--#{$prefix}primary),
-        $arrow-color: var(--#{$prefix}primary),
-        $bg-color: null
+              $title-color: var(--#{$prefix}primary),
+              $icon-color: var(--#{$prefix}primary),
+              $bullet-color: var(--#{$prefix}primary),
+              $arrow-color: var(--#{$prefix}primary),
+              $bg-color: null
       );
 
       @include menu-link-here-state(
-        $title-color: var(--#{$prefix}primary),
-        $icon-color: var(--#{$prefix}primary),
-        $bullet-color: var(--#{$prefix}primary),
-        $arrow-color: var(--#{$prefix}primary),
-        $bg-color: null
+              $title-color: var(--#{$prefix}primary),
+              $icon-color: var(--#{$prefix}primary),
+              $bullet-color: var(--#{$prefix}primary),
+              $arrow-color: var(--#{$prefix}primary),
+              $bg-color: null
       );
 
       @include menu-link-active-state(
-        $title-color: var(--#{$prefix}primary),
-        $icon-color: var(--#{$prefix}primary),
-        $bullet-color: var(--#{$prefix}primary),
-        $arrow-color: var(--#{$prefix}primary),
-        $bg-color: var(--#{$prefix}gray-100)
+              $title-color: var(--#{$prefix}primary),
+              $icon-color: var(--#{$prefix}primary),
+              $bullet-color: var(--#{$prefix}primary),
+              $arrow-color: var(--#{$prefix}primary),
+              $bg-color: var(--#{$prefix}gray-100)
       );
     }
 
@@ -87,11 +87,11 @@
         margin-right: 0.5rem;
 
         @include menu-link-here-state(
-          $title-color: var(--#{$prefix}primary),
-          $icon-color: var(--#{$prefix}primary),
-          $bullet-color: var(--#{$prefix}primary),
-          $arrow-color: var(--#{$prefix}primary),
-          $bg-color: var(--#{$prefix}gray-100)
+                $title-color: var(--#{$prefix}primary),
+                $icon-color: var(--#{$prefix}primary),
+                $bullet-color: var(--#{$prefix}primary),
+                $arrow-color: var(--#{$prefix}primary),
+                $bg-color: var(--#{$prefix}gray-100)
         );
 
         > .menu-link {

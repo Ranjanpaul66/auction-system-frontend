@@ -33,9 +33,11 @@ const PageTitle = ({children, description, breadcrumbs}) => {
     const {setPageTitle, setPageDescription, setPageBreadcrumbs} = usePageData()
     useEffect(() => {
         if (children) {
+            document.title = `${children} - Oktion`;
             setPageTitle(children.toString())
         }
         return () => {
+            document.title = `Oktion`;
             setPageTitle('')
         }
     }, [children])

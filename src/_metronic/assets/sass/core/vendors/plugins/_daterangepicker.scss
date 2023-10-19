@@ -104,14 +104,14 @@
 
     .cancelBtn {
       @include button-custom-variant(
-        $color: var(--#{$prefix}light-inverse),
-        $icon-color: var(--#{$prefix}light-inverse),
-        $border-color: var(--#{$prefix}light),
-        $bg-color: var(--#{$prefix}light),
-        $color-active: var(--#{$prefix}light-inverse),
-        $icon-color-active: var(--#{$prefix}light-inverse),
-        $border-color-active: var(--#{$prefix}light-active),
-        $bg-color-active: var(--#{$prefix}light-active)
+              $color: var(--#{$prefix}light-inverse),
+              $icon-color: var(--#{$prefix}light-inverse),
+              $border-color: var(--#{$prefix}light),
+              $bg-color: var(--#{$prefix}light),
+              $color-active: var(--#{$prefix}light-inverse),
+              $icon-color-active: var(--#{$prefix}light-inverse),
+              $border-color-active: var(--#{$prefix}light-active),
+              $bg-color-active: var(--#{$prefix}light-active)
       );
     }
   }

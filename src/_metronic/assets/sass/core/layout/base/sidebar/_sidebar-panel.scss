@@ -83,8 +83,8 @@
       @include property(z-index, $app-sidebar-panel-fixed-z-index);
       position: fixed;
       left: calc(
-        var(--#{$prefix}app-sidebar-width) + var(--#{$prefix}app-sidebar-gap-start, 0px) +
-          var(--#{$prefix}app-sidebar-gap-end, 0px)
+              var(--#{$prefix}app-sidebar-width) + var(--#{$prefix}app-sidebar-gap-start, 0px) +
+              var(--#{$prefix}app-sidebar-gap-end, 0px)
       );
       top: 0;
       bottom: 0;
@@ -93,8 +93,8 @@
     [data-kt-app-sidebar-panel-sticky='on'] & {
       position: fixed;
       left: calc(
-        var(--#{$prefix}app-sidebar-width) + var(--#{$prefix}app-sidebar-gap-start, 0px) +
-          var(--#{$prefix}app-sidebar-gap-end, 0px)
+              var(--#{$prefix}app-sidebar-width) + var(--#{$prefix}app-sidebar-gap-start, 0px) +
+              var(--#{$prefix}app-sidebar-gap-end, 0px)
       );
       top: 0;
       bottom: 0;
@@ -132,7 +132,7 @@
     }
 
     [data-kt-app-sidebar-panel-hoverable='true'][data-kt-app-sidebar-panel-minimize='on']
-      &:hover:not(.animating) {
+    &:hover:not(.animating) {
       transition: $app-sidebar-panel-base-transition;
       width: var(--#{$prefix}app-sidebar-panel-width-actual);
       box-shadow: var(--#{$prefix}app-sidebar-panel-minimize-hover-box-shadow);
@@ -142,7 +142,7 @@
       transition: $app-sidebar-panel-base-transition;
       width: var(--#{$prefix}app-sidebar-panel-width-actual);
       margin-left: calc(
-        -1 * (var(--#{$prefix}app-sidebar-panel-width-actual) +
+              -1 * (var(--#{$prefix}app-sidebar-panel-width-actual) +
               var(--#{$prefix}app-sidebar-gap-start, 0px) +
               var(--#{$prefix}app-sidebar-gap-end, 0px))
       );
@@ -153,13 +153,13 @@
   .app-sidebar-panel {
     // Header
     [data-kt-app-sidebar-panel-fixed='true'][data-kt-app-header-fixed='true']:not([data-kt-app-sidebar-panel-push-header='true'])
-      & {
+    & {
       top: var(--#{$prefix}app-header-height);
     }
 
     // Toolbar
     [data-kt-app-sidebar-panel-fixed='true'][data-kt-app-header-fixed='true'][data-kt-app-toolbar-fixed='true']:not([data-kt-app-sidebar-panel-push-toolbar='true'])
-      & {
+    & {
       top: calc(var(--#{$prefix}app-header-height) + var(--#{$prefix}app-toolbar-height, 0));
     }
   }
@@ -258,7 +258,7 @@
     }
 
     [data-kt-app-sidebar-panel-hoverable-mobile='true'][data-kt-app-sidebar-panel-minimize-mobile='on']
-      &:hover:not(.animating) {
+    &:hover:not(.animating) {
       transition: $app-sidebar-panel-base-transition;
       width: var(--#{$prefix}app-sidebar-panel-width-actual);
 
