@@ -1,10 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import axios from 'axios'
 import App from './App';
+import {QueryClient, QueryClientProvider} from 'react-query'
+import {setupAxios} from "./components/auth/AuthHelpers";
+import {ReactQueryDevtools} from "react-query/devtools";
+
+setupAxios(axios)
+const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <App/>
+    <QueryClientProvider client={queryClient}>
+        <App/>
+        <ReactQueryDevtools initialIsOpen={false}/>
+    </QueryClientProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
