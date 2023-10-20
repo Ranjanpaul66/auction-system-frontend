@@ -1,42 +1,114 @@
 import React, {useState} from 'react';
-import {AutoComplete, Button, Cascader, Checkbox, Col, Form, Input, InputNumber, Row, Select} from "antd";
+import {AutoComplete, Button, Cascader, Checkbox, Col, Form, Input, InputNumber, Layout, Row, Select} from "antd";
 import './css/registration.css'
+const { Header, Footer, Sider, Content } = Layout;
 
 function Registration(props) {
-    const [form] = Form.useForm();
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        form.validateFields((err, values) => {
-            if (!err) {
-                // Submit the form data to your backend server
-            }
-        });
+    const onFinish = (values) => {
+        console.log('Success:', values);
     };
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
+
+    const formItemLayout = {
+        labelCol: {
+            span: 8,
+        },
+        wrapperCol: {
+            span: 16,
+        },
+    };
+
+
     return (
-        <>
-            <Row></Row>
-            <Row justify="center">
-                <Form layout="horizontal">
-                    <Form.Item label="Username" name="username" rules={[{ required: true, message: 'Please enter a username.' }]}>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please enter your email address.' }, { type: 'email', message: 'Please enter a valid email address.' }]}>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please enter a password.' }, { min: 6, message: 'Password must be at least 6 characters long.' }]}>
-                        <Input.Password />
-                    </Form.Item>
-                    <Form.Item label="Confirm Password" name="confirm_password" rules={[{ required: true, message: 'Please confirm your password.' }, { validator: (rule, value) => { if (value !== this.getFieldValue('password')) { return Promise.reject('Passwords must match.'); } return Promise.resolve(); }}]}>
-                        <Input.Password />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">Register</Button>
-                    </Form.Item>
-                </Form>
-            </Row>
-        </>
+
+
+                <Row className={"centered-component"}>
+
+                    <Form
+                        name="basic"
+                        // labelCol={{
+                        //     span: 8,
+                        // }}
+                        // wrapperCol={{
+                        //     span: 16,
+                        // }}
+                        // initialValues={{
+                        //     remember: true,
+                        // }}
+
+                        {...formItemLayout}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        autoComplete="off"
+                    >
+                        <Form.Item
+                            label="Username"
+                            name="username"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your username!',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Password"
+                            name="password"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your password!',
+                                },
+                            ]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="New Password"
+                            name="newPassword"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your password!',
+                                },
+                            ]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="remember"
+                            valuePropName="checked"
+                            wrapperCol={{
+                                offset: 8,
+                                span: 16,
+                            }}
+                        >
+                            <Checkbox>Remember me</Checkbox>
+                        </Form.Item>
+
+
+
+                        <Form.Item
+                            wrapperCol={{
+                                offset: 8,
+                                span: 16,
+                            }}
+                        >
+                            <Button type="primary" htmlType="submit">
+                                Submit
+                            </Button>
+                        </Form.Item>
+
+
+                    </Form>
+                </Row>
 
 
 

@@ -1,11 +1,8 @@
 import React from 'react';
-import {Row, Col, Button, Checkbox, Form, Input, Typography, notification, Alert} from 'antd';
+import {Row, Col, Button, Form, Input, Typography} from 'antd';
 import './css/login.css'
 const {Title, Text, Link} = Typography
-const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-};
+
 function Login(props) {
     return (
         <>
