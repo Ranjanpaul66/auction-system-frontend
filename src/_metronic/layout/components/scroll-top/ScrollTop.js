@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react'
 import {useLocation} from 'react-router-dom'
-import {ScrollTopComponent, StickyComponent, ToggleComponent,} from '../../../assets/ts/components'
+import {ScrollTopComponent, StickyComponent, ToggleComponent,} from '../../../assets/js/components'
 import {KTIcon} from '../../../helpers'
 
 export function ScrollTop() {

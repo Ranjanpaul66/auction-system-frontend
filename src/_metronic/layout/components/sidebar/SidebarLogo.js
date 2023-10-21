@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import {KTIcon, toAbsoluteUrl} from '../../../helpers'
 import {useLayout} from '../../core'
 import {useEffect, useRef} from 'react'
-import {ToggleComponent} from '../../../assets/ts/components'
+import {ToggleComponent} from '../../../assets/js/components'
 
 const SidebarLogo = (props) => {
     const {config} = useLayout()

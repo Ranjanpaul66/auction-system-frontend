@@ -1,8 +1,16 @@
 import {PageTitle} from "../../../_metronic/layout/core";
 import {KTIcon} from "../../../_metronic/helpers";
 import {Link} from "react-router-dom";
+import {useEffect} from "react";
 
 const AddProductPage = () => {
+
+    useEffect(() => {
+        window.$("#kt_datepicker_1").flatpickr({
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+        });
+    }, []);
     return <>
         <div className="card">
             <div className="card-header border-0 pt-6">
@@ -40,6 +48,11 @@ const AddProductPage = () => {
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
                                 </select>
+                            </div>
+
+                            <div className="mb-10">
+                                <label htmlFor="kt_datepicker_1" className="form-label">Default input style</label>
+                                <input className="form-control" placeholder="Pick a date" id="kt_datepicker_1"/>
                             </div>
 
                             <button type="submit" className="btn btn-light-dark mt-3">

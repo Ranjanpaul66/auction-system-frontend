@@ -1,4 +1,4 @@
-import {MenuComponent} from '../assets/ts/components'
+import {MenuComponent} from '../assets/js/components'
 
 
 const reInitMenu = () => {

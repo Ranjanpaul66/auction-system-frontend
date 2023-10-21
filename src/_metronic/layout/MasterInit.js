@@ -1,7 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {Tab} from 'bootstrap'
-import {MenuComponent, ScrollTopComponent, StickyComponent, ToggleComponent,} from '../assets/ts/components'
-import {ThemeModeComponent} from '../assets/ts/layout'
+import {MenuComponent, ScrollTopComponent, StickyComponent, ToggleComponent,} from '../assets/js/components'
+import {ThemeModeComponent} from '../assets/js/layout'
 
 import {useLayout} from './core'
 

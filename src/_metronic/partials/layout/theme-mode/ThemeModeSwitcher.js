@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {KTIcon} from '../../../helpers'
-import {ThemeModeComponent} from '../../../assets/ts/layout'
+import {ThemeModeComponent} from '../../../assets/js/layout'
 import {useThemeMode} from './ThemeModeProvider'
 
 

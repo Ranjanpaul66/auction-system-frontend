@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from 'react'
-import {ThemeModeComponent} from '../../../assets/ts/layout'
+import {ThemeModeComponent} from '../../../assets/js/layout'
 import {toAbsoluteUrl} from '../../../helpers'
 
 export const themeModelSKey = 'kt_theme_mode_value'
