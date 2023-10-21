@@ -23,7 +23,7 @@ const DashboardPage = () => {
                         <div id="requests_count" className="fetch-stats text-gray-900 fw-bolder fs-2 mb-2 mt-5">
                             <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </div>
-                        <div className="fw-bold text-gray-400">Earnings</div>
+                        <div className="fw-bold text-gray-400">Balance</div>
                     </div>
                 </a>
             </div>
@@ -35,7 +35,7 @@ const DashboardPage = () => {
                         <div id="requests_count" className="fetch-stats text-gray-900 fw-bolder fs-2 mb-2 mt-5">
                             <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </div>
-                        <div className="fw-bold text-gray-400">Products</div>
+                        <div className="fw-bold text-gray-400">Bidding</div>
                     </div>
                 </a>
             </div>
@@ -44,7 +44,7 @@ const DashboardPage = () => {
     </>
 }
 
-const Dashboard = () => {
+const CustomerDashboard = () => {
     return (
         <>
             <PageTitle breadcrumbs={[]}>Dashboard</PageTitle>
@@ -53,4 +53,4 @@ const Dashboard = () => {
     )
 }
 
-export {Dashboard}
+export {CustomerDashboard}

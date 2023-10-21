@@ -4,12 +4,13 @@ import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 import {ErrorsPage} from "./components/errors/ErrorsPage";
 import {Logout} from "./components/auth/Logout";
 import {AuthRoutes} from "./components/auth/AuthRoutes";
-import {AccountRoutes} from "./components/account/AccountRoutes";
+import {SellerRoutes} from "./components/seller/SellerRoutes";
 import {MasterApp} from "./_metronic/layout/MasterApp";
 import {ComingSoon} from "./components/ComingSoon";
+import {CustomerRoutes} from "./components/customer/CustomerRoutes";
 
 function App() {
-    const currentUser = true;
+    const currentUser = {"type": "seller"};
     return (
         <BrowserRouter>
             <Routes>
@@ -18,16 +19,22 @@ function App() {
                     <Route path='logout' element={<Logout/>}/>
                     <Route path='coming-soon' element={<ComingSoon/>}/>
                     {currentUser ? (
-                        <>
-                            <Route path='/*' element={<AccountRoutes/>}/>
-                            <Route index element={<Navigate to='/dashboard'/>}/>
-                        </>
-                    ) : (
-                        <>
-                            <Route path='auth/*' element={<AuthRoutes/>}/>
-                            <Route path='*' element={<Navigate to='/auth'/>}/>
-                        </>
-                    )}
+                            (currentUser.type === "seller" ?
+                                    <>
+                                        <Route path='/*' element={<SellerRoutes/>}/>
+                                        <Route index element={<Navigate to='/dashboard'/>}/>
+                                    </> :
+                                    <>
+                                        <Route path='/*' element={<CustomerRoutes/>}/>
+                                        <Route index element={<Navigate to='/dashboard'/>}/>
+                                    </>
+                            )) :
+                        (
+                            <>
+                                <Route path='auth/*' element={<AuthRoutes/>}/>
+                                <Route path='*' element={<Navigate to='/auth'/>}/>
+                            </>
+                        )}
                 </Route>
             </Routes>
         </BrowserRouter>
