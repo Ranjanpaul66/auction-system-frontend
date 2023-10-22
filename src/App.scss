@@ -10,3 +10,7 @@ $font-family-sans-serif: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto
 @import './_metronic/assets/sass/style.scss';
 @import './_metronic/assets/sass/plugins.scss';
 @import './_metronic/assets/sass/style.react.scss';
+
+.tick-credits {
+  display: none !important;
+}
