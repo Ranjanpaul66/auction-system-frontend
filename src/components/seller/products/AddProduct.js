@@ -1,16 +1,35 @@
 import {PageTitle} from "../../../_metronic/layout/core";
 import {KTIcon} from "../../../_metronic/helpers";
 import {Link} from "react-router-dom";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 const AddProductPage = () => {
+    const [categories, setCategories] = useState([
+        {
+            "id": "1",
+            "name": "Computer & Network"
+        },
+        {
+            "id": "2",
+            "name": "Logistics"
+        }
+    ])
 
     useEffect(() => {
-        window.$("#kt_datepicker_1").flatpickr({
+        window.$(".date-time").flatpickr({
             enableTime: true,
+            altInput: true,
+            minDate: 'today',
+            minTime: `${(new Date()).getHours()}:${(new Date()).getMinutes()}`,
+            altFormat: "l, d F h:i K",
             dateFormat: "Y-m-d H:i",
         });
+
+        window.$("#categories").select2({
+            placeholder: 'Select categories'
+        });
     }, []);
+
     return <>
         <div className="card">
             <div className="card-header border-0 pt-6">
@@ -41,18 +60,36 @@ const AddProductPage = () => {
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
-                                <label className="fs-5 fw-bold mb-2" htmlFor="description">Categories</label>
-                                <select multiple className="form-select" id="floatingSelect"
-                                        aria-label="Floating label select example" style={{height: '140px'}}>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <label className="fs-5 fw-bold mb-2" htmlFor="categories">Categories</label>
+                                <select data-control="select2" multiple="multiple" className="form-select"
+                                        id="categories">
+                                    {categories.map((object) => {
+                                        return <option value={object.id} key={object.id}>{object.name}</option>;
+                                    })}
                                 </select>
                             </div>
 
-                            <div className="mb-10">
-                                <label htmlFor="kt_datepicker_1" className="form-label">Default input style</label>
-                                <input className="form-control" placeholder="Pick a date" id="kt_datepicker_1"/>
+                            <div className="col-md-12 fv-row mb-5">
+                                <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Start Price</label>
+                                <input type="number" className="form-control" id="name" placeholder="Bid Start Price"/>
+                            </div>
+
+                            <div className="col-md-12 fv-row mb-5">
+                                <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Deposit Amount</label>
+                                <input type="number" className="form-control" id="name"
+                                       placeholder="Bid Deposit Amount"/>
+                            </div>
+
+                            <div className="col-md-12 fv-row mb-5">
+                                <label htmlFor="bid_due_date" className="fs-5 fw-bold mb-2">Bid Due Date</label>
+                                <input className="form-control date-time" placeholder="Pick a date" id="bid_due_date"/>
+                            </div>
+
+                            <div className="col-md-12 fv-row mb-5">
+                                <label htmlFor="bid_payment_due_date" className="fs-5 fw-bold mb-2">Bid Payment Due
+                                    Date</label>
+                                <input className="form-control date-time" placeholder="Pick a date"
+                                       id="bid_payment_due_date"/>
                             </div>
 
                             <button type="submit" className="btn btn-light-dark mt-3">
