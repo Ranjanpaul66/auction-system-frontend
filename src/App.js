@@ -10,7 +10,7 @@ import {ComingSoon} from "./components/ComingSoon";
 import {CustomerRoutes} from "./components/customer/CustomerRoutes";
 
 function App() {
-    const currentUser = {"type": "seller"};
+    const currentUser = {"type": "s"};
     return (
         <BrowserRouter>
             <Routes>
@@ -19,7 +19,7 @@ function App() {
                     <Route path='logout' element={<Logout/>}/>
                     <Route path='coming-soon' element={<ComingSoon/>}/>
                     {currentUser ? (
-                            (currentUser.type === "seller" ?
+                            (currentUser.type === "s" ?
                                     <>
                                         <Route path='/*' element={<SellerRoutes/>}/>
                                         <Route index element={<Navigate to='/dashboard'/>}/>
