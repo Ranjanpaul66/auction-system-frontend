@@ -92,6 +92,13 @@ const AddProductPage = () => {
                                        id="bid_payment_due_date"/>
                             </div>
 
+                            <div className="col-md-12 fv-row mb-5">
+                                <label htmlFor="images" className="fs-5 fw-bold mb-2">
+                                    Images
+                                </label>
+                                <input className="form-control" type="file" id="images" multiple/>
+                            </div>
+
                             <button type="submit" className="btn btn-light-dark mt-3">
                                 Submit
                             </button>
