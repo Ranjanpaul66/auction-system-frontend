@@ -12,6 +12,21 @@ export function Registration() {
         setTitle("Sign Up")
     }, []);
 
+    const types = [
+        {
+            id: "SELLER",
+            name: "Seller",
+        },
+        {
+            id: "CUSTOMER",
+            name: "Customer",
+        },
+    ]
+
+    useEffect(() => {
+        window.$("#type").select2();
+    }, [])
+
     function handleSubmit() {
     }
 
@@ -36,6 +51,17 @@ export function Registration() {
             {/* end::Heading */}
 
             {/* begin::Form group Firstname */}
+            <div className='fv-row mb-8'>
+                <label className='form-label fw-bolder text-dark fs-6'>Account Type</label>
+                <select data-control="select2" className="form-select"
+                        id="type" required>
+                    <option disabled>Select a type</option>
+                    {types.map((object) => {
+                        return <option value={object.id} key={object.id}>{object.name}</option>;
+                    })}
+                </select>
+            </div>
+
             <div className='fv-row mb-8'>
                 <label className='form-label fw-bolder text-dark fs-6'>First name</label>
                 <input

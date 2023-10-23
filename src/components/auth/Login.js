@@ -1,19 +1,91 @@
 import {useEffect, useState} from 'react'
 import clsx from 'clsx'
-import {Link} from 'react-router-dom'
+import {Link, Navigate, Routes, useNavigate} from 'react-router-dom'
+import {getAuth, initPasswordShowHide, setTitle} from "./AuthHelpers";
+import {login} from "./_requests";
+import * as authHelper from "./AuthHelpers";
 
-import {initPasswordShowHide, setTitle} from "./AuthHelpers";
 
 export function Login() {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
+    const [validation, setValidation] = useState(false)
+    const [validationMessage, setValidationMessage]= useState("")
+    const [resMessage, setResMessage]= useState("")
+    const [isValid, setIsValid] = useState(true);
+    const email_pattern=/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    const [formData, setFormData] = useState({
+        email: '',
+        password :''
+    });
+
+
     useEffect(() => {
         initPasswordShowHide()
 
         setTitle("Sign In")
+
+        console.log("loading: ", formData)
     }, []);
 
     function handleSubmit(e) {
+        e.preventDefault();
+        setResMessage("")
+        const res = login(formData.email, formData.password)
+        res.then(response => {
+            // Handle the successful response here
+            authHelper.setAuth(response.data.data);
+          return navigate("/dashboard");
+
+        })
+            .catch(error => {
+                // Handle the error here
+                if (error.response) {
+                    // The request was made, and the server responded with a status code other than 2xx.
+                    setResMessage(error.response.data.message)
+
+                    return error
+                } else if (error.request) {
+                    return {"message": "No response received. The request was made but didn't get a response."}
+                } else {
+
+                    console.error("message:", error.message);
+                }
+
+                throw error;
+            });
+
     }
+
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if(name ==="email" ){
+            if(value.match(email_pattern)){
+                setValidation(false);
+                setFormData({
+                    ...formData,
+                    [name]: value,
+                });
+            }else{
+                setValidation(true);
+                setValidationMessage("Invalid email expression!")
+
+            }
+
+        }else if(name==="password"){
+            setFormData({
+                ...formData,
+                [name]: value,
+            });
+        }
+        else {
+            console.log("test set validation")
+            setValidation(true);
+
+        }
+
+    };
 
     return (
         <form
@@ -39,18 +111,16 @@ export function Login() {
                     placeholder='Email'
                     className={clsx(
                         'form-control bg-transparent',
-                        {'is-invalid': false},
-                        {
-                            'is-valid': false,
-                        }
+                        {'is-invalid': validation},
                     )}
-                    type='email'
+                    type={'email'}
                     name='email'
                     autoComplete='off'
+                    onChange={handleChange}
                 />
-                {false && (
+                {validation && (
                     <div className='fv-plugins-message-container'>
-                        <span role='alert'>{}</span>
+                        <span role='alert'>{validationMessage}</span>
                     </div>
                 )}
             </div>
@@ -68,11 +138,12 @@ export function Login() {
                             'form-control bg-transparent',
                             {
                                 'is-invalid': false,
-                            },
-                            {
-                                'is-valid': false,
                             }
                         )}
+                        name='password'
+                        onChange={handleChange}
+                        required={true}
+
                     />
                     <span className="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
                           data-kt-password-meter-control="visibility">
@@ -89,10 +160,10 @@ export function Login() {
                                             </i>
                     </span>
                 </div>
-                {false && (
+                {resMessage && (
                     <div className='fv-plugins-message-container'>
                         <div className='fv-help-block'>
-                            <span role='alert'>{}</span>
+                            <span role='alert'>{resMessage}</span>
                         </div>
                     </div>
                 )}
