@@ -38,6 +38,9 @@ dependencies:
   clsx:
     specifier: 1.1.1
     version: 1.1.1
+  form-serialize:
+    specifier: ^0.7.2
+    version: 0.7.2
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -5654,6 +5657,10 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
+
+  /form-serialize@0.7.2:
+    resolution: { integrity: sha512-ohEA4Crzd/+hSREjGf4kSsy73WhAtQ7H+blGEz2DVd+JCi0TV5nZBSn9PaPlvrl9m29fa6xclAfpRkqZ57b1bw== }
+    dev: false
 
   /forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
