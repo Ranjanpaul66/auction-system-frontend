@@ -50,8 +50,8 @@ export function setupAxios(axios) {
     axios.interceptors.request.use(
         (config) => {
             const auth = getAuth()
-            if (auth && auth.api_token) {
-                config.headers.Authorization = `Bearer ${auth.api_token}`
+            if (auth && auth.accessToken) {
+                config.headers.Authorization = `Bearer ${auth.accessToken}`
             }
 
             return config
