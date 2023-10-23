@@ -1,10 +1,11 @@
 import {PageTitle} from "../../../_metronic/layout/core";
 import {KTIcon} from "../../../_metronic/helpers";
 import {Link} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {fetchCategories} from "../_requests";
 
 const AddProductPage = () => {
+    const formRef = useRef();
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
@@ -31,6 +32,12 @@ const AddProductPage = () => {
         })
     }
 
+    function onSubmit(e) {
+        e.preventDefault()
+        var formData = new FormData(formRef.current);
+        console.log(formData)
+    }
+
     return <>
         <div className="card">
             <div className="card-header border-0 pt-6">
@@ -48,22 +55,23 @@ const AddProductPage = () => {
             <div className="card-body pt-0">
                 <div className="row mb-5 justify-content-center">
                     <div className="col-sm-12 col-lg-6">
-                        <form action="" method="post" id="form">
+                        <form ref={formRef} onSubmit={onSubmit} action="" method="post" id="form">
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="name">Name</label>
-                                <input type="text" className="form-control" id="name" placeholder="Name"/>
+                                <input type="text" name="name" className="form-control" id="name" placeholder="Name"
+                                       required/>
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="description">Description</label>
-                                <textarea id="description" className="form-control"
-                                          placeholder="Description" rows='4'></textarea>
+                                <textarea name="description" id="description" className="form-control"
+                                          placeholder="Description" rows='5' required></textarea>
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="categories">Categories</label>
-                                <select data-control="select2" multiple="multiple" className="form-select"
-                                        id="categories">
+                                <select name="name" data-control="select2" multiple="multiple" className="form-select"
+                                        id="categories" required>
                                     {categories.map((object) => {
                                         return <option value={object.id} key={object.id}>{object.name}</option>;
                                     })}
@@ -72,13 +80,14 @@ const AddProductPage = () => {
 
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Start Price</label>
-                                <input type="number" className="form-control" id="name" placeholder="Bid Start Price"/>
+                                <input type="number" className="form-control" id="name" placeholder="Bid Start Price"
+                                       required/>
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Deposit Amount</label>
                                 <input type="number" className="form-control" id="name"
-                                       placeholder="Bid Deposit Amount"/>
+                                       placeholder="Bid Deposit Amount" required/>
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
@@ -90,18 +99,22 @@ const AddProductPage = () => {
                                 <label htmlFor="bid_payment_due_date" className="fs-5 fw-bold mb-2">Bid Payment Due
                                     Date</label>
                                 <input className="form-control date-time" placeholder="Pick a date"
-                                       id="bid_payment_due_date"/>
+                                       id="bid_payment_due_date" required/>
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
                                 <label htmlFor="images" className="fs-5 fw-bold mb-2">
                                     Images
                                 </label>
-                                <input className="form-control" type="file" id="images" multiple/>
+                                <input className="form-control" type="file" id="images" multiple required/>
                             </div>
 
                             <button type="submit" className="btn btn-light-dark mt-3">
                                 Submit
+                            </button>
+
+                            <button type="submit" className="btn btn-light-success mt-3 ms-2">
+                                Submit & Release
                             </button>
                         </form>
                     </div>
