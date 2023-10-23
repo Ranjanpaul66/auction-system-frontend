@@ -1,7 +1,8 @@
-import {Link} from 'react-router-dom'
 import {toAbsoluteUrl} from "../_metronic/helpers";
+import {useNavigate} from "react-router-dom";
 
 const ComingSoon = () => {
+    const navigate = useNavigate();
     return (
         <div className='d-flex flex-column flex-root'>
             <div className='d-flex flex-column flex-center flex-column-fluid'>
@@ -31,9 +32,11 @@ const ComingSoon = () => {
 
                             {/* begin::Link */}
                             <div className='mb-0'>
-                                <Link to='/dashboard' className='btn btn-sm btn-primary'>
-                                    Return Home
-                                </Link>
+                                <button onClick={() => {
+                                    navigate(-1)
+                                }} className='btn btn-sm btn-primary'>
+                                    Return Back
+                                </button>
                             </div>
                             {/* end::Link */}
                         </div>
