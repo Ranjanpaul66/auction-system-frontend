@@ -1,7 +1,8 @@
-import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {toAbsoluteUrl} from "../../_metronic/helpers";
 
 const Error404 = () => {
+    const navigate = useNavigate();
     return (
         <>
             {/* begin::Title */}
@@ -29,9 +30,11 @@ const Error404 = () => {
 
             {/* begin::Link */}
             <div className='mb-0'>
-                <Link to='/dashboard' className='btn btn-sm btn-primary'>
-                    Return Home
-                </Link>
+                <button onClick={() => {
+                    navigate(-1)
+                }} className='btn btn-sm btn-primary'>
+                    Return Back
+                </button>
             </div>
             {/* end::Link */}
         </>

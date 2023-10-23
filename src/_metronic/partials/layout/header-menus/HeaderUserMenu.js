@@ -2,10 +2,12 @@
 import {Link} from 'react-router-dom'
 import {Languages} from './Languages'
 import {KTIcon} from '../../../helpers'
-import {useAuth} from "../../../../components/auth/AuthHelpers";
+import {useAuth} from "../../../../components/auth/AuthProvider";
+import clsx from "clsx";
 
 const HeaderUserMenu = () => {
     const {currentUser, logout} = useAuth()
+    // "".toLowerCase()
     return (
         <div
             className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px'
@@ -19,12 +21,17 @@ const HeaderUserMenu = () => {
 
                     <div className='d-flex flex-column'>
                         <div className='fw-bolder d-flex align-items-center fs-5'>
-                            {currentUser?.first_name} {currentUser?.first_name}
-                            <span className='badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2'>Pro</span>
+                            {currentUser?.name} <br/>
                         </div>
                         <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
                             {currentUser?.email}
                         </a>
+                        <div>
+                            <span
+                                className={clsx('badge badge-lg fw-bolder fs-6 mt-2', currentUser.roles[0].role === "SELLER" ? "badge-light-success" : "badge-light-info")}>
+                                {currentUser.roles[0].role.toLowerCase()}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

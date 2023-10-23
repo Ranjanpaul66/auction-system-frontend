@@ -1,22 +1,22 @@
 import {useEffect, useState} from 'react'
 import clsx from 'clsx'
-import {Link, Navigate, Routes, useNavigate} from 'react-router-dom'
-import {getAuth, initPasswordShowHide, setAuth, setTitle, useAuth} from "./AuthHelpers";
+import {Link, useNavigate} from 'react-router-dom'
+import {initPasswordShowHide, setTitle} from "./AuthHelpers";
 import {login} from "./_requests";
-import * as authHelper from "./AuthHelpers";
+import {useAuth} from "./AuthProvider";
 
 
 export function Login() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const [validation, setValidation] = useState(false)
-    const [validationMessage, setValidationMessage]= useState("")
-    const [resMessage, setResMessage]= useState("")
+    const [validationMessage, setValidationMessage] = useState("")
+    const [resMessage, setResMessage] = useState("")
     const [isValid, setIsValid] = useState(true);
-    const email_pattern=/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    const email_pattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     const [formData, setFormData] = useState({
         email: '',
-        password :''
+        password: ''
     });
 
 
@@ -24,24 +24,19 @@ export function Login() {
         initPasswordShowHide()
 
         setTitle("Sign In")
-
-        console.log("loading: ", formData)
     }, []);
 
     const {setCurrentUser, saveAuth} = useAuth();
 
     function handleSubmit(e) {
         e.preventDefault();
+        setLoading(true)
         setResMessage("")
         const res = login(formData.email, formData.password)
         res.then(response => {
             // Handle the successful response here
-            setAuth(response.data.data);
-            //saveAuth(response.data.data);
+            saveAuth(response.data.data);
             setCurrentUser(response.data.data)
-           navigate("/dashboard");
-           return;
-
         })
             .catch(error => {
                 // Handle the error here
@@ -58,45 +53,42 @@ export function Login() {
                 }
 
                 throw error;
-            });
-
+            }).finally(() => {
+            setLoading(false)
+        });
     }
 
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        if(name ==="email" ){
-            if(value.match(email_pattern)){
+        const {name, value} = e.target;
+        if (name === "email") {
+            if (value.match(email_pattern)) {
                 setValidation(false);
                 setFormData({
                     ...formData,
                     [name]: value,
                 });
-            }else{
+            } else {
                 setValidation(true);
                 setValidationMessage("Invalid email expression!")
 
             }
 
-        }else if(name==="password"){
+        } else if (name === "password") {
             setFormData({
                 ...formData,
                 [name]: value,
             });
-        }
-        else {
+        } else {
             console.log("test set validation")
             setValidation(true);
-
         }
-
     };
 
     return (
         <form
             className='form w-100'
             onSubmit={handleSubmit}
-            noValidate
             id='kt_login_signin_form'
         >
             {/* begin::Heading */}
@@ -113,6 +105,7 @@ export function Login() {
             <div className='fv-row mb-8'>
                 <label className='form-label fs-6 fw-bolder text-dark'>Email</label>
                 <input
+                    required
                     placeholder='Email'
                     className={clsx(
                         'form-control bg-transparent',
@@ -147,8 +140,7 @@ export function Login() {
                         )}
                         name='password'
                         onChange={handleChange}
-                        required={true}
-
+                        required
                     />
                     <span className="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
                           data-kt-password-meter-control="visibility">
@@ -175,32 +167,20 @@ export function Login() {
             </div>
             {/* end::Form group */}
 
-            {/* begin::Wrapper */}
-            <div className='d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8'>
-                <div/>
-
-                {/* begin::Link */}
-                <Link to='/auth/forgot-password' className='link-primary'>
-                    Forgot Password ?
-                </Link>
-                {/* end::Link */}
-            </div>
-            {/* end::Wrapper */}
-
             {/* begin::Action */}
             <div className='d-grid mb-10'>
                 <button
                     type='submit'
                     id='kt_sign_in_submit'
                     className='btn btn-primary'
-                    disabled={false}
+                    disabled={loading}
                 >
-                    {!loading && <span className='indicator-label'>Continue</span>}
+                    {!loading && <span className='indicator-label'>Login</span>}
                     {loading && (
                         <span className='indicator-progress' style={{display: 'block'}}>
-              Please wait...
-              <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-            </span>
+                            Please wait...
+                            <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                        </span>
                     )}
                 </button>
             </div>
