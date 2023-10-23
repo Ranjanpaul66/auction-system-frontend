@@ -2,18 +2,10 @@ import {PageTitle} from "../../../_metronic/layout/core";
 import {KTIcon} from "../../../_metronic/helpers";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {fetchCategories} from "../_requests";
 
 const AddProductPage = () => {
-    const [categories, setCategories] = useState([
-        {
-            "id": "1",
-            "name": "Computer & Network"
-        },
-        {
-            "id": "2",
-            "name": "Logistics"
-        }
-    ])
+    const [categories, setCategories] = useState([])
 
     useEffect(() => {
         window.$(".date-time").flatpickr({
@@ -28,7 +20,16 @@ const AddProductPage = () => {
         window.$("#categories").select2({
             placeholder: 'Select categories'
         });
+
+        getCategories()
+
     }, []);
+
+    async function getCategories() {
+        fetchCategories().then((res) => {
+            setCategories(res.data.data);
+        })
+    }
 
     return <>
         <div className="card">
