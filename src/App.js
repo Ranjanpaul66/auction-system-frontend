@@ -8,9 +8,15 @@ import {SellerRoutes} from "./components/seller/SellerRoutes";
 import {MasterApp} from "./_metronic/layout/MasterApp";
 import {ComingSoon} from "./components/ComingSoon";
 import {CustomerRoutes} from "./components/customer/CustomerRoutes";
+import {getAuth} from "./components/auth/AuthHelpers";
 
 function App() {
-    const currentUser = {"type": "seller"};
+    const currentUser = getAuth();
+    console.log("get Auth: ", getAuth())
+    function isCustomer(){
+        // currentUser.data.
+        return true
+    }
     return (
         <BrowserRouter>
             <Routes>
