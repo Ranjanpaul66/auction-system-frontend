@@ -28,7 +28,7 @@ const ProductsPage = () => {
             price: "38,000",
             deposit: "5,000",
             highestBidAmount: "100,000",
-            bidders: 100
+            bidders: 0
         },
         {
             id: 3,
@@ -103,7 +103,17 @@ const ProductsPage = () => {
                                     </td>
                                     <td className="text-center pe-0">
                                         <div
-                                            className={clsx('badge badge-lg', object.status === "Running" ? "badge-light-warning" : (object.status === "Closed" ? "badge-light-danger" : "badge-light-success"))}>{object.status}</div>
+                                            className={clsx('badge badge-lg mb-2', object.status === "Running" ? "badge-light-warning" : (object.status === "Closed" ? "badge-light-danger" : "badge-light-success"))}>
+                                            {object.status}
+                                        </div>
+                                        {object.bidders > 0 &&
+                                            <>
+                                                <br/>
+                                                <span
+                                                    className="badge badge-circle badge-outline badge-primary ms-2 p-4">
+                                                    {object.bidders}
+                                                </span>
+                                            </>}
                                     </td>
                                     <td className="text-center pe-0" data-order="23">
                                         <span className="fs-6 fw-semibold text-gray-400">$</span>{object.price}
