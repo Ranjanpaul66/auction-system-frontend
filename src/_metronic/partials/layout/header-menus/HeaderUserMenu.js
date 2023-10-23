@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {Languages} from './Languages'
 import {KTIcon} from '../../../helpers'
 import {useAuth} from "../../../../components/auth/AuthProvider";
+import clsx from "clsx";
 
 const HeaderUserMenu = () => {
     const {currentUser, logout} = useAuth()
@@ -26,7 +27,8 @@ const HeaderUserMenu = () => {
                             {currentUser?.email}
                         </a>
                         <div>
-                            <span className='badge badge-lg badge-light-success fw-bolder fs-6 mt-2'>
+                            <span
+                                className={clsx('badge badge-lg fw-bolder fs-6 mt-2', currentUser.roles[0].role === "SELLER" ? "badge-light-success" : "badge-light-info")}>
                                 {currentUser.roles[0].role.toLowerCase()}
                             </span>
                         </div>
