@@ -10,7 +10,7 @@ import {ComingSoon} from "./components/ComingSoon";
 import {CustomerRoutes} from "./components/customer/CustomerRoutes";
 
 function App() {
-    const currentUser = {"type": "s"};
+    const currentUser = {"type": "c"};
     return (
         <BrowserRouter>
             <Routes>

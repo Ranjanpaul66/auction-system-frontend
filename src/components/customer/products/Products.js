@@ -33,7 +33,7 @@ const ProductsPage = () => {
     return <>
         {/* begin::Row */}
         <div className='row g-5 g-xl-10 mb-5 mb-xl-10 justify-content-center'>
-            <div className="card bg-transparent border-0 shadow-none">
+            <div className="card p-0 bg-transparent border-0 shadow-none">
                 <div className="card-header border-0 pt-6">
                     <div className="card-title">
                         <div className="d-flex align-items-center position-relative my-1">
@@ -49,7 +49,7 @@ const ProductsPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="card-body pt-5 row">
+                <div className="card-body row">
                     {products.map((object) => {
                         return <>
                             <div className="col-sm-12 col-md-4">

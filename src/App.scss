@@ -14,3 +14,18 @@ $font-family-sans-serif: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto
 .tick-credits {
   display: none !important;
 }
+
+.tick {
+  font-size: 3.2rem;
+  line-height: unset !important;
+}
+
+.tick-label {
+  font-size: .7em;
+  text-align: center;
+}
+
+.tick-group {
+  margin: 0 .25em;
+  text-align: center;
+}
