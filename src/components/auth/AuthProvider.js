@@ -24,6 +24,7 @@ const AuthProvider = ({children}) => {
     const [auth, setAuth] = useState(authHelper.getAuth())
     const [currentUser, setCurrentUser] = useState()
     const saveAuth = (auth) => {
+        console.log("AuthProvider: ", auth)
         setAuth(auth)
         if (auth) {
             authHelper.setAuth(auth)
@@ -33,6 +34,7 @@ const AuthProvider = ({children}) => {
     }
 
     const logout = () => {
+        console.log("logout")
         saveAuth(undefined)
         setCurrentUser(undefined)
     }
@@ -50,12 +52,13 @@ const AuthInit = ({children}) => {
     const [showSplashScreen, setShowSplashScreen] = useState(true)
     // We should request user by authToken (IN OUR EXAMPLE IT'S API_TOKEN) before rendering the application
     useEffect(() => {
+        console.log('AuthInit: ', auth)
         const requestUser = async (apiToken) => {
             try {
                 if (!didRequest.current) {
-                    const {data} = await getUserByToken(apiToken)
-                    if (data) {
-                        setCurrentUser(data)
+                    // const {data} = await getUserByToken(apiToken)
+                    if (auth) {
+                        setCurrentUser(auth)
                     }
                 }
             } catch (error) {
@@ -70,8 +73,8 @@ const AuthInit = ({children}) => {
             return () => (didRequest.current = true)
         }
 
-        if (auth && auth.api_token) {
-            requestUser(auth.api_token)
+        if (auth && auth.accessToken) {
+            requestUser(auth.accessToken)
         } else {
             logout()
             setShowSplashScreen(false)

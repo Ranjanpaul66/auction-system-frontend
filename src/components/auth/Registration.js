@@ -1,12 +1,17 @@
 import {useEffect, useState} from 'react'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom';
 import {initPasswordShowHide, setTitle} from "./AuthHelpers";
+import {apiPost} from "../common/apiService";
 
 
 export function Registration() {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
+    const [passValidation, setPassvalidation] = useState(false)
+    const [errMsg, setErrMsg] = useState("")
+
     useEffect(() => {
         initPasswordShowHide()
         setTitle("Sign Up")
@@ -27,13 +32,62 @@ export function Registration() {
         window.$("#type").select2();
     }, [])
 
-    function handleSubmit() {
+    function clearAll(){
+        setErrMsg("");
+        setPassvalidation(false)
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        setLoading(true);
+        clearAll()
+        const formData = new FormData(e.target);
+        const formDataObj = Object.fromEntries(formData.entries())
+
+        if(formDataObj?.password!==formDataObj?.confirmPassword){
+            console.log("confirm password has matched ")
+            setPassvalidation(true);
+            return
+        }
+
+        formDataObj.roles= [formDataObj["roles"]]
+        delete formDataObj.confirmPassword;
+
+        apiPost('/users/register',formDataObj )
+            .then((response) => {
+                console.log("Success")
+                setLoading(false)
+                navigate('/auth/login');
+
+            }) .catch(error => {
+            setLoading(false);
+
+            // Handle the error here
+            if (error.response) {
+                // The request was made, and the server responded with a status code other than 2xx.
+                console.log("Response data:", error.response.data.message);
+                console.log("Response status:", error.response.status);
+                setErrMsg(error.response.data.message)
+                return
+
+            } else if (error.request) {
+                // The request was made, but no response was received.
+                console.log("No response received. The request was made but didn't get a response.");
+            } else {
+                // Something happened in setting up the request that triggered an error.
+                console.error("Error:", error.message);
+            }
+
+            // You can throw an error or handle it as needed.
+            // For example, you might return a specific error message or set some state.
+            throw error;
+        })
+
     }
 
     return (
         <form
             className='form w-100 fv-plugins-bootstrap5 fv-plugins-framework'
-            noValidate
             id='kt_login_signup_form'
             onSubmit={handleSubmit}
         >
@@ -50,22 +104,30 @@ export function Registration() {
             </div>
             {/* end::Heading */}
 
-            {/* begin::Form group Firstname */}
+            {errMsg!=="" ? (
+                    <div className='mb-lg-15 alert alert-danger'>
+                        <div className='alert-text font-weight-bold'>{errMsg}</div>
+                    </div>
+                ):""}
+
+                {/* begin::Form group Firstname */}
             <div className='fv-row mb-8'>
-                <label className='form-label fw-bolder text-dark fs-6'>Account Type</label>
-                <select data-control="select2" className="form-select"
-                        id="type" required>
+                <label className='form-label    fw-bolder text-dark fs-6'>Account Type</label>
+                <select data-control="select2" className="form-select" name="roles"
+                        id="type" required={true}>
                     <option disabled>Select a type</option>
                     {types.map((object) => {
                         return <option value={object.id} key={object.id}>{object.name}</option>;
                     })}
                 </select>
+
             </div>
 
             <div className='fv-row mb-8'>
                 <label className='form-label fw-bolder text-dark fs-6'>First name</label>
                 <input
-                    placeholder='First name'
+                    required={true}
+                    placeholder='Name'
                     type='text'
                     autoComplete='off'
                     className={clsx(
@@ -77,6 +139,7 @@ export function Registration() {
                             'is-valid': false,
                         }
                     )}
+                    name="name"
                 />
                 {false && (
                     <div className='fv-plugins-message-container'>
@@ -89,18 +152,17 @@ export function Registration() {
             {/* end::Form group */}
             <div className='fv-row mb-8'>
                 {/* begin::Form group Lastname */}
-                <label className='form-label fw-bolder text-dark fs-6'>Last name</label>
+                <label className='form-label fw-bolder text-dark fs-6'>Licence</label>
                 <input
-                    placeholder='Last name'
+                    required={true}
+                    placeholder='Licence'
+                    name='licenseNumber'
                     type='text'
                     autoComplete='off'
                     className={clsx(
                         'form-control bg-transparent',
                         {
                             'is-invalid': false,
-                        },
-                        {
-                            'is-valid': false,
                         }
                     )}
                 />
@@ -118,15 +180,14 @@ export function Registration() {
             <div className='fv-row mb-8'>
                 <label className='form-label fw-bolder text-dark fs-6'>Email</label>
                 <input
+                    required={true}
                     placeholder='Email'
                     type='email'
+                    name='email'
                     autoComplete='off'
                     className={clsx(
                         'form-control bg-transparent',
-                        {'is-invalid': false},
-                        {
-                            'is-valid': false,
-                        }
+                        {'is-invalid': false}
                     )}
                 />
                 {false && (
@@ -145,16 +206,15 @@ export function Registration() {
                     <label className='form-label fw-bolder text-dark fs-6'>Password</label>
                     <div className='position-relative mb-3'>
                         <input
+                            required={true}
                             type='password'
+                            name='password'
                             placeholder='Password'
                             autoComplete='off'
                             className={clsx(
                                 'form-control bg-transparent',
                                 {
                                     'is-invalid': false,
-                                },
-                                {
-                                    'is-valid': false,
                                 }
                             )}
                         />
@@ -192,16 +252,15 @@ export function Registration() {
                 <label className='form-label fw-bolder text-dark fs-6'>Confirm Password</label>
                 <div className="position-relative">
                     <input
+                        required={true}
                         type='password'
-                        placeholder='Password confirmation'
+                        name='confirmPassword'
+                        placeholder='confirm Password'
                         autoComplete='off'
                         className={clsx(
                             'form-control bg-transparent',
                             {
-                                'is-invalid': false,
-                            },
-                            {
-                                'is-valid': false,
+                                'is-invalid': passValidation,
                             }
                         )}
                     />
@@ -220,45 +279,16 @@ export function Registration() {
                                             </i>
                     </span>
                 </div>
-                {false && (
+                {passValidation && (
                     <div className='fv-plugins-message-container'>
                         <div className='fv-help-block'>
-                            <span role='alert'>{}</span>
+                            <span role='alert'>{"Password has miss-matched !"}</span>
                         </div>
                     </div>
                 )}
             </div>
             {/* end::Form group */}
 
-            {/* begin::Form group */}
-            <div className='fv-row mb-8'>
-                <label className='form-check form-check-inline' htmlFor='kt_login_toc_agree'>
-                    <input
-                        className='form-check-input'
-                        type='checkbox'
-                        id='kt_login_toc_agree'
-                    />
-                    <span>
-            I Accept the{' '}
-                        <a
-                            href='#'
-                            target='_blank'
-                            className='ms-1 link-primary'
-                        >
-              Terms
-            </a>
-            .
-          </span>
-                </label>
-                {false && (
-                    <div className='fv-plugins-message-container'>
-                        <div className='fv-help-block'>
-                            <span role='alert'>{}</span>
-                        </div>
-                    </div>
-                )}
-            </div>
-            {/* end::Form group */}
 
             {/* begin::Form group */}
             <div className='text-center'>

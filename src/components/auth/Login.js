@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import clsx from 'clsx'
 import {Link, Navigate, Routes, useNavigate} from 'react-router-dom'
-import {getAuth, initPasswordShowHide, setTitle} from "./AuthHelpers";
+import {getAuth, initPasswordShowHide, setAuth, setTitle, useAuth} from "./AuthHelpers";
 import {login} from "./_requests";
 import * as authHelper from "./AuthHelpers";
 
@@ -28,14 +28,19 @@ export function Login() {
         console.log("loading: ", formData)
     }, []);
 
+    const {setCurrentUser, saveAuth} = useAuth();
+
     function handleSubmit(e) {
         e.preventDefault();
         setResMessage("")
         const res = login(formData.email, formData.password)
         res.then(response => {
             // Handle the successful response here
-            authHelper.setAuth(response.data.data);
-          return navigate("/dashboard");
+            setAuth(response.data.data);
+            //saveAuth(response.data.data);
+            setCurrentUser(response.data.data)
+           navigate("/dashboard");
+           return;
 
         })
             .catch(error => {
