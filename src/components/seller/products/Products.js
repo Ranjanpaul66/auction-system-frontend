@@ -78,7 +78,7 @@ const ProductsPage = () => {
                             <th>Deposit</th>
                             <th>Highest Bid</th>
                             <th>Bid Due Date</th>
-                            <th>Bid Due Payment Date</th>
+                            <th>Bid Payment Due Date</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
