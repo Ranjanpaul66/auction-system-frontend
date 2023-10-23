@@ -35,11 +35,12 @@ const DashboardPage = () => {
             <div className="col-sm-12 col-md-3" data-kt-indicator="on">
                 <a href="#" className="card bg-body hoverable card-xl-stretch mb-xl-8">
                     <div className="card-body p-5 text-center">
-                        <KTIcon iconType="duotone" iconName="abstract-23" className="fs-3x"/>
-                        <div ref={countUpRef} className=" text-gray-900 fw-bolder fs-2 mb-2 mt-5">
-                            0
+                        <KTIcon iconType="duotone" iconName="abstract-23" className="fs-4x"/>
+                        <div className="text-gray-900 fw-bolder mb-2 mt-5">
+                            <span className="fs-2 fw-semibold text-gray-400">$</span>
+                            <span className="fs-3x" ref={countUpRef}>0</span>
                         </div>
-                        <div className="fw-bold text-gray-400">Balance</div>
+                        <div className="fs-3 fw-bold text-gray-400">Balance</div>
                     </div>
                 </a>
             </div>
@@ -48,10 +49,10 @@ const DashboardPage = () => {
                 <a href="#" className="card bg-body hoverable card-xl-stretch mb-xl-8">
                     <div className="card-body p-5 text-center">
                         <KTIcon iconType="duotone" iconName="crown" className="fs-3x"/>
-                        <div className="fetch-stats text-gray-900 fw-bolder fs-2 mb-2 mt-5">
-                            <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        <div className="fetch-stats text-gray-900 fw-bolder fs-3x mb-2 mt-5">
+                            <span className="spinner-border spinner-border-lg align-middle ms-2"></span>
                         </div>
-                        <div className="fw-bold text-gray-400">Bidding</div>
+                        <div className="fs-3 fw-bold text-gray-400">Bidding</div>
                     </div>
                 </a>
             </div>
