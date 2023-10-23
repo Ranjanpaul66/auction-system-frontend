@@ -8,15 +8,15 @@ import {SellerRoutes} from "./components/seller/SellerRoutes";
 import {MasterApp} from "./_metronic/layout/MasterApp";
 import {ComingSoon} from "./components/ComingSoon";
 import {CustomerRoutes} from "./components/customer/CustomerRoutes";
-import {getAuth, useAuth} from "./components/auth/AuthHelpers";
+import {useAuth} from "./components/auth/AuthProvider";
 
 function App() {
     const {currentUser} = useAuth();
-    function isCustomer(){
-        console.log("get Auth: ", currentUser)
 
-        return true
+    function isSeller() {
+        return currentUser.roles.find((r) => r.role === "SELLER") != null
     }
+
     return (
         <BrowserRouter>
             <Routes>
@@ -25,7 +25,7 @@ function App() {
                     <Route path='logout' element={<Logout/>}/>
                     <Route path='coming-soon' element={<ComingSoon/>}/>
                     {currentUser ? (
-                            (isCustomer() === "seller" ?
+                            (isSeller() ?
                                     <>
                                         <Route path='/*' element={<SellerRoutes/>}/>
                                         <Route index element={<Navigate to='/dashboard'/>}/>

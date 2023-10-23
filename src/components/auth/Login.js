@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react'
 import clsx from 'clsx'
 import {Link, useNavigate} from 'react-router-dom'
-import * as authHelper from "./AuthHelpers";
 import {initPasswordShowHide, setTitle} from "./AuthHelpers";
 import {login} from "./_requests";
+import {useAuth} from "./AuthProvider";
 
 
 export function Login() {
@@ -24,9 +24,9 @@ export function Login() {
         initPasswordShowHide()
 
         setTitle("Sign In")
-
-        console.log("loading: ", formData)
     }, []);
+
+    const {setCurrentUser, saveAuth} = useAuth();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -35,8 +35,8 @@ export function Login() {
         const res = login(formData.email, formData.password)
         res.then(response => {
             // Handle the successful response here
-            authHelper.setAuth(response.data.data);
-            return navigate("/dashboard");
+            saveAuth(response.data.data);
+            setCurrentUser(response.data.data)
         })
             .catch(error => {
                 // Handle the error here
@@ -54,9 +54,8 @@ export function Login() {
 
                 throw error;
             }).finally(() => {
-            setLoading(true)
+            setLoading(false)
         });
-
     }
 
 

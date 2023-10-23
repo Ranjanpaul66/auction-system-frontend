@@ -1,5 +1,3 @@
-import {createContext, useContext} from "react";
-
 const AUTH_LOCAL_STORAGE_KEY = 'oktion-auth'
 const getAuth = () => {
     if (!localStorage) {
@@ -62,24 +60,7 @@ export function setupAxios(axios) {
     )
 }
 
-const initAuthContextPropsState = {
-    auth: getAuth(),
-    saveAuth: () => {
-    },
-    currentUser: undefined,
-    setCurrentUser: () => {
-    },
-    logout: () => {
-    },
-}
-
-const AuthContext = createContext(initAuthContextPropsState)
-
-const useAuth = () => {
-    return useContext(AuthContext)
-}
-
-export {useAuth, getAuth, setAuth, removeAuth, AUTH_LOCAL_STORAGE_KEY}
+export {getAuth, setAuth, removeAuth, AUTH_LOCAL_STORAGE_KEY}
 export const setTitle = (title) => {
     document.title = `${title} - Oktion`;
 }

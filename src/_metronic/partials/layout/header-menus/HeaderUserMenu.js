@@ -2,7 +2,7 @@
 import {Link} from 'react-router-dom'
 import {Languages} from './Languages'
 import {KTIcon} from '../../../helpers'
-import {useAuth} from "../../../../components/auth/AuthHelpers";
+import {useAuth} from "../../../../components/auth/AuthProvider";
 
 const HeaderUserMenu = () => {
     const {currentUser, logout} = useAuth()
