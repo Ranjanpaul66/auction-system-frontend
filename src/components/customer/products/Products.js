@@ -96,7 +96,7 @@ const ProductsPage = () => {
                             }
 
                             return <>
-                                <div key={object.id} className="col-sm-12 col-md-4">
+                                <div key={object.id} className="col-sm-12 col-md-4 mb-5">
                                     <div className="card rounded-0 h-100" key={object.id}>
                                         <div className="card-body p-5 mb-0 pb-0">
                                             <Link className="d-block overlay" data-fslightbox="lightbox-hot-sales"
