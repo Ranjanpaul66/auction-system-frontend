@@ -14,6 +14,7 @@ export function Registration() {
     const [errMsg, setErrMsg] = useState("")
     const {setSuccessMessage} = useSuccessMessage();
 
+
     useEffect(() => {
         initPasswordShowHide()
         setTitle("Sign Up")

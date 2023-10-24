@@ -1,11 +1,25 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {KTIcon} from "../../../_metronic/helpers";
 import {PageTitle} from "../../../_metronic/layout/core";
 import {Link} from "react-router-dom";
+import {apiGet} from "../../common/apiService";
+import clsx from "clsx";
 
 const ProductsPage = () => {
+
+    useEffect(() => {
+
+        apiGet(`/customers/product`).then((response) => {
+            setProducts(response.data.data);
+        })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+
+    }, []);
+
     const [products, setProducts] = useState([
-        {
+        /*{
             id: 1,
             imageUrl: "https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/600x400/img-23.jpg",
             name: "25 Products Mega Bundle with 50% off discount amazing",
@@ -29,7 +43,7 @@ const ProductsPage = () => {
             price: "50,000",
             bidders: 80
         }
-    ])
+    */])
     return <>
         {/* begin::Row */}
         <div className='row g-5 g-xl-10 mb-5 mb-xl-10 justify-content-center'>
@@ -55,32 +69,38 @@ const ProductsPage = () => {
                             <div className="col-sm-12 col-md-4">
                                 <div className="card p-5 me-md-6" key={object.id}>
                                     <Link className="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                                          to="/products/show">
+                                          to={`/products/show/${object.id}`}>
                                         <div
                                             className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                                            style={{backgroundImage: `url('${object.imageUrl}')`}}>
+                                            style={{backgroundImage: `url('https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/600x400/img-23.jpg')`}}>
                                         </div>
                                     </Link>
 
                                     <div className="mt-5">
-                                        <Link to="/products/show"
+                                        <Link to={`/products/show/${object.id}`}
                                               className="fs-4 text-dark fw-bold text-hover-primary text-dark lh-base">
                                             {object.name}
                                         </Link>
 
                                         <div className="fs-5 fw-bold mt-3">
                                             <span className="text-muted">End on</span>
-                                            <span className="text-gray-700 text-hover-primary"> {object.endOn}</span>
+                                            <span
+                                                className="text-gray-700 text-hover-primary">  {new Date(object?.bidDueDate).toLocaleString()}</span>
+                                        </div>
+
+                                        <div
+                                            className={clsx('badge badge-lg mb-2', object.status === "Running" ? "badge-light-warning" : (object.status === "Closed" ? "badge-light-danger" : "badge-light-success"))}>
+                                            {object.status}
                                         </div>
 
                                         <div className="fs-6 fw-bold mt-5 d-flex flex-stack">
                                     <span className="badge fs-2 fw-bold text-dark">
-                                        <span className="fs-6 fw-semibold text-gray-400">$</span>{object.price}
+                                        <span className="fs-6 fw-semibold text-gray-400">$</span>{object?.price}
                                         <span
-                                            className="badge badge-circle badge-outline badge-primary ms-2 p-4">{object.bidders}</span>
+                                            className="badge badge-circle badge-outline badge-primary ms-2 p-4">{object?.bidders}</span>
                                     </span>
 
-                                            <Link to="/products/show" className="btn btn-sm btn-light-success">
+                                            <Link to={`/products/show/1`} className="btn btn-sm btn-light-success">
                                                 Bid Now
                                             </Link>
                                         </div>
@@ -91,36 +111,6 @@ const ProductsPage = () => {
                     })}
                 </div>
             </div>
-            <ul className="pagination pagination-circle pagination-outline">
-                <li className="page-item first disabled m-1">
-                    <a href="#" className="page-link px-0">
-                        <i className="ki-duotone ki-double-left fs-2"><span className="path1"></span><span
-                            className="path2"></span></i>
-                    </a>
-                </li>
-                <li className="page-item previous disabled m-1">
-                    <a href="#" className="page-link px-0">
-                        <i className="ki-duotone ki-left fs-2"></i>
-                    </a>
-                </li>
-                <li className="page-item m-1 active"><a href="#" className="page-link">1</a></li>
-                <li className="page-item m-1"><a href="#" className="page-link">2</a></li>
-                <li className="page-item m-1"><a href="#" className="page-link">3</a></li>
-                <li className="page-item m-1"><a href="#" className="page-link">4</a></li>
-                <li className="page-item m-1"><a href="#" className="page-link">5</a></li>
-                <li className="page-item m-1"><a href="#" className="page-link">6</a></li>
-                <li className="page-item next m-1">
-                    <a href="#" className="page-link px-0">
-                        <i className="ki-duotone ki-right fs-2"></i>
-                    </a>
-                </li>
-                <li className="page-item last m-1">
-                    <a href="#" className="page-link px-0">
-                        <i className="ki-duotone ki-double-right fs-2"><span className="path1"></span><span
-                            className="path2"></span></i>
-                    </a>
-                </li>
-            </ul>
         </div>
         {/* end::Row */}
     </>

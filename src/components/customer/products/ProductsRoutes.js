@@ -7,7 +7,7 @@ const ProductsRoutes = () => (
     <Routes>
         <Route>
             <Route path='' element={<Products/>}/>
-            <Route path='show' element={<ShowProduct/>}/>
+            <Route path='show/:id' element={<ShowProduct/>}/>
             <Route index element={<Products/>}/>
         </Route>
     </Routes>
