@@ -52,17 +52,15 @@ const AddProductPage = () => {
 
         const formData = serialize(document.querySelector('#add-product-form'), {hash: true});
         formData.status = status
-        console.log(formData)
         addProduct(formData).then((res) => {
-            console.log(res)
-
             imagesRef.current.files.forEach((file) => {
-                addUploadImage(res.data.data.id, {"file": file}).then((res) => {
-                    console.log(res)
+                const fileFomData = new FormData()
+                fileFomData.append("file", file)
+                addUploadImage(res.data.data.id, fileFomData).then((res) => {
                 })
             })
-
-            navigate("/products")
+            //
+            // navigate("/products")
         }).finally(() => {
             setLoading(false)
         })
