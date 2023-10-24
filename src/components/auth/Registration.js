@@ -4,7 +4,6 @@ import {Link, useNavigate} from 'react-router-dom'
 import {initPasswordShowHide, setTitle} from "./AuthHelpers";
 
 import {apiPost} from "../common/apiService";
-import SuccessMessage from "../common/SuccessMessage";
 import {useSuccessMessage} from "./AuthProvider";
 
 
@@ -13,7 +12,7 @@ export function Registration() {
     const [loading, setLoading] = useState(false)
     const [passValidation, setPassValidation] = useState(false)
     const [errMsg, setErrMsg] = useState("")
-    const { setSuccessMessage } = useSuccessMessage();
+    const {setSuccessMessage} = useSuccessMessage();
 
     useEffect(() => {
         initPasswordShowHide()
@@ -35,7 +34,7 @@ export function Registration() {
         window.$("#type").select2();
     }, [])
 
-    function clearAll(){
+    function clearAll() {
         setErrMsg("");
         setPassValidation(false)
     }
@@ -47,16 +46,16 @@ export function Registration() {
         const formData = new FormData(e.target);
         const formDataObj = Object.fromEntries(formData.entries())
 
-        if(formDataObj?.password!==formDataObj?.confirmPassword){
+        if (formDataObj?.password !== formDataObj?.confirmPassword) {
             console.log("confirm password has matched ")
             setPassValidation(true);
             return
         }
 
-        formDataObj.roles= [formDataObj["roles"]]
+        formDataObj.roles = [formDataObj["roles"]]
         delete formDataObj.confirmPassword;
 
-        apiPost('/users/register',formDataObj )
+        apiPost('/users/register', formDataObj)
             .then((response) => {
                 console.log("Success")
                 setLoading(false)
@@ -65,7 +64,7 @@ export function Registration() {
                 // SuccessMessage("Registration Successfully Done!")
 
 
-            }) .catch(error => {
+            }).catch(error => {
             setLoading(false);
 
             // Handle the error here
@@ -110,13 +109,13 @@ export function Registration() {
             </div>
             {/* end::Heading */}
 
-            {errMsg!=="" ? (
-                    <div className='mb-lg-15 alert alert-danger'>
-                        <div className='alert-text font-weight-bold'>{errMsg}</div>
-                    </div>
-                ):""}
+            {errMsg !== "" ? (
+                <div className='mb-lg-15 alert alert-danger'>
+                    <div className='alert-text font-weight-bold'>{errMsg}</div>
+                </div>
+            ) : ""}
 
-                {/* begin::Form group Firstname */}
+            {/* begin::Form group Firstname */}
             <div className='fv-row mb-8'>
                 <label className='form-label    fw-bolder text-dark fs-6'>Account Type</label>
                 <select data-control="select2" className="form-select" name="roles"

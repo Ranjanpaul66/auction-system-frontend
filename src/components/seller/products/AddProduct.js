@@ -42,7 +42,7 @@ const AddProductPage = () => {
     }
 
     function submitForRelease() {
-        status = "Release"
+        status = "Running"
         submitRef.current.click();
     }
 
