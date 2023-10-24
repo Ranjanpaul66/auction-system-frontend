@@ -1,23 +1,28 @@
 import {PageTitle} from "../../../_metronic/layout/core";
 import {KTIcon} from "../../../_metronic/helpers";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {addProduct, addUploadImage, fetchCategories} from "../_requests";
 import serialize from "form-serialize";
+import {apiGet} from "../../common/apiService";
 
 const EditProductPage = () => {
+    console.log("edit page of product")
     const navigate = useNavigate()
     const formRef = useRef();
     const imagesRef = useRef();
     const submitRef = useRef();
     const [categories, setCategories] = useState([])
     const [loading, setLoading] = useState(false)
+    const {id} = useParams();
 
     let status = "Saved"
+    const [formData, setFormData] = useState({});
 
     useEffect(() => {
         window.$(".date-time").flatpickr({
             enableTime: true,
+            defaultDate: "05/14/2019 14:25",
             altInput: true,
             time_24hr: true,
             minDate: 'today',
@@ -25,7 +30,6 @@ const EditProductPage = () => {
             altFormat: "l, d F H:i K",
             dateFormat: "Z",
         });
-
         window.$("#categories").select2({
             placeholder: 'Select categories'
         });
@@ -34,10 +38,28 @@ const EditProductPage = () => {
 
     }, []);
 
+    useEffect(() => {
+        apiGet(`/products/${id}`).then((response) => {
+            setFormData(response.data.data);
+
+        })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+
+    }, [])
+    const handleChange = (event) => {
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value,
+        });
+    };
+
     async function getCategories() {
         status = "Saved"
         fetchCategories().then((res) => {
             setCategories(res.data.data);
+
         })
     }
 
@@ -89,14 +111,16 @@ const EditProductPage = () => {
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="name">Name</label>
                                 <input disabled={loading} type="text" name="name" className="form-control" id="name"
-                                       placeholder="Name"
+                                       placeholder="Name" value={formData.name}
+                                       onChange={handleChange}
                                        required/>
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="description">Description</label>
                                 <textarea disabled={loading} name="description" id="description"
-                                          className="form-control"
+                                          value={formData.description}
+                                          onChange={handleChange} className="form-control"
                                           placeholder="Description" rows='5' required></textarea>
                             </div>
 
@@ -115,7 +139,8 @@ const EditProductPage = () => {
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Start Price</label>
                                 <input disabled={loading} name="bidStartingPrice" min="1" type="number"
-                                       className="form-control" id="name"
+                                       className="form-control" id="name" value={formData.bidStartingPrice}
+                                       onChange={handleChange}
                                        placeholder="Bid Start Price"
                                        required/>
                             </div>
@@ -123,14 +148,15 @@ const EditProductPage = () => {
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Deposit Amount</label>
                                 <input disabled={loading} name="deposit" min="1" type="number" className="form-control"
-                                       id="name"
+                                       id="name" value={formData.deposit} onChange={handleChange}
                                        placeholder="Bid Deposit Amount" required/>
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
                                 <label htmlFor="bid_due_date" className="fs-5 fw-bold mb-2">Bid Due Date</label>
                                 <input disabled={loading} name="bidDueDate" className="form-control date-time"
-                                       placeholder="Pick a date"
+
+                                       placeholder="Pick a date" value={formData.bidDueDate} onChange={handleChange}
                                        id="bid_due_date"/>
                             </div>
 
@@ -139,11 +165,12 @@ const EditProductPage = () => {
                                     Date</label>
                                 <input disabled={loading} name="biddingPaymentDueDate"
                                        className="form-control date-time"
-                                       placeholder="Pick a date"
+                                       placeholder="Pick a date" value={formData.biddingPaymentDueDate}
+                                       onChange={handleChange}
                                        id="bid_payment_due_date" required/>
                             </div>
 
-                            <div className="col-md-12 fv-row mb-5">
+                            {/*                            <div className="col-md-12 fv-row mb-5">
                                 <label htmlFor="images" className="fs-5 fw-bold mb-2">
                                     Images
                                 </label>
@@ -151,7 +178,7 @@ const EditProductPage = () => {
                                        type="file" id="images"
                                        multiple
                                        required/>
-                            </div>
+                            </div>*/}
 
                             <button ref={submitRef} type="submit" className="btn btn-light-dark mt-3">
                                 {!loading && <span className='indicator-label'>Submit</span>}
@@ -197,7 +224,7 @@ const EditProduct = () => {
     ]
     return (
         <>
-            <PageTitle breadcrumbs={breadcrumbs}>Add Product</PageTitle>
+            <PageTitle breadcrumbs={breadcrumbs}>Edit Product</PageTitle>
             <EditProductPage/>
         </>
     )
