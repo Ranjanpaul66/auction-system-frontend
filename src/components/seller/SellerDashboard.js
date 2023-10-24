@@ -3,7 +3,7 @@ import {PageTitle} from "../../_metronic/layout/core";
 import {KTIcon} from "../../_metronic/helpers";
 import {useEffect, useRef, useState} from "react";
 import {apiGet} from "../common/apiService";
-import data from "bootstrap/js/src/dom/data";
+import {DASHBOARD_URL} from "../common/apiUrl";
 
 const DashboardPage = () => {
     const countUpRef = useRef(null);
@@ -13,7 +13,7 @@ const DashboardPage = () => {
     useEffect(() => {
         initCountUp(0);
 
-        apiGet("/users/dashboard").then((response) => {
+        apiGet(DASHBOARD_URL).then((response) => {
             console.log("res: ", response.data.data)
             setDashboardData(response.data.data);
             countUpAnim.update(response.data.data.balance)
@@ -53,7 +53,8 @@ const DashboardPage = () => {
                     <div className="card-body p-5 text-center">
                         <KTIcon iconType="duotone" iconName="crown" className="fs-4x"/>
                         <div className="fetch-stats text-gray-900 fw-bolder fs-3x mb-2 mt-5">
-                            {dashboardData ? dashboardData.totalNumberOfProduct : <span className="spinner-border spinner-border-lg align-middle ms-2"></span>}
+                            {dashboardData ? dashboardData.totalNumberOfProduct :
+                                <span className="spinner-border spinner-border-lg align-middle ms-2"></span>}
                         </div>
                         <div className="fs-3 fw-bold text-gray-400">Products</div>
                     </div>

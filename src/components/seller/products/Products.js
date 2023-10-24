@@ -4,21 +4,46 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import clsx from "clsx";
 import {apiGet} from "../../common/apiService";
+import {PRODUCTS_URL} from "../../common/apiUrl";
 
 const ProductsPage = () => {
     const [products, setProducts] = useState([])
-
+    const [loading, setLoading] = useState(false)
+    const [isFiltering, setIsFiltering] = useState(false)
+    const [search, setSearch] = useState("")
 
     useEffect(() => {
-        apiGet("/products").then((response) => {
-            setProducts(response.data.data);
-        })
+        fetchProducts()
+    }, []);
+
+    function releaseProduct(object) {
+    }
+
+    useEffect(() => {
+        fetchProducts(search)
+    }, [search])
+
+    function fetchProducts(text) {
+        let url = PRODUCTS_URL;
+        if (text && text.trim() !== "") {
+            url += `?search=${text}`
+            setIsFiltering(true)
+        }
+        setLoading(true)
+        apiGet(url)
+            .then((response) => {
+                console.log(text, response.data.data)
+                if (response.data.data.length > 0) {
+                    setProducts(response.data.data);
+                }
+            })
             .catch((error) => {
                 console.error('Error fetching data:', error);
-            });
-
-    }, []);
-    
+            }).finally(() => {
+            setLoading(false)
+            setIsFiltering(false)
+        });
+    }
 
     return <>
         {/* begin::Row */}
@@ -27,10 +52,28 @@ const ProductsPage = () => {
                 <div className="card-header border-0 pt-6">
                     <div className="card-title">
                         <div className="d-flex align-items-center position-relative my-1">
-                            <KTIcon iconType="duotone" iconName="magnifier" className="position-absolute ms-6 fs-2"/>
-                            <input type="text" id="data-kt-docs-table-filter-search" data-kt-docs-table-filter="search"
-                                   className="form-control border-2 w-250px ps-14"
-                                   placeholder="Search product"/>
+                            {loading && isFiltering ?
+                                <span className='indicator-progress position-absolute ms-3'
+                                      style={{display: 'block'}}>
+                                    <span
+                                        className={clsx('spinner-border spinner-border-lg align-middle ms-2')}></span>
+                                </span>
+                                :
+                                <KTIcon iconType="duotone" iconName="magnifier"
+                                        className="position-absolute ms-6 fs-1"/>
+                            }
+
+                            <input onChange={(event) => {
+                                setSearch(event.target.value)
+                            }} type="text" id="data-kt-docs-table-filter-search" data-kt-docs-table-filter="search"
+                                   className="form-control form-control-lg border-2 w-450px ps-14"
+                                   placeholder="Search a product" value={search}/>
+                            <span onClick={() => {
+                                setSearch("")
+                            }}
+                                  className={clsx("btn btn-flush btn-active-color-primary position-absolute top-50 end-0 translate-middle-y lh-0 me-5", search.trim() === "" && "d-none")}>
+                                    <KTIcon iconType="duotone" iconName="cross-circle" className="fs-1"/>
+                            </span>
                         </div>
                     </div>
                     <div className="card-toolbar">
@@ -49,37 +92,51 @@ const ProductsPage = () => {
                         <thead>
                         <tr className="text-start text-gray-900 fw-bolder fs-7 text-uppercase gs-0 ">
                             <th style={{width: '30%'}}>Name</th>
-                            <th>Status</th>
-                            <th>Bid Start Price</th>
-                            <th>Deposit</th>
-                            <th>Highest Bid</th>
+                            <th className="text-center">Status</th>
+                            <th className="text-center">Bid Start Price</th>
+                            <th className="text-center">Deposit</th>
+                            <th className="text-center">Highest Bid</th>
                             <th>Bid Due Date</th>
                             <th>Bid Payment Due Date</th>
-                            <th>Actions</th>
+                            <th className="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody className="text-gray-800 fw-bold">
                         {products.map((object) => {
+                            function statusBadgeColor() {
+                                switch (object.status) {
+                                    case "Running":
+                                        return "badge-light-warning"
+                                    case "Closed":
+                                        return "badge-light-danger"
+                                    case "Sold":
+                                        return "badge-light-success"
+                                    default:
+                                        return "badge-light-info"
+                                }
+                            }
+
                             return <>
-                                <tr className="">
+                                <tr className="" key={object.id}>
                                     <td>
                                         <div className="d-flex align-items-center">
-                                            <a href="#" className="symbol symbol-50px">
-                                        <span className="symbol-label"
-                                              style={{backgroundImage: `url(${object.imageUrl})`}}></span>
-                                            </a>
+                                            <Link to={`/products/${object.id}`} className="symbol symbol-50px">
+                                                <span className="symbol-label"
+                                                      style={{backgroundImage: `url(${object.imageUrl})`}}></span>
+                                            </Link>
 
                                             <div className="ms-5">
-                                                <a href="#" className="text-gray-800 text-hover-primary fs-5 fw-bold"
-                                                   data-kt-ecommerce-product-filter="product_name">
+                                                <Link to={`/products/${object.id}`}
+                                                      className="text-gray-800 text-hover-primary fs-5 fw-bold"
+                                                      data-kt-ecommerce-product-filter="product_name">
                                                     {object.name}
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="text-center pe-0">
                                         <div
-                                            className={clsx('badge badge-lg mb-2', object.status === "Running" ? "badge-light-warning" : (object.status === "Closed" ? "badge-light-danger" : "badge-light-success"))}>
+                                            className={clsx('badge badge-lg mb-2', statusBadgeColor())}>
                                             {object.status}
                                         </div>
                                         {object.bidders > 0 &&
@@ -92,22 +149,40 @@ const ProductsPage = () => {
                                             </>}
                                     </td>
                                     <td className="text-center pe-0" data-order="23">
-                                        <span className="fs-6 fw-semibold text-gray-400">$</span>{object.bidStartingPrice}
-                                    </td>
-                                    <td className="text-center pe-0" data-order="23">
-                                        <span className="fs-6 fw-semibold text-gray-400">$</span>{object.deposit}
+                                        <span
+                                            className="fs-6 fw-semibold text-gray-400">$</span>{object.bidStartingPrice.toLocaleString('en-US')}
                                     </td>
                                     <td className="text-center pe-0" data-order="23">
                                         <span
-                                            className="fs-6 fw-semibold text-gray-400">$</span>{object.highestBidAmount}
+                                            className="fs-6 fw-semibold text-gray-400">$</span>{object.deposit.toLocaleString('en-US')}
+                                    </td>
+                                    <td className="text-center pe-0" data-order="23">
+                                        {object.highestBidAmount > 0 ?
+                                            <><span
+                                                className="fs-6 fw-semibold text-gray-400">$</span>{object.highestBidAmount.toLocaleString('en-US')}
+                                            </> : "-"}
                                     </td>
                                     <td className="pe-0">
                                         {/*{object.bidDueDate }*/}
-                                        {new Date(object.bidDueDate).toLocaleString()}
+                                        {new Date(object.bidDueDate).toLocaleString('en-us', {
+                                            weekday: "long",
+                                            year: "numeric",
+                                            month: "short",
+                                            day: "numeric",
+                                            hour: "numeric",
+                                            minute: "numeric",
+                                        })}
                                     </td>
                                     <td className="pe-0">
                                         {/*{object.biddingPaymentDueDate}*/}
-                                        {new Date(object.biddingPaymentDueDate).toLocaleString()}
+                                        {new Date(object.biddingPaymentDueDate).toLocaleString('en-us', {
+                                            weekday: "long",
+                                            year: "numeric",
+                                            month: "short",
+                                            day: "numeric",
+                                            hour: "numeric",
+                                            minute: "numeric",
+                                        })}
 
                                     </td>
                                     <td className="text-end">
@@ -120,32 +195,75 @@ const ProductsPage = () => {
                                         <div
                                             className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
                                             data-kt-menu="true">
-                                            <div className="menu-item px-3">
-                                                <a href="#" className="menu-link px-3">
-                                                    Edit
-                                                </a>
-                                            </div>
+                                            {
+                                                object.status === "Saved" &&
+                                                <div className="menu-item px-3">
+                                                    <Link to={`/products/${object.id}/edit`} className="menu-link px-3">
+                                                        Edit
+                                                    </Link>
+                                                </div>
+                                            }
 
                                             <div className="menu-item px-3">
-                                                <a href="#" className="menu-link px-3">
+                                                <Link to={`/products/${object.id}`} className="menu-link px-3">
                                                     View
-                                                </a>
+                                                </Link>
                                             </div>
 
-                                            <div className="menu-item px-3">
-                                                <a href="#" className="menu-link px-3">
-                                                    Release
-                                                </a>
-                                            </div>
+                                            {
+                                                object.status === "Saved" &&
+                                                <div className="menu-item px-3">
+                                                    <span onClick={releaseProduct(object)} className="menu-link px-3">
+                                                        Release
+                                                    </span>
+                                                </div>
+                                            }
                                         </div>
                                     </td>
                                 </tr>
                             </>
                         })}
-
                         </tbody>
                     </table>
 
+                    <div className="row">
+                        <div
+                            className="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                        </div>
+                        <div
+                            className="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                            <div className="dataTables_paginate paging_simple_numbers"
+                                 id="kt_ecommerce_products_table_paginate">
+                                <ul className="pagination">
+                                    <li key="1" className="paginate_button page-item previous disabled"
+                                        id="kt_ecommerce_products_table_previous">
+                                        <a href="#"
+                                           aria-controls="kt_ecommerce_products_table"
+                                           data-dt-idx="0" tabIndex="0"
+                                           className="page-link"><i
+                                            className="previous"></i>
+                                        </a>
+                                    </li>
+                                    <li key="2" className="paginate_button page-item active">
+                                        <a href="#"
+                                           aria-controls="kt_ecommerce_products_table"
+                                           data-dt-idx="1" tabIndex="0"
+                                           className="page-link">1
+                                        </a>
+                                    </li>
+                                    <li key="3" className="paginate_button page-item next disabled"
+                                        id="kt_ecommerce_products_table_next">
+                                        <a href="#"
+                                           aria-controls="kt_ecommerce_products_table"
+                                           data-dt-idx="6" tabIndex="0"
+                                           className="page-link">
+                                            <i className="next"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

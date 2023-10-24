@@ -13,12 +13,9 @@ const Footer = () => {
         <span className='text-muted fw-semibold me-1'>
           2023 &copy;
         </span>
-                <a
-                    href='#'
-                    className='text-gray-800 text-hover-primary'
-                >
-                    Team WAA
-                </a>
+                <span className='text-gray-800 text-hover-primary'>
+                    Team Five String
+                </span>
             </div>
         </>
     )
