@@ -16,5 +16,9 @@ export const apiPost = (url, data) => {
     return axiosInstance.post(url, data);
 };
 
+export const apiPut = (url, data) => {
+    return axiosInstance.put(url, data);
+};
+
 // You can add more functions for other HTTP methods (PUT, DELETE, etc.) as needed
 export default axiosInstance;

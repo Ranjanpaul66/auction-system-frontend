@@ -5,12 +5,15 @@ import {useEffect, useState} from "react";
 import clsx from "clsx";
 import {apiGet} from "../../common/apiService";
 import {PRODUCTS_URL} from "../../common/apiUrl";
+import {useSuccessMessage} from "../../auth/AuthProvider";
 
 const ProductsPage = () => {
+    const {messageSuccess} = useSuccessMessage();
+
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
     const [isFiltering, setIsFiltering] = useState(false)
-    const [search, setSearch] = useState("")
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         fetchProducts()
@@ -47,6 +50,11 @@ const ProductsPage = () => {
 
     return <>
         {/* begin::Row */}
+        {messageSuccess ? (
+            <div className='mb-lg-15 alert alert-success'>
+                <div className='alert-text font-weight-bold'>{messageSuccess}</div>
+            </div>
+        ) : ""}
         <div className='row g-5 g-xl-10 mb-5 mb-xl-10 justify-content-center'>
             <div className="card">
                 <div className="card-header border-0 pt-6">
