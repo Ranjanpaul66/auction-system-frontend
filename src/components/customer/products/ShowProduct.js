@@ -1,11 +1,12 @@
 import {PageTitle} from "../../../_metronic/layout/core";
 import {useEffect, useRef, useState} from "react";
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import "@pqina/flip/dist/flip.min.css";
 import CountDown from "../../CountDown";
 import clsx from "clsx";
 import {KTIcon} from "../../../_metronic/helpers";
 import {apiGet, apiPost} from "../../common/apiService";
+import {useSuccessMessage} from "../../auth/AuthProvider";
 
 const ShowProductPage = () => {
     const {id} = useParams();
@@ -25,6 +26,9 @@ const ShowProductPage = () => {
     const [biddersAnim, setBiddersAnim] = useState()
 
     const [bidders, setBidders] = useState([]);
+    const {setSuccessMessage} = useSuccessMessage();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         initHighestBidAmountCountUp()
@@ -79,6 +83,19 @@ const ShowProductPage = () => {
         } else {
             setBidAmount(500)
         }
+    }
+
+    function handleFullPayment() {
+
+        apiPost("/bidding/full-payment", {id: id}).then((response) => {
+            console.log("Success ", id)
+            setLoading(false)
+            setSuccessMessage("Payment Successfully Done!")
+            navigate('/products');
+        }).catch(error => {
+            setLoading(false);
+        });
+
     }
 
     function decreaseBidAmount() {
@@ -138,7 +155,6 @@ const ShowProductPage = () => {
             setBidders(bidUserNames)
         }
     }, [bidding]);
-
     useEffect(() => {
         updateBiddersCounter()
     }, [bidders]);
@@ -403,8 +419,20 @@ const ShowProductPage = () => {
             </div>
 
             <div className="col-sm-12 col-md-5 mt-5">
+
                 <div className="card mb-5">
+
                     <div className="card-body">
+                        {product.status === "Sold" && <button onClick={handleFullPayment} type="submit"
+                                                              className="btn btn-warning btn-lg rounded-0 mt-5 col-md-12">
+                            {!loading && <span className='indicator-label'>Full Payment</span>}
+                            {loading && (
+                                <span className='indicator-progress' style={{display: 'block'}}>
+                                        Submitting...
+                                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                                    </span>
+                            )}
+                        </button>}
                         <h1 className={clsx("text-center fs-4x mb-4", statusTextColor())}>
                             {product && product.status}
                         </h1>
