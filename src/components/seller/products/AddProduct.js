@@ -111,6 +111,14 @@ const AddProductPage = () => {
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
+                                <label className="fs-5 fw-bold mb-2" htmlFor="name">Price</label>
+                                <input disabled={loading} name="price" min="1" type="number"
+                                       className="form-control" id="name"
+                                       placeholder="Price"
+                                       required/>
+                            </div>
+
+                            <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Start Price</label>
                                 <input disabled={loading} name="bidStartingPrice" min="1" type="number"
                                        className="form-control" id="name"
@@ -119,10 +127,18 @@ const AddProductPage = () => {
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
-                                <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Deposit Amount</label>
-                                <input disabled={loading} name="deposit" min="1" type="number" className="form-control"
-                                       id="name"
-                                       placeholder="Bid Deposit Amount" required/>
+                                <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Deposit Percent</label>
+                                <div className="input-group">
+                                    <input disabled={loading} name="deposit" min="1" type="number"
+                                           className="form-control"
+                                           id="name"
+                                           placeholder="Bid Deposit Percent" required/>
+                                    <span className="input-group-text">
+                                        <span className="text-dark">
+                                            %
+                                        </span>
+                                    </span>
+                                </div>
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
