@@ -4,7 +4,6 @@ import {Link, useNavigate} from 'react-router-dom'
 import {initPasswordShowHide, setTitle} from "./AuthHelpers";
 
 import {apiPost} from "../common/apiService";
-import SuccessMessage from "../common/SuccessMessage";
 import {useSuccessMessage} from "./AuthProvider";
 
 
@@ -14,6 +13,7 @@ export function Registration() {
     const [passValidation, setPassValidation] = useState(false)
     const [errMsg, setErrMsg] = useState("")
     const { setSuccessMessage } = useSuccessMessage();
+
 
     useEffect(() => {
         initPasswordShowHide()
