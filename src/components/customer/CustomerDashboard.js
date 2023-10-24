@@ -3,6 +3,7 @@ import {PageTitle} from "../../_metronic/layout/core";
 import {KTIcon} from "../../_metronic/helpers";
 import {useEffect, useRef, useState} from "react";
 import {apiGet} from "../common/apiService";
+import {DASHBOARD_URL} from "../common/apiUrl";
 
 const DashboardPage = () => {
     const countUpRef = useRef(null);
@@ -12,7 +13,7 @@ const DashboardPage = () => {
     useEffect(() => {
         initCountUp(0);
 
-        apiGet("/users/dashboard").then((response) => {
+        apiGet(DASHBOARD_URL).then((response) => {
             console.log("res: ", response.data.data)
             setDashboardData(response.data.data);
             countUpAnim.update(response.data.data.balance)

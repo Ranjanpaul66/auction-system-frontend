@@ -1,15 +1,13 @@
-import axios from 'axios'
-import {LOGIN_URL, REGISTER_URL} from "../apiUrl";
+import {LOGIN_URL, REGISTER_URL} from "../common/apiUrl";
+import {apiPost} from "../common/apiService";
 
-// Server should return AuthModel
 export function login(email, password) {
-    return axios.post(LOGIN_URL, {
+    return apiPost(LOGIN_URL, {
         email,
         password,
     })
 }
 
-// Server should return AuthModel
 export function register(
     email,
     firstname,
@@ -17,7 +15,7 @@ export function register(
     password,
     password_confirmation
 ) {
-    return axios.post(REGISTER_URL, {
+    return apiPost(REGISTER_URL, {
         email,
         first_name: firstname,
         last_name: lastname,

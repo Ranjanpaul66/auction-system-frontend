@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import clsx from "clsx";
 import {apiGet} from "../../common/apiService";
-import {PRODUCTS_URL} from "../../apiUrl";
+import {PRODUCTS_URL} from "../../common/apiUrl";
 
 const ProductsPage = () => {
     const [products, setProducts] = useState([])
