@@ -1,25 +1,28 @@
 import {PageTitle} from "../../../_metronic/layout/core";
 import {useEffect, useRef, useState} from "react";
+import {Link, useParams} from 'react-router-dom';
 import "@pqina/flip/dist/flip.min.css";
 import CountDown from "../../CountDown";
 import clsx from "clsx";
 import {KTIcon} from "../../../_metronic/helpers";
-import {Link} from "react-router-dom";
+import {apiGet} from "../../common/apiService";
 
 const ShowProductPage = () => {
-    const [product, setProduct] = useState({
-        id: 1,
-        status: "Running",
-        imageUrl: "https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/600x400/img-23.jpg",
-        name: "25 Products Mega Bundle with 50% off discount amazing",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        endOn: "Saturday, 21 October 2023",
-        paymentEndOn: "Monday, 25 October 2023",
-        price: "28,400",
-        deposit: "8,400",
-        highestBidAmount: "120,000",
-        bidders: 10
-    });
+    const {id} = useParams();
+
+    useEffect(() => {
+
+        apiGet(`/products/${id}`).then((response) => {
+            setProduct(response.data.data);
+        })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+
+    }, []);
+
+
+    const [product, setProduct] = useState({});
 
     const [bidding, setBidding] = useState([
         {
@@ -108,7 +111,7 @@ const ShowProductPage = () => {
                            href="#">
                             <div
                                 className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-250px"
-                                style={{backgroundImage: `url('${product.imageUrl}')`}}>
+                                style={{backgroundImage: `url("https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/600x400/img-23.jpg")`}}>
                             </div>
                         </a>
 
@@ -127,7 +130,7 @@ const ShowProductPage = () => {
                                 <h6 className="fs-4 text-muted">Price</h6>
                                 <p>
                                     <span className="fs-5 fw-semibold text-gray-400">$</span>
-                                    <span className="fs-1 fw-bold">{product.price}</span>
+                                    <span className="fs-1 fw-bold">{product.bidStartingPrice}</span>
                                 </p>
                             </div>
 
@@ -156,12 +159,12 @@ const ShowProductPage = () => {
 
                             <div className="col-md-12 mt-5">
                                 <h6 className="fs-4 text-muted">Bid Due Date</h6>
-                                <p className="fs-3">{product.endOn}</p>
+                                <p className="fs-3">{product.bidDueDate}</p>
                             </div>
 
                             <div className="col-md-12 mt-5">
                                 <h6 className="fs-4 text-muted">Bid Payment Due Date</h6>
-                                <p className="fs-3">{product.endOn}</p>
+                                <p className="fs-3">{product.biddingPaymentDueDate}</p>
                             </div>
                         </div>
 
