@@ -1,10 +1,9 @@
 import {useEffect, useState} from 'react'
 import clsx from 'clsx'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {initPasswordShowHide, setTitle} from "./AuthHelpers";
 import {login} from "./_requests";
 import {useAuth, useSuccessMessage} from "./AuthProvider";
-import SuccessMessage from "../common/SuccessMessage";
 
 
 export function Login() {
