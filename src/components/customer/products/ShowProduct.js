@@ -6,6 +6,7 @@ import CountDown from "../../CountDown";
 import clsx from "clsx";
 import {KTIcon} from "../../../_metronic/helpers";
 import {apiGet, apiPost} from "../../common/apiService";
+import {API_URL} from "../../common/apiUrl";
 
 const ShowProductPage = () => {
     const {id} = useParams();
@@ -198,9 +199,28 @@ const ShowProductPage = () => {
                     <div className="card-body p-0">
                         <a className="d-block overlay" data-fslightbox="lightbox-hot-sales"
                            href="#">
-                            <div
-                                className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-250px"
-                                style={{backgroundImage: `url("https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/600x400/img-23.jpg")`}}>
+                            <div id="kt_carousel_1_carousel" className="carousel carousel-custom slide"
+                                 data-bs-ride="carousel" data-bs-interval="8000">
+                                <div className="d-flex align-items-center justify-content-between flex-wrap">
+                                    <span className="fs-4 fw-bold pe-2"></span>
+                                    <ol className="p-0 m-0 carousel-indicators carousel-indicators-dots">
+                                        {product.images && product.images.map((image, index) => {
+                                            return <li data-bs-target="#kt_carousel_1_carousel" data-bs-slide-to={index}
+                                                       className={clsx("ms-1", index === 0 && "active")}></li>
+                                        })}
+                                    </ol>
+                                </div>
+
+                                <div className="carousel-inner">
+                                    {product.images && product.images.map((image, index) => {
+                                        return <div className={clsx("carousel-item", index === 0 && "active")}>
+                                            <div
+                                                className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-250px"
+                                                style={{backgroundImage: `url("${API_URL}/products/images/${image.path}")`}}>
+                                            </div>
+                                        </div>
+                                    })}
+                                </div>
                             </div>
                         </a>
 

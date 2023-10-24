@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import clsx from "clsx";
 import {apiGet} from "../../common/apiService";
-import {PRODUCTS_URL} from "../../common/apiUrl";
+import {API_URL, PRODUCTS_URL} from "../../common/apiUrl";
 
 const ProductsPage = () => {
     const [products, setProducts] = useState([])
@@ -121,8 +121,10 @@ const ProductsPage = () => {
                                     <td>
                                         <div className="d-flex align-items-center">
                                             <Link to={`/products/${object.id}`} className="symbol symbol-50px">
-                                                <span className="symbol-label"
-                                                      style={{backgroundImage: `url(${object.imageUrl})`}}></span>
+                                                {object.images.length > 0 ?
+                                                    <span className="symbol-label"
+                                                          style={{backgroundImage: `url("${API_URL}/products/images/${object.images[0].path}")`}}></span> :
+                                                    <span className="symbol-label">{object.name[0]}</span>}
                                             </Link>
 
                                             <div className="ms-5">

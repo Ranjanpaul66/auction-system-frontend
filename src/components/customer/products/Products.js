@@ -4,7 +4,7 @@ import {PageTitle} from "../../../_metronic/layout/core";
 import {Link} from "react-router-dom";
 import {apiGet} from "../../common/apiService";
 import clsx from "clsx";
-import {CUSTOMER_PRODUCTS_URL} from "../../common/apiUrl";
+import {API_URL, CUSTOMER_PRODUCTS_URL} from "../../common/apiUrl";
 import timeAgo from "../../common/timeAgo";
 
 const ProductsPage = () => {
@@ -101,10 +101,12 @@ const ProductsPage = () => {
                                         <div className="card-body p-5 mb-0 pb-0">
                                             <Link className="d-block overlay" data-fslightbox="lightbox-hot-sales"
                                                   to={`/products/show/${object.id}`}>
-                                                <div
-                                                    className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                                                    style={{backgroundImage: `url('https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/600x400/img-23.jpg')`}}>
-                                                </div>
+
+                                                {object.images &&
+                                                    <div
+                                                        className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
+                                                        style={{backgroundImage: `url("${API_URL}/products/images/${object.images[0].path}")`}}>
+                                                    </div>}
                                             </Link>
 
                                             <div className="mt-5">
