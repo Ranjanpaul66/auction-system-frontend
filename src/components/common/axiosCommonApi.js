@@ -1,12 +1,13 @@
 // api.js
 
 import axios from 'axios';
-import {API_URL} from "../auth/_requests";
+import {API_URL} from "../apiUrl";
+import {setupAxios} from "../auth/AuthHelpers";
 
 const axiosInstance = axios.create({
-    baseURL: API_URL, // Replace with your API base URL
+    baseURL: API_URL
 });
 
-// You can set default headers or interceptors here if needed
 
+setupAxios(axiosInstance);
 export default axiosInstance;

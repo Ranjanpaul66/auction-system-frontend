@@ -3,11 +3,12 @@ import clsx from 'clsx'
 import {Link, useNavigate} from 'react-router-dom'
 import {initPasswordShowHide, setTitle} from "./AuthHelpers";
 import {login} from "./_requests";
-import {useAuth} from "./AuthProvider";
+import {useAuth, useSuccessMessage} from "./AuthProvider";
+import SuccessMessage from "../common/SuccessMessage";
 
 
 export function Login() {
-    const navigate = useNavigate();
+    const {messageSuccess} = useSuccessMessage()
     const [loading, setLoading] = useState(false)
     const [validation, setValidation] = useState(false)
     const [validationMessage, setValidationMessage] = useState("")
@@ -18,7 +19,7 @@ export function Login() {
         email: '',
         password: ''
     });
-
+    // const {successMsg} = props;
 
     useEffect(() => {
         initPasswordShowHide()
@@ -100,6 +101,12 @@ export function Login() {
                 </div>
             </div>
             {/* begin::Heading */}
+
+            {messageSuccess ? (
+                <div className='mb-lg-15 alert alert-success'>
+                    <div className='alert-text font-weight-bold'>{messageSuccess}</div>
+                </div>
+            ):""}
 
             {/* begin::Form group */}
             <div className='fv-row mb-8'>

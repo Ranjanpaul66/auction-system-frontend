@@ -3,7 +3,9 @@ import clsx from 'clsx'
 import {Link, useNavigate} from 'react-router-dom'
 import {initPasswordShowHide, setTitle} from "./AuthHelpers";
 
-// import {apiPost} from "../common/apiService";
+import {apiPost} from "../common/apiService";
+import SuccessMessage from "../common/SuccessMessage";
+import {useSuccessMessage} from "./AuthProvider";
 
 
 export function Registration() {
@@ -11,6 +13,7 @@ export function Registration() {
     const [loading, setLoading] = useState(false)
     const [passValidation, setPassValidation] = useState(false)
     const [errMsg, setErrMsg] = useState("")
+    const { setSuccessMessage } = useSuccessMessage();
 
     useEffect(() => {
         initPasswordShowHide()
@@ -53,35 +56,38 @@ export function Registration() {
         formDataObj.roles= [formDataObj["roles"]]
         delete formDataObj.confirmPassword;
 
-        // apiPost('/users/register',formDataObj )
-        //     .then((response) => {
-        //         console.log("Success")
-        //         setLoading(false)
-        //         navigate('/auth/login');
-        //
-        //     }) .catch(error => {
-        //     setLoading(false);
-        //
-        //     // Handle the error here
-        //     if (error.response) {
-        //         // The request was made, and the server responded with a status code other than 2xx.
-        //         console.log("Response data:", error.response.data.message);
-        //         console.log("Response status:", error.response.status);
-        //         setErrMsg(error.response.data.message)
-        //         return
-        //
-        //     } else if (error.request) {
-        //         // The request was made, but no response was received.
-        //         console.log("No response received. The request was made but didn't get a response.");
-        //     } else {
-        //         // Something happened in setting up the request that triggered an error.
-        //         console.error("Error:", error.message);
-        //     }
-        //
-        //     // You can throw an error or handle it as needed.
-        //     // For example, you might return a specific error message or set some state.
-        //     throw error;
-        // })
+        apiPost('/users/register',formDataObj )
+            .then((response) => {
+                console.log("Success")
+                setLoading(false)
+                setSuccessMessage("Registration Successfully Done!")
+                navigate('/auth/login');
+                // SuccessMessage("Registration Successfully Done!")
+
+
+            }) .catch(error => {
+            setLoading(false);
+
+            // Handle the error here
+            if (error.response) {
+                // The request was made, and the server responded with a status code other than 2xx.
+                console.log("Response data:", error.response.data.message);
+                console.log("Response status:", error.response.status);
+                setErrMsg(error.response.data.message)
+                return
+
+            } else if (error.request) {
+                // The request was made, but no response was received.
+                console.log("No response received. The request was made but didn't get a response.");
+            } else {
+                // Something happened in setting up the request that triggered an error.
+                console.error("Error:", error.message);
+            }
+
+            // You can throw an error or handle it as needed.
+            // For example, you might return a specific error message or set some state.
+            throw error;
+        })
 
     }
 

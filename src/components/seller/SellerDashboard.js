@@ -1,27 +1,30 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {PageTitle} from "../../_metronic/layout/core";
 import {KTIcon} from "../../_metronic/helpers";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
+import {apiGet} from "../common/apiService";
+import data from "bootstrap/js/src/dom/data";
 
 const DashboardPage = () => {
     const countUpRef = useRef(null);
+    const [dashboardData, setDashboardData] = useState(0);
     let countUpAnim;
 
     useEffect(() => {
-        const data = ['5']
-        document.querySelectorAll(".fetch-stats")
-            .forEach((el, index) => {
-                setTimeout(() => {
-                    el.textContent = data[index];
-                }, 700)
-            })
+        initCountUp(0);
 
-        initCountUp();
-
+        apiGet("/users/dashboard").then((response) => {
+            console.log("res: ", response.data.data)
+            setDashboardData(response.data.data);
+            countUpAnim.update(response.data.data.balance)
+        })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
     }, []);
 
     async function initCountUp() {
-        countUpAnim = new window.CountUp(countUpRef.current, 100);
+        countUpAnim = new window.CountUp(countUpRef.current, 0);
         if (!countUpAnim.error) {
             countUpAnim.start();
         } else {
@@ -50,7 +53,7 @@ const DashboardPage = () => {
                     <div className="card-body p-5 text-center">
                         <KTIcon iconType="duotone" iconName="crown" className="fs-4x"/>
                         <div className="fetch-stats text-gray-900 fw-bolder fs-3x mb-2 mt-5">
-                            <span className="spinner-border spinner-border-lg align-middle ms-2"></span>
+                            {dashboardData ? dashboardData.totalNumberOfProduct : <span className="spinner-border spinner-border-lg align-middle ms-2"></span>}
                         </div>
                         <div className="fs-3 fw-bold text-gray-400">Products</div>
                     </div>

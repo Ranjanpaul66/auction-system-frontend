@@ -19,9 +19,15 @@ const useAuth = () => {
     return useContext(AuthContext)
 }
 
+export function useSuccessMessage() {
+    return useContext(AuthContext);
+}
+
 const AuthProvider = ({children}) => {
     const [auth, setAuth] = useState(authHelper.getAuth())
     const [currentUser, setCurrentUser] = useState()
+    const [messageSuccess, setSuccessMessage] = useState(null);
+
     const saveAuth = (auth) => {
         setAuth(auth)
         if (auth) {
@@ -37,7 +43,7 @@ const AuthProvider = ({children}) => {
     }
 
     return (
-        <AuthContext.Provider value={{auth, saveAuth, currentUser, setCurrentUser, logout}}>
+        <AuthContext.Provider value={{auth, saveAuth, currentUser, setCurrentUser, logout, messageSuccess, setSuccessMessage}}>
             {children}
         </AuthContext.Provider>
     )

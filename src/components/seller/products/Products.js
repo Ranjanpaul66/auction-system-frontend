@@ -1,48 +1,24 @@
 import {PageTitle} from "../../../_metronic/layout/core";
 import {KTIcon} from "../../../_metronic/helpers";
 import {Link} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import clsx from "clsx";
+import {apiGet} from "../../common/apiService";
 
 const ProductsPage = () => {
-    const [products, setProducts] = useState([
-        {
-            id: 1,
-            status: "Running",
-            imageUrl: "https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/600x400/img-23.jpg",
-            name: "25 Products Mega Bundle with 50% off discount amazing",
-            endOn: "Saturday, 21 October 2023",
-            paymentEndOn: "Monday, 25 October 2023",
-            price: "28,400",
-            deposit: "4,500",
-            highestBidAmount: "120,000",
-            bidders: 10
-        },
-        {
-            id: 2,
-            status: "Closed",
-            imageUrl: "https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/600x600/img-14.jpg",
-            name: "Admin Panel - How To Started the Dashboard Tutorial",
-            endOn: "Sunday, 25 October 2023",
-            paymentEndOn: "Tuesday, 30 October 2023",
-            price: "38,000",
-            deposit: "5,000",
-            highestBidAmount: "100,000",
-            bidders: 0
-        },
-        {
-            id: 3,
-            status: "Sold",
-            imageUrl: "https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/600x400/img-71.jpg",
-            name: "Any occasion, any time, we have everything you'll ever need.",
-            endOn: "Monday, 05 December 2023",
-            paymentEndOn: "Friday, 08 December 2023",
-            price: "50,000",
-            deposit: "10,000",
-            highestBidAmount: "70,000",
-            bidders: 80
-        }
-    ])
+    const [products, setProducts] = useState([])
+
+
+    useEffect(() => {
+        apiGet("/products").then((response) => {
+            setProducts(response.data.data);
+        })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+
+    }, []);
+    
 
     return <>
         {/* begin::Row */}
@@ -116,7 +92,7 @@ const ProductsPage = () => {
                                             </>}
                                     </td>
                                     <td className="text-center pe-0" data-order="23">
-                                        <span className="fs-6 fw-semibold text-gray-400">$</span>{object.price}
+                                        <span className="fs-6 fw-semibold text-gray-400">$</span>{object.bidStartingPrice}
                                     </td>
                                     <td className="text-center pe-0" data-order="23">
                                         <span className="fs-6 fw-semibold text-gray-400">$</span>{object.deposit}
@@ -126,10 +102,13 @@ const ProductsPage = () => {
                                             className="fs-6 fw-semibold text-gray-400">$</span>{object.highestBidAmount}
                                     </td>
                                     <td className="pe-0">
-                                        {object.endOn}
+                                        {/*{object.bidDueDate }*/}
+                                        {new Date(object.bidDueDate).toLocaleString()}
                                     </td>
                                     <td className="pe-0">
-                                        {object.paymentEndOn}
+                                        {/*{object.biddingPaymentDueDate}*/}
+                                        {new Date(object.biddingPaymentDueDate).toLocaleString()}
+
                                     </td>
                                     <td className="text-end">
                                         <button
@@ -166,6 +145,7 @@ const ProductsPage = () => {
 
                         </tbody>
                     </table>
+{/*
                     <div className="row">
                         <div
                             className="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
@@ -232,6 +212,7 @@ const ProductsPage = () => {
                             </div>
                         </div>
                     </div>
+*/}
                 </div>
             </div>
         </div>
