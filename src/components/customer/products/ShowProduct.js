@@ -17,7 +17,6 @@ const ShowProductPage = () => {
 
     const [loading, setLoading] = useState(false)
     const [fetchingProduct, setFetchingProduct] = useState(false)
-    const [fetchingProductIntervalId, setFetchingProductIntervalId] = useState()
 
     const highestBidAmountRef = useRef(null);
     const [highestBidAmountAnim, sethighestBidAmountAnim] = useState()
@@ -66,11 +65,11 @@ const ShowProductPage = () => {
     function updateBidAmount() {
         let localMinBidAmount = 0
         if (product) {
-            localMinBidAmount = (product.highestBidAmount > 0 ? product.highestBidAmount : product.bidStartingPrice) + 1
+            localMinBidAmount = (product.highestBidAmount > 0 ? product.highestBidAmount : product.bidStartingPrice)
             setMinBidAmount(localMinBidAmount)
         }
         if (bidAmount <= localMinBidAmount) {
-            setBidAmount(localMinBidAmount)
+            setBidAmount(localMinBidAmount + 1)
         }
     }
 
@@ -217,6 +216,15 @@ const ShowProductPage = () => {
                             </div>
 
                             <div className="col-md-12 mt-5">
+                                <h6 className="fs-4 text-muted">Price</h6>
+                                <p>
+                                    <span className="fs-5 fw-semibold text-gray-400">$</span>
+                                    <span
+                                        className="fs-1 fw-bold">{product.price && product.price.toLocaleString('en-US')}</span>
+                                </p>
+                            </div>
+
+                            <div className="col-md-12 mt-5">
                                 <h6 className="fs-4 text-muted">Starting Price</h6>
                                 <p>
                                     <span className="fs-5 fw-semibold text-gray-400">$</span>
@@ -230,17 +238,17 @@ const ShowProductPage = () => {
                                 <p>
                                     <span className="fs-5 fw-semibold text-gray-400">$</span>
                                     <span
-                                        className="fs-1 fw-bold">{product.deposit && product.deposit.toLocaleString('en-US')}</span>
+                                        className="fs-1 fw-bold">{product.depositAmount && product.depositAmount.toLocaleString('en-US')} - {product.deposit && product.deposit}%</span>
                                 </p>
                             </div>
 
                             {product.highestBidAmount > 0 &&
                                 <div className="col-md-12 mt-5">
-                                    <h6 className="fs-4 text-muted">Highest Bid Amount</h6>
+                                    <h6 className="fs-4 text-muted">Highest Bid</h6>
                                     <p>
                                         <span className="fs-5 fw-semibold text-gray-400">$</span>
                                         <span
-                                            className="fs-1 fw-bold">{product.highestBidAmount && product.highestBidAmount.toLocaleString('en-US')}</span>
+                                            className="fs-1 fw-bold">{product.highestBidAmount && product.highestBidAmount.toLocaleString('en-US')} - {product.highestBidUser && product.highestBidUser.name}</span>
                                     </p>
                                 </div>}
 

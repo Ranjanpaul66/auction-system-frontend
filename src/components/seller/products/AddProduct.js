@@ -130,6 +130,7 @@ const AddProductPage = () => {
                                 <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Deposit Percent</label>
                                 <div className="input-group">
                                     <input disabled={loading} name="deposit" min="1" type="number"
+                                           max={100}
                                            className="form-control"
                                            id="name"
                                            placeholder="Bid Deposit Percent" required/>
