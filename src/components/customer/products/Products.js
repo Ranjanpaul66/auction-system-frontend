@@ -4,14 +4,10 @@ import {PageTitle} from "../../../_metronic/layout/core";
 import {Link} from "react-router-dom";
 import {apiGet} from "../../common/apiService";
 import clsx from "clsx";
-import TimeAgo from "javascript-time-ago";
-import en from 'javascript-time-ago/locale/en'
 import {CUSTOMER_PRODUCTS_URL} from "../../common/apiUrl";
+import timeAgo from "../../common/timeAgo";
 
 const ProductsPage = () => {
-    TimeAgo.addDefaultLocale(en)
-    const timeAgo = new TimeAgo('en-US')
-
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
     const [isFiltering, setIsFiltering] = useState(false)
@@ -35,7 +31,6 @@ const ProductsPage = () => {
         setLoading(true)
         apiGet(url)
             .then((response) => {
-                console.log(text, response.data.data)
                 if (response.data.data.length > 0) {
                     setProducts(response.data.data);
                 }
@@ -180,7 +175,7 @@ const ProductsPage = () => {
                                 className="path2"></span></i>
                         </a>
                     </li>
-                    <li className="page-item m-1 active"><a href="#" className="page-link fs-1">1</a></li>
+                    <li className="page-item m-1 active"><a href="#" className="page-link fs-2">1</a></li>
                     <li className="page-item last disabled m-1">
                         <a href="#" className="page-link px-0">
                             <i className="ki-duotone ki-double-right fs-2x"><span className="path1"></span><span

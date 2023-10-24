@@ -13,40 +13,11 @@ const ShowProductPage = () => {
     const [minBidAmount, setMinBidAmount] = useState(0);
 
     const [product, setProduct] = useState({});
-    const [bidding, setBidding] = useState([
-        {
-            id: 1,
-            fullName: "Leona Bartlett",
-            amount: "28,500",
-            madeOn: "Saturday, 21 October 2023",
-        },
-        {
-            id: 2,
-            fullName: "Sahar Bruce",
-            amount: "21,000",
-            madeOn: "Saturday, 21 October 2023",
-        },
-        {
-            id: 3,
-            fullName: "Bilal Beltran",
-            amount: "20,500",
-            madeOn: "Saturday, 21 October 2023",
-        },
-        {
-            id: 4,
-            fullName: "Selina Wang",
-            amount: "19,000",
-            madeOn: "Saturday, 21 October 2023",
-        },
-        {
-            id: 5,
-            fullName: "Maxwell Mendoza",
-            amount: "18,400",
-            madeOn: "Saturday, 21 October 2023",
-        }
-    ]);
+    const [bidding, setBidding] = useState([]);
 
     const [loading, setLoading] = useState(false)
+    const [fetchingProduct, setFetchingProduct] = useState(false)
+    const [fetchingProductIntervalId, setFetchingProductIntervalId] = useState()
 
     const highestBidAmountRef = useRef(null);
     const [highestBidAmountAnim, sethighestBidAmountAnim] = useState()
@@ -54,10 +25,17 @@ const ShowProductPage = () => {
     const biddersRef = useRef(null);
     const [biddersAnim, setBiddersAnim] = useState()
 
+    const [bidders, setBidders] = useState([]);
+
     useEffect(() => {
         initHighestBidAmountCountUp()
         initBiddersCountUp()
         fetchProduct()
+
+        const intervalId = setInterval(fetchingProduct, 5000);
+        return () => {
+            clearInterval(intervalId);
+        };
     }, []);
 
     async function initHighestBidAmountCountUp() {
@@ -114,6 +92,7 @@ const ShowProductPage = () => {
     }
 
     async function fetchProduct() {
+        setFetchingProduct(true)
         apiGet(`/products/${id}`).then((response) => {
             setProduct(response.data.data);
             if (response.data.data.highestBidAmount) {
@@ -122,12 +101,13 @@ const ShowProductPage = () => {
         })
             .catch((error) => {
                 console.error('Error fetching data:', error);
-            });
+            }).finally(() => {
+            setFetchingProduct(false)
+        });
     }
 
     async function fetchBidHistory() {
         apiGet(`/bidding/product/${id}`).then((response) => {
-            console.log(response.data.data)
             setBidding(response.data.data);
         })
             .catch((error) => {
@@ -146,12 +126,27 @@ const ShowProductPage = () => {
     }
 
     useEffect(() => {
-        updateBiddersCounter()
+        let bidUserIds = [];
+        let bidUserNames = [];
+        bidding.forEach((b) => {
+            if (!bidUserIds.includes(b.customer.id)) {
+                bidUserIds.push(b.customer.id)
+                bidUserNames.push(b.customer.name)
+            }
+        })
+
+        if (bidUserIds.length > bidders.length) {
+            setBidders(bidUserNames)
+        }
     }, [bidding]);
+
+    useEffect(() => {
+        updateBiddersCounter()
+    }, [bidders]);
 
     function updateBiddersCounter() {
         if (biddersAnim) {
-            biddersAnim.update(bidding.length)
+            biddersAnim.update(bidders.length)
         }
     }
 
@@ -315,15 +310,20 @@ const ShowProductPage = () => {
                                                     <a href="#" className="symbol symbol-circle symbol-50px">
                                                     <span
                                                         className={clsx("symbol-label text-inverse-primary fw-bold fs-3", getRandomBackground())}>
-                                                        {object.fullName[0]}
+                                                        {object.customer.name[0]}
                                                     </span>
                                                     </a>
 
-                                                    <div className="ms-5">
+                                                    <div className="">
                                                         <a href="#"
-                                                           className="text-gray-800 text-hover-primary fs-3 fw-normal"
+                                                           className="text-start text-gray-800 text-hover-primary fs-3 fw-normal"
                                                            data-kt-ecommerce-product-filter="product_name">
-                                                            {object.fullName}
+                                                            {object.customer.name}
+                                                            <div className="ms-9">
+                                                               <span className="text-start text-muted fw-normal fs-4">
+                                                                    {object.customer.email}
+                                                                </span>
+                                                            </div>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -332,16 +332,22 @@ const ShowProductPage = () => {
                                             <td className="text-center">
                                                 <span className="fs-6 fw-semibold text-gray-400">$</span>
                                                 <span className="fs-2">
-                                                {object.amount}
+                                                {object.amount.toLocaleString("en-US")}
                                             </span>
                                             </td>
                                             <td className="text-center fs-3 fw-normal">
-                                                {object.madeOn}
+                                                {(new Date(object.createdOn)).toLocaleString('en-us', {
+                                                    weekday: "long",
+                                                    year: "numeric",
+                                                    month: "short",
+                                                    day: "numeric",
+                                                    hour: "numeric",
+                                                    minute: "numeric",
+                                                })}
                                             </td>
                                         </tr>
                                     </>
                                 })}
-
                                 </tbody>
                             </table>
 
@@ -354,7 +360,7 @@ const ShowProductPage = () => {
                                     <div className="dataTables_paginate paging_simple_numbers"
                                          id="kt_ecommerce_products_table_paginate">
                                         <ul className="pagination">
-                                            <li className="paginate_button page-item previous disabled"
+                                            <li key={1} className="paginate_button page-item previous disabled"
                                                 id="kt_ecommerce_products_table_previous">
                                                 <a href="#"
                                                    aria-controls="kt_ecommerce_products_table"
@@ -363,42 +369,14 @@ const ShowProductPage = () => {
                                                     className="previous"></i>
                                                 </a>
                                             </li>
-                                            <li className="paginate_button page-item active">
+                                            <li key={2} className="paginate_button page-item active">
                                                 <a href="#"
                                                    aria-controls="kt_ecommerce_products_table"
                                                    data-dt-idx="1" tabIndex="0"
                                                    className="page-link">1
                                                 </a>
                                             </li>
-                                            <li className="paginate_button page-item ">
-                                                <a href="#"
-                                                   aria-controls="kt_ecommerce_products_table"
-                                                   data-dt-idx="2" tabIndex="0"
-                                                   className="page-link">2
-                                                </a>
-                                            </li>
-                                            <li className="paginate_button page-item ">
-                                                <a href="#"
-                                                   aria-controls="kt_ecommerce_products_table"
-                                                   data-dt-idx="3" tabIndex="0"
-                                                   className="page-link">3
-                                                </a>
-                                            </li>
-                                            <li className="paginate_button page-item ">
-                                                <a href="#"
-                                                   aria-controls="kt_ecommerce_products_table"
-                                                   data-dt-idx="4" tabIndex="0"
-                                                   className="page-link">4
-                                                </a>
-                                            </li>
-                                            <li className="paginate_button page-item ">
-                                                <a href="#"
-                                                   aria-controls="kt_ecommerce_products_table"
-                                                   data-dt-idx="5" tabIndex="0"
-                                                   className="page-link">5
-                                                </a>
-                                            </li>
-                                            <li className="paginate_button page-item next"
+                                            <li key={3} className="paginate_button page-item next disabled"
                                                 id="kt_ecommerce_products_table_next">
                                                 <a href="#"
                                                    aria-controls="kt_ecommerce_products_table"
@@ -420,17 +398,19 @@ const ShowProductPage = () => {
                 <div className="card mb-5">
                     <div className="card-body">
                         <h1 className={clsx("text-center fs-4x mb-4", statusTextColor())}>
-                            {product.status}
+                            {product && product.status}
                         </h1>
-                        {product.bidDueDate && <CountDown value={product.bidDueDate}/>}
+                        {product && product.bidDueDate && <CountDown value={product.bidDueDate}/>}
 
                         <div className="text-center">
                             <span className="fs-1 fw-semibold text-gray-400">$</span>
                             <span ref={highestBidAmountRef} className="text-gray-900 fw-bolder fs-5x mt-5">
                                 0
                             </span>
-                            {product.highestBidAmount > 0 &&
-                                <div className="fs-2 fw-bold text-gray-900">Maxwell Mendoza</div>}
+                            {product && product.highestBidAmount > 0 &&
+                                <div className="fs-2 fw-bold text-gray-900">
+                                    {product.highestBidUser.name}
+                                </div>}
                             <div
                                 className="fs-1 fw-bold text-gray-400">{product.highestBidAmount > 0 ? "Highest Bid" : "Starting Price"}</div>
                         </div>
@@ -484,22 +464,23 @@ const ShowProductPage = () => {
                         <div className="fs-1 fw-semibold text-gray-400 mb-7">Bidders</div>
                         {product.highestBidAmount > 0 &&
                             <div className="symbol-group symbol-hover justify-content-center">
-                                <div className="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                     data-bs-original-title="Alan Warden" data-kt-initialized="1">
-                                    <span className="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
-                                </div>
-                                <div className="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                     data-bs-original-title="Susan Redwood" data-kt-initialized="1">
-                                    <span className="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                </div>
-                                <div className="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                     data-bs-original-title="Perry Matthew" data-kt-initialized="1">
-                                    <span className="symbol-label bg-info text-inverse-info fw-bold">P</span>
-                                </div>
-                                <a href="#" className="symbol symbol-35px symbol-circle" data-bs-toggle="modal"
-                                   data-bs-target="#kt_modal_view_users">
-                                    <span className="symbol-label bg-dark text-gray-300 fs-8 fw-bold">+42</span>
-                                </a>
+                                {bidders.slice(0, 2).map((bidder) => {
+                                    return <div className="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                                data-bs-original-title={bidder} data-kt-initialized="1">
+                                            <span className="symbol-label bg-warning text-inverse-warning fw-bold">
+                                                {bidder[0].toUpperCase()}
+                                            </span>
+                                    </div>
+                                })}
+
+                                {bidders.length > 3 &&
+                                    <a href="#" className="symbol symbol-35px symbol-circle" data-bs-toggle="modal"
+                                       data-bs-target="#kt_modal_view_users">
+                                        <span className="symbol-label bg-dark text-gray-300 fs-8 fw-bold">
+                                            +{bidders.length - 3}
+                                        </span>
+                                    </a>
+                                }
                             </div>
                         }
                     </div>
