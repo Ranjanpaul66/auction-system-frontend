@@ -2,12 +2,13 @@ import {PageTitle} from "../../../_metronic/layout/core";
 import {KTIcon} from "../../../_metronic/helpers";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
-import {addProduct, addUploadImage, fetchCategories} from "../_requests";
+import {editProduct, fetchCategories} from "../_requests";
 import serialize from "form-serialize";
 import {apiGet} from "../../common/apiService";
+import {useSuccessMessage} from "../../auth/AuthProvider";
 
 const EditProductPage = () => {
-    console.log("edit page of product")
+    const {setSuccessMessage} = useSuccessMessage();
     const navigate = useNavigate()
     const formRef = useRef();
     const imagesRef = useRef();
@@ -20,9 +21,8 @@ const EditProductPage = () => {
     const [formData, setFormData] = useState({});
 
     useEffect(() => {
-        window.$(".date-time").flatpickr({
+        window.$(".date-time").flatpickr("datetime-local", {
             enableTime: true,
-            defaultDate: "05/14/2019 14:25",
             altInput: true,
             time_24hr: true,
             minDate: 'today',
@@ -40,7 +40,11 @@ const EditProductPage = () => {
 
     useEffect(() => {
         apiGet(`/products/${id}`).then((response) => {
-            setFormData(response.data.data);
+            const res = response.data.data
+            const categoryIds = res.categories.map(category => category.id)
+            res["categoryIds"] = categoryIds
+            setFormData(res);
+
 
         })
             .catch((error) => {
@@ -48,6 +52,12 @@ const EditProductPage = () => {
             });
 
     }, [])
+
+    useEffect(() => {
+        console.log("categoryIds: ", formData)
+    }, [formData]);
+
+
     const handleChange = (event) => {
         setFormData({
             ...formData,
@@ -59,6 +69,7 @@ const EditProductPage = () => {
         status = "Saved"
         fetchCategories().then((res) => {
             setCategories(res.data.data);
+            console.log("getCategories ", res.data.data)
 
         })
     }
@@ -74,16 +85,18 @@ const EditProductPage = () => {
 
         const formData = serialize(document.querySelector('#add-product-form'), {hash: true});
         formData.status = status
-        console.log(formData)
-        addProduct(formData).then((res) => {
-            console.log(res)
+        formData.id = id
+        const originalDate = new Date(formData["bidDueDate"]);
+        const originalDate2 = new Date(formData["biddingPaymentDueDate"]);
+        const utcDate = new Date(originalDate.toISOString());
+        const utcDate2 = new Date(originalDate2.toISOString());
+        const formattedUtcDate = utcDate.toISOString();
+        const formattedUtcDate2 = utcDate2.toISOString();
 
-            imagesRef.current.files.forEach((file) => {
-                addUploadImage(res.data.data.id, {"file": file}).then((res) => {
-                    console.log(res)
-                })
-            })
-
+        formData["bidDueDate"] = formattedUtcDate;
+        formData["biddingPaymentDueDate"] = formattedUtcDate2;
+        editProduct(formData).then((res) => {
+            setSuccessMessage("Registration Successfully Done!")
             navigate("/products")
         }).finally(() => {
             setLoading(false)
@@ -129,11 +142,22 @@ const EditProductPage = () => {
                                 <select disabled={loading} name="categoryIds[]" data-control="select2"
                                         multiple="multiple"
                                         className="form-select"
+                                        defaultValue={formData.categoryIds}
+                                        value={formData.categoryIds}
                                         id="categories" required>
                                     {categories.map((object) => {
                                         return <option value={object.id} key={object.id}>{object.name}</option>;
                                     })}
                                 </select>
+                            </div>
+
+                            <div className="col-md-12 fv-row mb-5">
+                                <label className="fs-5 fw-bold mb-2" htmlFor="price">Price</label>
+                                <input disabled={loading} name="price" min="1" type="number"
+                                       className="form-control" id="price" value={formData.price}
+                                       onChange={handleChange}
+                                       placeholder="Price"
+                                       required/>
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
@@ -146,7 +170,7 @@ const EditProductPage = () => {
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
-                                <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Deposit Amount</label>
+                                <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Deposit Percent %</label>
                                 <input disabled={loading} name="deposit" min="1" type="number" className="form-control"
                                        id="name" value={formData.deposit} onChange={handleChange}
                                        placeholder="Bid Deposit Amount" required/>
@@ -155,8 +179,9 @@ const EditProductPage = () => {
                             <div className="col-md-12 fv-row mb-5">
                                 <label htmlFor="bid_due_date" className="fs-5 fw-bold mb-2">Bid Due Date</label>
                                 <input disabled={loading} name="bidDueDate" className="form-control date-time"
-
-                                       placeholder="Pick a date" value={formData.bidDueDate} onChange={handleChange}
+                                       type={"datetime-local"}
+                                       placeholder="Pick a date" value={new Date(formData.bidDueDate).toLocaleString()}
+                                       onChange={handleChange}
                                        id="bid_due_date"/>
                             </div>
 
@@ -164,8 +189,9 @@ const EditProductPage = () => {
                                 <label htmlFor="bid_payment_due_date" className="fs-5 fw-bold mb-2">Bid Payment Due
                                     Date</label>
                                 <input disabled={loading} name="biddingPaymentDueDate"
-                                       className="form-control date-time"
-                                       placeholder="Pick a date" value={formData.biddingPaymentDueDate}
+                                       className="form-control date-time" type={"datetime-local"}
+                                       placeholder="Pick a date"
+                                       value={new Date(formData.biddingPaymentDueDate).toLocaleString()}
                                        onChange={handleChange}
                                        id="bid_payment_due_date" required/>
                             </div>
