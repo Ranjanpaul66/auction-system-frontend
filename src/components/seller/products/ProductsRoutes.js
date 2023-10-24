@@ -11,7 +11,7 @@ const ProductsRoutes = () => (
             <Route path='' element={<Products/>}/>
             <Route path='add' element={<AddProduct/>}/>
             <Route path='show' element={<ShowProduct/>}/>
-            <Route path='edit' element={<EditProduct/>}/>
+            <Route path='/:id/edit' element={<EditProduct/>}/>
             <Route index element={<Products/>}/>
         </Route>
     </Routes>
