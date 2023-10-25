@@ -351,8 +351,16 @@ const ShowProductPage = () => {
                                     minute: "numeric",
                                 })}</p>
                             </div>
-                        </div>
 
+                            <div className="col-md-12 mt-5">
+                                <h6 className="fs-4 text-muted">Categories</h6>
+                                <ul>
+                                    {product.categories && product.categories.map((object) => {
+                                        return <li className="fs-3">{object.name}</li>
+                                    })}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

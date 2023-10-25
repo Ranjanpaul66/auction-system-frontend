@@ -105,8 +105,7 @@ const ProductsPage = () => {
                                 <div className="card rounded-0 h-100" key={object.id}>
                                     <div className="card-body p-5 mb-0 pb-0">
                                         <Link className="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                                              to={`/products/show/${object.id}`}>
-
+                                              to={`/products/${object.id}`}>
                                             {object.images &&
                                                 <div
                                                     className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
@@ -123,7 +122,7 @@ const ProductsPage = () => {
                                             <div className="mt-4">
                                                 <div
                                                     className={clsx('badge badge-lg fs-3 p-2', statusBadgeColor())}>
-                                                    {object.status}
+                                                    {object.status === "Sold" ? "Won" : (object.status === "Sold & Paid" ? "Won & Paid" : object.status)}
                                                 </div>
                                             </div>
 
@@ -146,11 +145,14 @@ const ProductsPage = () => {
                                                     })}</span>
                                             </div>
 
-                                            {/*<div className="mb-3">*/}
-                                            {/*    <span*/}
-                                            {/*        className={clsx('badge badge-light-dark  p-2')}>*/}
-                                            {/*    </span>*/}
-                                            {/*</div>*/}
+                                            <div className="mb-3">
+                                                {object.categories.map((object) => {
+                                                    return <span key={object.id}
+                                                                 className={clsx('badge badge-light-dark p-2 me-2')}>
+                                                        {object.name}
+                                                            </span>
+                                                })}
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="card-footer p-5 pt-0">

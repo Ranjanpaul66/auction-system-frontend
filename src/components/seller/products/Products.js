@@ -122,6 +122,8 @@ const ProductsPage = () => {
                                         return "badge-light-danger"
                                     case "Sold":
                                         return "badge-light-success"
+                                    case "Saved":
+                                        return "badge-light-dark"
                                     default:
                                         return "badge-light-info"
                                 }
@@ -152,24 +154,18 @@ const ProductsPage = () => {
                                             className={clsx('badge badge-lg mb-2', statusBadgeColor())}>
                                             {object.status}
                                         </div>
-                                        {object.bidders > 0 &&
-                                            <>
-                                                <br/>
-                                                <span
-                                                    className="badge badge-circle badge-outline badge-primary ms-2 p-4">
-                                                    {object.bidders}
-                                                </span>
-                                            </>}
                                     </td>
-                                    <td className="text-center pe-0" data-order="23">
+                                    <td className="text-center pe-0">
                                         <span
-                                            className="fs-6 fw-semibold text-gray-400">$</span>{object.price.toLocaleString('en-US')}
+                                            className="fs-6 fw-semibold text-gray-400">$</span>
+                                        {object.price.toLocaleString('en-US')}
                                     </td>
-                                    <td className="text-center pe-0" data-order="23">
+                                    <td className="text-center pe-0">
                                         <span
-                                            className="fs-6 fw-semibold text-gray-400">$</span>{object.bidStartingPrice.toLocaleString('en-US')}
+                                            className="fs-6 fw-semibold text-gray-400">$</span>
+                                        {object.bidStartingPrice.toLocaleString('en-US')}
                                     </td>
-                                    <td className="text-center pe-0" data-order="23">
+                                    <td className="text-center pe-0">
                                         <span
                                             className="fs-6 fw-semibold text-gray-400">$</span>
                                         {object.depositAmount.toLocaleString('en-US')}
@@ -177,11 +173,14 @@ const ProductsPage = () => {
                                             {object.deposit}%
                                         </div>
                                     </td>
-                                    <td className="text-center pe-0" data-order="23">
+                                    <td className="text-center pe-0">
                                         {object.highestBidAmount > 0 ?
                                             <><span
                                                 className="fs-6 fw-semibold text-gray-400">$</span>{object.highestBidAmount.toLocaleString('en-US')}
                                             </> : "-"}
+                                        <div>
+                                            {object.highestBidUser && object.highestBidUser.name}
+                                        </div>
                                     </td>
                                     <td className="pe-0">
                                         {/*{object.bidDueDate }*/}
