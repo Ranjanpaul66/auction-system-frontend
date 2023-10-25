@@ -11,9 +11,9 @@ const EditProductPage = () => {
     const {setSuccessMessage} = useSuccessMessage();
     const navigate = useNavigate()
     const formRef = useRef();
-    const imagesRef = useRef();
     const submitRef = useRef();
     const [categories, setCategories] = useState([])
+    const [selectedCategories, setSelectedCategories] = useState([])
     const [loading, setLoading] = useState(false)
     const {id} = useParams();
 
@@ -141,6 +141,7 @@ const EditProductPage = () => {
                                 <label className="fs-5 fw-bold mb-2" htmlFor="categories">Categories</label>
                                 <select disabled={loading} name="categoryIds[]" data-control="select2"
                                         multiple="multiple"
+                                    // ref={select2Ref}
                                         className="form-select"
                                         defaultValue={formData.categoryIds}
                                         value={formData.categoryIds}

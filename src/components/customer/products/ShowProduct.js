@@ -86,9 +86,7 @@ const ShowProductPage = () => {
     }
 
     function handleFullPayment() {
-
-        apiPost("/bidding/full-payment", {id: id}).then((response) => {
-            console.log("Success ", id)
+        apiPost("/bidding/full-payment", {productId: id}).then((response) => {
             setLoading(false)
             setSuccessMessage("Payment Successfully Done!")
             navigate('/products');
