@@ -14,6 +14,7 @@ const AddProductPage = () => {
     const submitRef = useRef();
     const [categories, setCategories] = useState([])
     const [loading, setLoading] = useState(false)
+    const [price, setPrice] = useState(0)
 
     let status = "Saved"
 
@@ -116,6 +117,7 @@ const AddProductPage = () => {
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="name">Price</label>
                                 <input disabled={loading} name="price" min="1" type="number"
+                                       onChange={(event) => setPrice(event.target.value)}
                                        className="form-control" id="name"
                                        placeholder="Price"
                                        required/>
@@ -123,7 +125,7 @@ const AddProductPage = () => {
 
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Start Price</label>
-                                <input disabled={loading} name="bidStartingPrice" min="1" type="number"
+                                <input disabled={loading} name="bidStartingPrice" min={price} type="number"
                                        className="form-control" id="name"
                                        placeholder="Bid Start Price"
                                        required/>

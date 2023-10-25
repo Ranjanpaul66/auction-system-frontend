@@ -7,12 +7,29 @@ import {DASHBOARD_URL} from "../common/apiUrl";
 
 const DashboardPage = () => {
     const countUpRef = useRef(null);
-    let countUpAnim;
+    const [countUpAnim, setCountUpAnim] = useState();
+    const [isCountUpAnimInitiated, setIsCountUpAnimInitiated] = useState(false);
+
     const [dashboardData, setDashboardData] = useState(0);
 
     useEffect(() => {
-        initCountUp(0);
+        fetchDashboardData()
 
+        const intervalId = setInterval(fetchDashboardData, 5000);
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (isCountUpAnimInitiated) {
+            countUpAnim.update(dashboardData.balance)
+        } else {
+            initCountUp()
+        }
+    }, [dashboardData]);
+
+    async function fetchDashboardData() {
         apiGet(DASHBOARD_URL).then((response) => {
             console.log("res: ", response.data.data)
             setDashboardData(response.data.data);
@@ -21,15 +38,14 @@ const DashboardPage = () => {
             .catch((error) => {
                 console.error('Error fetching data:', error);
             });
-    }, []);
-
+    }
 
     async function initCountUp() {
-        countUpAnim = new window.CountUp(countUpRef.current, 0);
-        if (!countUpAnim.error) {
-            countUpAnim.start();
-        } else {
-            console.error(countUpAnim.error);
+        const countUp = new window.CountUp(countUpRef.current, dashboardData.balance);
+        setCountUpAnim(countUp);
+        if (!countUp.error) {
+            countUp.start();
+            setIsCountUpAnimInitiated(true)
         }
     }
 

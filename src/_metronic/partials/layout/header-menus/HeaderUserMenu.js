@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {Link} from 'react-router-dom'
 import {Languages} from './Languages'
-import {KTIcon} from '../../../helpers'
 import {useAuth} from "../../../../components/auth/AuthProvider";
 import clsx from "clsx";
 
@@ -15,8 +14,11 @@ const HeaderUserMenu = () => {
         >
             <div className='menu-item px-3'>
                 <div className='menu-content d-flex align-items-center px-3'>
-                    <div className='symbol symbol-50px me-5'>
-                        <KTIcon iconName='profile-circle' className="fs-3x"/>
+                    <div className='symbol symbol-circle symbol-50px me-5'>
+                        <span
+                            className={clsx("symbol-label text-inverse-warning fw-bold", currentUser.roles[0].role === "SELLER" ? "bg-success" : "bg-info")}>
+                            {currentUser?.name[0]}
+                        </span>
                     </div>
 
                     <div className='d-flex flex-column'>

@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import {KTIcon} from '../../../helpers'
 import {HeaderUserMenu, ThemeModeSwitcher} from '../../../partials'
 import {useLayout} from '../../core'
+import {useAuth} from "../../../../components/auth/AuthProvider";
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -11,6 +12,7 @@ const btnIconClass = 'fs-2'
 
 const Navbar = () => {
     const {config} = useLayout()
+    const {currentUser} = useAuth()
     return (
         <div className='app-navbar flex-shrink-0'>
             <div className={clsx('app-navbar-item align-items-stretch', itemClass)}>
@@ -27,7 +29,12 @@ const Navbar = () => {
                     data-kt-menu-attach='parent'
                     data-kt-menu-placement='bottom-end'
                 >
-                    <KTIcon iconName='profile-circle' className="fs-2x"/>
+                    <div className='symbol symbol-circle symbol-30px'>
+                    <span
+                        className={clsx("symbol-label text-inverse-warning fw-bold", currentUser.roles[0].role === "SELLER" ? "bg-success" : "bg-info")}>
+                            {currentUser?.name[0]}
+                        </span>
+                    </div>
                 </div>
                 <HeaderUserMenu/>
             </div>
