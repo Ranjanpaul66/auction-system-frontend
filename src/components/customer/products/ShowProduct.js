@@ -227,6 +227,9 @@ const ShowProductPage = () => {
             if (error.response.status === 412) {
                 setBidError("Oops! It seems your account balance is too low to place a bid. To keep participating, top up your balance now. Make a deposit and keep the excitement going!")
             }
+            if (error.response.status === 406) {
+                setBidError("Oops! Your Bid is Below the Highest Bid. Probably due to a previous concurrent bid!")
+            }
         }).finally(() => {
             setLoading(false)
         })
