@@ -46,6 +46,8 @@ const ShowProductPage = () => {
         initBiddersCountUp()
         fetchProduct()
 
+        console.log(currentUser)
+
         const intervalId = setInterval(fetchProduct, 5000);
         return () => {
             clearInterval(intervalId);
@@ -481,17 +483,23 @@ const ShowProductPage = () => {
             <div className="col-sm-12 col-md-5 mt-5">
                 <div className="card mb-5">
                     <div className="card-body">
-                        {["Sold", "Sold & Paid"].includes(product.status) && <div className="text-center">
+                        {["Sold", "Sold & Paid"].includes(product.status) && product.highestBidUser.id === currentUser.id &&
+                            <div className="text-center">
                             <KTIcon iconType="duotone" iconName="medal-star"
                                     className="text-success fs-7x"/>
                         </div>}
 
-                        {["Sold", "Sold & Paid"].includes(product.status) &&
+                        {["Sold", "Sold & Paid"].includes(product.status) && product.highestBidUser.id === currentUser.id &&
                             <h1 className={clsx("text-center text-success fs-2x mb-4")}>
                                 Congratulations<br/> You've Hit the Jackpot!
                             </h1>}
 
                         {["Running", "Closed"].includes(product.status) &&
+                            <h1 className={clsx("text-center fs-4x mb-4", statusTextColor())}>
+                                {product && product.status}
+                            </h1>}
+
+                        {["Sold"].includes(product.status) && product.highestBidUser.id !== currentUser.id &&
                             <h1 className={clsx("text-center fs-4x mb-4", statusTextColor())}>
                                 {product && product.status}
                             </h1>}
@@ -521,7 +529,7 @@ const ShowProductPage = () => {
                         {["Closed", "Sold", "Sold & Paid"].includes(product.status) &&
                             <div className="separator my-5"></div>}
 
-                        {product.status === "Sold" && <>
+                        {product.status === "Sold" && product.highestBidUser.id === currentUser.id && <>
                             <div className="text-center mb-2">
                                 <span className="text-warning fw-bolder fs-2x">
                                         Make your the remaining payment before the due time
@@ -536,7 +544,7 @@ const ShowProductPage = () => {
                             <UserBalanceCountUp balance={userBalance}
                                                 color={userBalance < bidPaymentRemainingAmount ? "text-danger" : "text-success"}/>}
 
-                        {product.status === "Sold" && <>
+                        {product.status === "Sold" && product.highestBidUser.id === currentUser.id && <>
                             <div className="text-center mt-3">
                                 <p className="m-0 fs-2 fw-semibold">Remaining Amount</p>
                                 <span className="fs-1 fw-semibold text-gray-400">$</span>
