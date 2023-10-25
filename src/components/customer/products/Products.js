@@ -106,7 +106,7 @@ const ProductsPage = () => {
                                     <div className="card-body p-5 mb-0 pb-0">
                                         <Link className="d-block overlay" data-fslightbox="lightbox-hot-sales"
                                               to={`/products/${object.id}`}>
-                                            {object.images &&
+                                            {object.images && object.images.length > 0 &&
                                                 <div
                                                     className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
                                                     style={{backgroundImage: `url("${API_URL}/products/images/${object.images[0].path}")`}}>
@@ -166,9 +166,9 @@ const ProductsPage = () => {
                                                                                   className="btn btn-sm btn-light-success rounded-0 fs-5">
                                                 Bid Now
                                             </Link>}
-                                            {object.status === "Sold" && <>
+                                            {["Sold", "Sold & Paid"].includes(object.status) && <>
                                                 <KTIcon iconType="duotone" iconName="medal-star"
-                                                        className="text-success fs-2x"/>
+                                                        className={clsx("fs-2x", object.status === "Sold" ? "text-success" : "text-info")}/>
                                             </>}
                                         </div>
                                     </div>
