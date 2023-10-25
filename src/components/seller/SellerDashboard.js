@@ -33,7 +33,6 @@ const DashboardPage = () => {
         apiGet(DASHBOARD_URL).then((response) => {
             console.log("res: ", response.data.data)
             setDashboardData(response.data.data);
-            countUpAnim.update(response.data.data.balance)
         })
             .catch((error) => {
                 console.error('Error fetching data:', error);

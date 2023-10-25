@@ -2,6 +2,38 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Requirements
+
+- [Docker](https://docs.docker.com/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+## How to run it?
+
+- Clone the repository
+- Update env variables
+
+```bash
+cp .env.example .env
+```
+
+- Install dependencies
+
+```bash
+docker compose run app pnpm i
+```
+
+- Build
+
+```bash
+docker compose run app pnpm run build
+```
+
+- Run app
+
+```bash
+docker compose up
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
