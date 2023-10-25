@@ -6,13 +6,19 @@ import CountDown from "../../CountDown";
 import clsx from "clsx";
 import {KTIcon} from "../../../_metronic/helpers";
 import {apiGet, apiPost} from "../../common/apiService";
-import {useSuccessMessage} from "../../auth/AuthProvider";
-import {API_URL} from "../../common/apiUrl";
+import {useAuth, useSuccessMessage} from "../../auth/AuthProvider";
+import {API_URL, DASHBOARD_URL} from "../../common/apiUrl";
+import timeAgo from "../../common/timeAgo";
+import {UserBalanceCountUp} from "../../UserBalanceCountUp";
 
 const ShowProductPage = () => {
+    const {currentUser} = useAuth()
     const {id} = useParams();
+
     const [bidAmount, setBidAmount] = useState(0);
     const [minBidAmount, setMinBidAmount] = useState(0);
+    const [bidPaymentRemainingAmount, setBidPaymentRemainingAmount] = useState(0);
+    const [userBalance, setUserBalance] = useState(currentUser.balance);
 
     const [product, setProduct] = useState({});
     const [bidding, setBidding] = useState([]);
@@ -21,13 +27,19 @@ const ShowProductPage = () => {
     const [fetchingProduct, setFetchingProduct] = useState(false)
 
     const highestBidAmountRef = useRef(null);
-    const [highestBidAmountAnim, sethighestBidAmountAnim] = useState()
+    const [highestBidAmountAnim, setHighestBidAmountAnim] = useState()
+    const [isHighestBidAmountAnimInitiated, setIsHighestBidAmountAnimInitiated] = useState(false)
 
     const biddersRef = useRef(null);
     const [biddersAnim, setBiddersAnim] = useState()
+    const [isBiddersAnimInitiated, setIsBiddersAnimInitiated] = useState(false)
 
     const [bidders, setBidders] = useState([]);
     const {setSuccessMessage} = useSuccessMessage();
+
+    const [bidError, setBidError] = useState(null);
+
+    const [isMakingFullPayment, setIsMakingFullPayment] = useState(false)
 
     const navigate = useNavigate();
 
@@ -43,29 +55,34 @@ const ShowProductPage = () => {
     }, []);
 
     async function initHighestBidAmountCountUp() {
-        const anim = new window.CountUp(highestBidAmountRef.current, 0);
-        sethighestBidAmountAnim(anim)
+        const anim = new window.CountUp(highestBidAmountRef.current, minBidAmount);
+        setHighestBidAmountAnim(anim)
         if (!anim.error) {
             anim.start();
-        } else {
-            console.error(anim.error);
+            setIsHighestBidAmountAnimInitiated(true)
         }
     }
 
     async function initBiddersCountUp() {
-        const anim = new window.CountUp(biddersRef.current, 0)
+        const anim = new window.CountUp(biddersRef.current, bidders.length)
         setBiddersAnim(anim);
         if (!anim.error) {
             anim.start();
-        } else {
-            console.error(anim.error);
+            setIsBiddersAnimInitiated(true)
         }
     }
 
     useEffect(() => {
         updateBidAmount()
         updateHighestBidCounter()
+        updateRemainingAmount()
     }, [product]);
+
+    function updateRemainingAmount() {
+        if (product.status === "Sold") {
+            setBidPaymentRemainingAmount(product.highestBidAmount - product.depositAmount)
+        }
+    }
 
     function updateBidAmount() {
         let localMinBidAmount = 0
@@ -87,12 +104,13 @@ const ShowProductPage = () => {
     }
 
     function handleFullPayment() {
+        setIsMakingFullPayment(true)
         apiPost("/bidding/full-payment", {productId: id}).then((response) => {
-            setLoading(false)
-            setSuccessMessage("Payment Successfully Done!")
-            navigate('/products');
-        }).catch(error => {
-            setLoading(false);
+            console.log(response)
+            fetchProduct()
+        }).catch((error) => {
+        }).finally(() => {
+            setIsMakingFullPayment(false)
         });
 
     }
@@ -114,6 +132,7 @@ const ShowProductPage = () => {
                 if (response.data.data.highestBidAmount) {
                     fetchBidHistory()
                 }
+                fetchUserBalance()
             })
                 .catch((error) => {
                     console.error('Error fetching data:', error);
@@ -132,13 +151,24 @@ const ShowProductPage = () => {
             });
     }
 
+    async function fetchUserBalance() {
+        apiGet(DASHBOARD_URL).then((response) => {
+            setUserBalance(response.data.data.balance)
+        })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
     useEffect(() => {
         updateHighestBidCounter()
     }, [minBidAmount]);
 
     function updateHighestBidCounter() {
-        if (highestBidAmountAnim) {
+        if (isHighestBidAmountAnimInitiated) {
             highestBidAmountAnim.update(minBidAmount)
+        } else {
+            initHighestBidAmountCountUp()
         }
     }
 
@@ -156,20 +186,17 @@ const ShowProductPage = () => {
             setBidders(bidUserNames)
         }
     }, [bidding]);
+
     useEffect(() => {
         updateBiddersCounter()
     }, [bidders]);
 
     function updateBiddersCounter() {
-        if (biddersAnim) {
+        if (isBiddersAnimInitiated) {
             biddersAnim.update(bidders.length)
+        } else {
+            initBiddersCountUp()
         }
-    }
-
-    const backgrounds = ["bg-info", "bg-warning", "bg-success", "bg-dark", "bg-danger"]
-
-    function getRandomBackground() {
-        return backgrounds[Math.floor(Math.random() * 5)];
     }
 
     function statusTextColor() {
@@ -188,12 +215,17 @@ const ShowProductPage = () => {
     function onSubmit(event) {
         event.preventDefault()
         setLoading(true)
+        setBidError(null)
         apiPost("/bidding", {"productId": product.id, "amount": bidAmount})
             .then((res) => {
                 console.log(res)
 
                 fetchProduct()
-            }).finally(() => {
+            }).catch((error) => {
+            if (error.response.status === 412) {
+                setBidError("Oops! It seems your account balance is too low to place a bid. To keep participating, top up your balance now. Make a deposit and keep the excitement going!")
+            }
+        }).finally(() => {
             setLoading(false)
         })
     }
@@ -213,15 +245,15 @@ const ShowProductPage = () => {
             <div className="col-sm-12 col-md-7 mt-5">
                 <div className="card p-5 mb-5">
                     <div className="card-body p-0">
-                        <a className="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                           href="#">
+                        <div className="d-block overlay" data-fslightbox="lightbox-hot-sales">
                             <div id="kt_carousel_1_carousel" className="carousel carousel-custom slide"
                                  data-bs-ride="carousel" data-bs-interval="8000">
                                 <div className="d-flex align-items-center justify-content-between flex-wrap">
                                     <span className="fs-4 fw-bold pe-2"></span>
                                     <ol className="p-0 m-0 carousel-indicators carousel-indicators-dots">
                                         {product.images && product.images.map((image, index) => {
-                                            return <li data-bs-target="#kt_carousel_1_carousel" data-bs-slide-to={index}
+                                            return <li data-bs-target="#kt_carousel_1_carousel"
+                                                       data-bs-slide-to={index}
                                                        className={clsx("ms-1", index === 0 && "active")}></li>
                                         })}
                                     </ol>
@@ -238,13 +270,13 @@ const ShowProductPage = () => {
                                     })}
                                 </div>
                             </div>
-                        </a>
+                        </div>
 
                         <div className="mt-5">
-                            <a href="#"
-                               className="fs-2 text-dark fw-bold text-hover-primary text-dark lh-base">
+                            <div
+                                className="fs-2 text-dark fw-bold text-hover-primary text-dark lh-base">
                                 {product.name}
-                            </a>
+                            </div>
 
                             <div className="col-md-12 mt-5">
                                 <h6 className="fs-4 text-muted">Description</h6>
@@ -353,7 +385,7 @@ const ShowProductPage = () => {
                                                 <div className="d-flex align-items-center">
                                                     <a href="#" className="symbol symbol-circle symbol-50px">
                                                     <span
-                                                        className={clsx("symbol-label text-inverse-primary fw-bold fs-3", getRandomBackground())}>
+                                                        className={clsx("symbol-label text-inverse-primary fw-bold fs-3 bg-dark")}>
                                                         {object.customer.name[0]}
                                                     </span>
                                                     </a>
@@ -439,26 +471,33 @@ const ShowProductPage = () => {
             </div>
 
             <div className="col-sm-12 col-md-5 mt-5">
-
                 <div className="card mb-5">
-
                     <div className="card-body">
-                        {product.status === "Sold" && <button onClick={handleFullPayment} type="submit"
-                                                              className="btn btn-warning btn-lg rounded-0 mt-5 col-md-12">
-                            {!loading && <span className='indicator-label'>Full Payment</span>}
-                            {loading && (
-                                <span className='indicator-progress' style={{display: 'block'}}>
-                                        Submitting...
-                                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                                    </span>
-                            )}
-                        </button>}
-                        <h1 className={clsx("text-center fs-4x mb-4", statusTextColor())}>
-                            {product && product.status}
-                        </h1>
-                        {product && product.bidDueDate && <CountDown value={product.bidDueDate}/>}
+                        {["Sold", "Sold & Paid"].includes(product.status) && <div className="text-center">
+                            <KTIcon iconType="duotone" iconName="medal-star"
+                                    className="text-success fs-7x"/>
+                        </div>}
 
-                        <div className="text-center">
+                        {["Sold", "Sold & Paid"].includes(product.status) &&
+                            <h1 className={clsx("text-center text-success fs-2x mb-4")}>
+                                Congratulations<br/> You've Hit the Jackpot!
+                            </h1>}
+
+                        {["Running", "Closed"].includes(product.status) &&
+                            <h1 className={clsx("text-center fs-4x mb-4", statusTextColor())}>
+                                {product && product.status}
+                            </h1>}
+
+                        {product && product.bidDueDate && product.status === "Running" &&
+                            <CountDown value={product.bidDueDate}/>}
+
+                        {["Closed", "Sold", "Sold & Paid"].includes(product.status) && <div className="text-center">
+                            <span className="text-gray-900 fw-bolder fs-2x">
+                                {timeAgo.format(new Date(product?.bidDueDate))}
+                            </span>
+                        </div>}
+
+                        {product.status === "Running" && <div className="text-center">
                             <span className="fs-1 fw-semibold text-gray-400">$</span>
                             <span ref={highestBidAmountRef} className="text-gray-900 fw-bolder fs-5x mt-5">
                                 0
@@ -469,12 +508,61 @@ const ShowProductPage = () => {
                                 </div>}
                             <div
                                 className="fs-1 fw-bold text-gray-400">{product.highestBidAmount > 0 ? "Highest Bid" : "Starting Price"}</div>
-                        </div>
+                        </div>}
+
+                        {["Closed", "Sold", "Sold & Paid"].includes(product.status) &&
+                            <div className="separator my-5"></div>}
+
+                        {product.status === "Sold" && <>
+                            <div className="text-center mb-2">
+                                <span className="text-warning fw-bolder fs-2x">
+                                        Make your the remaining payment before the due time
+                                    </span>
+                            </div>
+
+                            {product && product.biddingPaymentDueDate && product.status === "Sold" &&
+                                <CountDown value={product.biddingPaymentDueDate}/>}
+                        </>}
+
+                        {["Sold", "Sold & Paid"].includes(product.status) &&
+                            <UserBalanceCountUp balance={userBalance}
+                                                color={userBalance < bidPaymentRemainingAmount ? "text-danger" : "text-success"}/>}
+
+                        {product.status === "Sold" && <>
+                            <div className="text-center mt-3">
+                                <p className="m-0 fs-2 fw-semibold">Remaining Amount</p>
+                                <span className="fs-1 fw-semibold text-gray-400">$</span>
+                                <span className="text-gray-900 fw-bolder fs-3x mt-5">
+                                    {bidPaymentRemainingAmount.toLocaleString("en-US")}
+                                </span>
+                            </div>
+
+                            {userBalance < bidPaymentRemainingAmount &&
+                                <div className="text-danger text-center fs-3">
+                                    Uh-oh! Your account balance is a bit short for the full payment. Time to top it
+                                    up! Make
+                                    a deposit and complete the payment seamlessly.
+                                </div>}
+
+                            <button onClick={handleFullPayment} type="submit"
+                                    disabled={userBalance < bidPaymentRemainingAmount}
+                                    className="btn btn-success btn-lg rounded-0 mt-5 col-md-12">
+                                {!loading && <span className='indicator-label'>Make the payment</span>}
+                                {loading && (
+                                    <span className='indicator-progress' style={{display: 'block'}}>
+                                        Submitting...
+                                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                                    </span>
+                                )}
+                            </button>
+                        </>}
                     </div>
                 </div>
 
                 {product.status === "Running" && <div className="card mb-5">
                     <div className="card-body text-center d-flex flex-column justify-content-center">
+                        <UserBalanceCountUp balance={userBalance}/>
+
                         <form action="" onSubmit={onSubmit}>
                             <div className="col-md-12 fv-row mb-5">
                                 <label className="fs-1 fw-bold mb-1" htmlFor="name">Amount</label>
@@ -499,6 +587,11 @@ const ShowProductPage = () => {
                                         <KTIcon iconType="duotone" iconName="plus-circle" className="fs-3x text-dark"/>
                                     </span>
                                 </div>
+                                {bidError && <div className="mt-3">
+                                    <span className="text-danger fs-3">
+                                        {bidError}
+                                    </span>
+                                </div>}
                             </div>
 
                             <button type="submit" className="btn btn-light-success btn-lg rounded-0 col-md-12">
@@ -514,14 +607,16 @@ const ShowProductPage = () => {
                     </div>
                 </div>}
 
-                <div className="card me-md-6">
+                {product.status !== "Closed" && <div className="card me-md-6">
                     <div className="card-body text-center d-flex flex-column justify-content-center">
                         <div ref={biddersRef} className="fs-6x fw-bold">0</div>
-                        <div className="fs-1 fw-semibold text-gray-400 mb-7">Bidders</div>
+                        <div
+                            className="fs-1 fw-semibold text-gray-400 mb-7">Bidder{bidders.length > 1 ? "s" : ""}</div>
                         {product.highestBidAmount > 0 &&
                             <div className="symbol-group symbol-hover justify-content-center">
                                 {bidders.slice(0, 2).map((bidder) => {
-                                    return <div className="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                    return <div className="symbol symbol-35px symbol-circle"
+                                                data-bs-toggle="tooltip"
                                                 data-bs-original-title={bidder} data-kt-initialized="1">
                                             <span className="symbol-label bg-warning text-inverse-warning fw-bold">
                                                 {bidder[0].toUpperCase()}
@@ -540,7 +635,7 @@ const ShowProductPage = () => {
                             </div>
                         }
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
         {/* end::Row */}

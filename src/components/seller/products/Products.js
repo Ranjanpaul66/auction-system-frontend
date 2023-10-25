@@ -17,10 +17,12 @@ const ProductsPage = () => {
 
     useEffect(() => {
         fetchProducts()
-    }, []);
 
-    function releaseProduct(object) {
-    }
+        const intervalId = setInterval(fetchProducts, 5000);
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
 
     useEffect(() => {
         fetchProducts(search)
@@ -228,15 +230,6 @@ const ProductsPage = () => {
                                                     View
                                                 </Link>
                                             </div>
-
-                                            {
-                                                object.status === "Saved" &&
-                                                <div className="menu-item px-3">
-                                                    <span onClick={releaseProduct(object)} className="menu-link px-3">
-                                                        Release
-                                                    </span>
-                                                </div>
-                                            }
                                         </div>
                                     </td>
                                 </tr>
