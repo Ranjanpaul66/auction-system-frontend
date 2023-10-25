@@ -133,7 +133,6 @@ const EditProductPage = () => {
                                 <label className="fs-5 fw-bold mb-2" htmlFor="categories">Categories</label>
                                 <select disabled={loading} name="categoryIds[]" data-control="select2"
                                         multiple="multiple"
-                                    // ref={select2Ref}
                                         className="form-select"
                                         defaultValue={formData.categoryIds}
                                         value={formData.categoryIds}

@@ -210,6 +210,8 @@ const ShowProductPage = () => {
         }
     }
 
+    const backgrounds = ["bg-info", "bg-warning", "bg-success", "bg-dark", "bg-danger"]
+
     function onSubmit(event) {
         event.preventDefault()
         setLoading(true)
@@ -401,7 +403,7 @@ const ShowProductPage = () => {
                                                            className="text-start text-gray-800 text-hover-primary fs-3 fw-normal"
                                                            data-kt-ecommerce-product-filter="product_name">
                                                             {object.customer.name}
-                                                            <div className="ms-9">
+                                                            <div className="">
                                                                <span className="text-start text-muted fw-normal fs-4">
                                                                     {object.customer.email}
                                                                 </span>
@@ -621,11 +623,12 @@ const ShowProductPage = () => {
                             className="fs-1 fw-semibold text-gray-400 mb-7">Bidder{bidders.length > 1 ? "s" : ""}</div>
                         {product.highestBidAmount > 0 &&
                             <div className="symbol-group symbol-hover justify-content-center">
-                                {bidders.slice(0, 2).map((bidder) => {
+                                {bidders.slice(0, 2).map((bidder, index) => {
                                     return <div className="symbol symbol-35px symbol-circle"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-original-title={bidder} data-kt-initialized="1">
-                                            <span className="symbol-label bg-warning text-inverse-warning fw-bold">
+                                            <span
+                                                className={clsx("symbol-label text-inverse-warning fw-bold", backgrounds[index])}>
                                                 {bidder[0].toUpperCase()}
                                             </span>
                                     </div>
