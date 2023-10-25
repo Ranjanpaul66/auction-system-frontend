@@ -59,8 +59,8 @@ const AddProductPage = () => {
                 addUploadImage(res.data.data.id, fileFomData).then((res) => {
                 })
             })
-            //
-            // navigate("/products")
+
+            navigate("/products")
         }).finally(() => {
             setLoading(false)
         })

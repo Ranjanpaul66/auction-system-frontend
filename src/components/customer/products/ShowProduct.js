@@ -32,7 +32,7 @@ const ShowProductPage = () => {
         initBiddersCountUp()
         fetchProduct()
 
-        const intervalId = setInterval(fetchingProduct, 5000);
+        const intervalId = setInterval(fetchProduct, 5000);
         return () => {
             clearInterval(intervalId);
         };
@@ -92,18 +92,20 @@ const ShowProductPage = () => {
     }
 
     async function fetchProduct() {
-        setFetchingProduct(true)
-        apiGet(`/products/${id}`).then((response) => {
-            setProduct(response.data.data);
-            if (response.data.data.highestBidAmount) {
-                fetchBidHistory()
-            }
-        })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            }).finally(() => {
-            setFetchingProduct(false)
-        });
+        if (!fetchingProduct) {
+            setFetchingProduct(true)
+            apiGet(`/products/${id}`).then((response) => {
+                setProduct(response.data.data);
+                if (response.data.data.highestBidAmount) {
+                    fetchBidHistory()
+                }
+            })
+                .catch((error) => {
+                    console.error('Error fetching data:', error);
+                }).finally(() => {
+                setFetchingProduct(false)
+            });
+        }
     }
 
     async function fetchBidHistory() {

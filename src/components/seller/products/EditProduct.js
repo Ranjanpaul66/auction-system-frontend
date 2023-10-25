@@ -170,10 +170,18 @@ const EditProductPage = () => {
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">
-                                <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Deposit Percent %</label>
-                                <input disabled={loading} name="deposit" min="1" type="number" className="form-control"
-                                       id="name" value={formData.deposit} onChange={handleChange}
-                                       placeholder="Bid Deposit Amount" required/>
+                                <label className="fs-5 fw-bold mb-2" htmlFor="name">Bid Deposit Percent</label>
+                                <div className="input-group">
+                                    <input disabled={loading} name="deposit" min="1" type="number"
+                                           className="form-control"
+                                           id="name" value={formData.deposit} onChange={handleChange}
+                                           placeholder="Bid Deposit Percent" required/>
+                                    <span className="input-group-text">
+                                        <span className="text-dark">
+                                            %
+                                        </span>
+                                    </span>
+                                </div>
                             </div>
 
                             <div className="col-md-12 fv-row mb-5">

@@ -99,13 +99,14 @@ const ProductsPage = () => {
                            className="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer">
                         <thead>
                         <tr className="text-start text-gray-900 fw-bolder fs-7 text-uppercase gs-0 ">
-                            <th style={{width: '30%'}}>Name</th>
+                            <th style={{width: '25%'}}>Name</th>
                             <th className="text-center">Status</th>
+                            <th className="text-center">Price</th>
                             <th className="text-center">Bid Start Price</th>
                             <th className="text-center">Deposit</th>
                             <th className="text-center">Highest Bid</th>
-                            <th>Bid Due Date</th>
-                            <th>Bid Payment Due Date</th>
+                            <th style={{width: '10%'}}>Bid Due Date</th>
+                            <th style={{width: '12%'}}>Bid Payment Due Date</th>
                             <th className="text-center">Actions</th>
                         </tr>
                         </thead>
@@ -128,7 +129,7 @@ const ProductsPage = () => {
                                 <tr className="" key={object.id}>
                                     <td>
                                         <div className="d-flex align-items-center">
-                                            <Link to={`/products/${object.id}`} className="symbol symbol-50px">
+                                            <Link to={`/products/${object.id}`} className="symbol symbol-70px">
                                                 {object.images.length > 0 ?
                                                     <span className="symbol-label"
                                                           style={{backgroundImage: `url("${API_URL}/products/images/${object.images[0].path}")`}}></span> :
@@ -160,11 +161,19 @@ const ProductsPage = () => {
                                     </td>
                                     <td className="text-center pe-0" data-order="23">
                                         <span
+                                            className="fs-6 fw-semibold text-gray-400">$</span>{object.price.toLocaleString('en-US')}
+                                    </td>
+                                    <td className="text-center pe-0" data-order="23">
+                                        <span
                                             className="fs-6 fw-semibold text-gray-400">$</span>{object.bidStartingPrice.toLocaleString('en-US')}
                                     </td>
                                     <td className="text-center pe-0" data-order="23">
                                         <span
-                                            className="fs-6 fw-semibold text-gray-400">$</span>{object.deposit.toLocaleString('en-US')}
+                                            className="fs-6 fw-semibold text-gray-400">$</span>
+                                        {object.depositAmount.toLocaleString('en-US')}
+                                        <div>
+                                            {object.deposit}%
+                                        </div>
                                     </td>
                                     <td className="text-center pe-0" data-order="23">
                                         {object.highestBidAmount > 0 ?
@@ -236,44 +245,55 @@ const ProductsPage = () => {
                         </tbody>
                     </table>
 
-                    <div className="row">
-                        <div
-                            className="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
-                        </div>
-                        <div
-                            className="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
-                            <div className="dataTables_paginate paging_simple_numbers"
-                                 id="kt_ecommerce_products_table_paginate">
-                                <ul className="pagination">
-                                    <li key="1" className="paginate_button page-item previous disabled"
-                                        id="kt_ecommerce_products_table_previous">
-                                        <a href="#"
-                                           aria-controls="kt_ecommerce_products_table"
-                                           data-dt-idx="0" tabIndex="0"
-                                           className="page-link"><i
-                                            className="previous"></i>
-                                        </a>
-                                    </li>
-                                    <li key="2" className="paginate_button page-item active">
-                                        <a href="#"
-                                           aria-controls="kt_ecommerce_products_table"
-                                           data-dt-idx="1" tabIndex="0"
-                                           className="page-link">1
-                                        </a>
-                                    </li>
-                                    <li key="3" className="paginate_button page-item next disabled"
-                                        id="kt_ecommerce_products_table_next">
-                                        <a href="#"
-                                           aria-controls="kt_ecommerce_products_table"
-                                           data-dt-idx="6" tabIndex="0"
-                                           className="page-link">
-                                            <i className="next"></i>
-                                        </a>
-                                    </li>
-                                </ul>
+                    {products.length === 0 &&
+                        <div className="text-center mt-20">
+                            <KTIcon iconType="duotone" iconName="crown-2" className="fs-6x"/>
+                            <p className="text-muted fs-4 mt-10 text-center">
+                                Ready to boost your sales? <br/>
+                                Consider adding more products! It's an easy way to
+                                attract more customers and increase revenue. <br/>
+                                We're here to support you every step of the way.
+                            </p>
+                        </div>}
+                    {products.length > 0 &&
+                        <div className="row">
+                            <div
+                                className="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
                             </div>
-                        </div>
-                    </div>
+                            <div
+                                className="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                                <div className="dataTables_paginate paging_simple_numbers"
+                                     id="kt_ecommerce_products_table_paginate">
+                                    <ul className="pagination">
+                                        <li key="1" className="paginate_button page-item previous disabled"
+                                            id="kt_ecommerce_products_table_previous">
+                                            <a href="#"
+                                               aria-controls="kt_ecommerce_products_table"
+                                               data-dt-idx="0" tabIndex="0"
+                                               className="page-link"><i
+                                                className="previous"></i>
+                                            </a>
+                                        </li>
+                                        <li key="2" className="paginate_button page-item active">
+                                            <a href="#"
+                                               aria-controls="kt_ecommerce_products_table"
+                                               data-dt-idx="1" tabIndex="0"
+                                               className="page-link">1
+                                            </a>
+                                        </li>
+                                        <li key="3" className="paginate_button page-item next disabled"
+                                            id="kt_ecommerce_products_table_next">
+                                            <a href="#"
+                                               aria-controls="kt_ecommerce_products_table"
+                                               data-dt-idx="6" tabIndex="0"
+                                               className="page-link">
+                                                <i className="next"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>}
                 </div>
             </div>
         </div>

@@ -15,6 +15,11 @@ const ProductsPage = () => {
 
     useEffect(() => {
         fetchProducts()
+
+        const intervalId = setInterval(fetchProducts, 5000);
+        return () => {
+            clearInterval(intervalId);
+        };
     }, []);
 
 
@@ -49,7 +54,7 @@ const ProductsPage = () => {
                 <div className="card p-0 bg-transparent border-0 shadow-none">
                     <div className="card-header border-0 pt-6">
                         <div className="card-title">
-                            <div className="d-flex align-items-center position-relative my-1">
+                            {products.length > 0 && <div className="d-flex align-items-center position-relative my-1">
                                 {loading && isFiltering ?
                                     <span className='indicator-progress position-absolute ms-3'
                                           style={{display: 'block'}}>
@@ -72,7 +77,7 @@ const ProductsPage = () => {
                                       className={clsx("btn btn-flush btn-active-color-primary position-absolute top-50 end-0 translate-middle-y lh-0 me-5", search.trim() === "" && "d-none")}>
                                     <KTIcon iconType="duotone" iconName="cross-circle" className="fs-1"/>
                             </span>
-                            </div>
+                            </div>}
                         </div>
                         <div className="card-toolbar">
                             <div className="d-flex justify-content-end" id="data-kt-docs-table-toolbar-base"
@@ -168,23 +173,35 @@ const ProductsPage = () => {
                                 </div>
                             </>;
                         })}
+
+                        {products.length === 0 &&
+                            <div className="text-center mt-20">
+                                <KTIcon iconType="duotone" iconName="crown-2" className="fs-6x"/>
+                                <p className="text-muted fs-4 mt-10">
+                                    Great news! We have some exciting new products on the way. <br/>
+                                    We kindly request your patience as we prepare to unveil them. <br/>
+                                    Stay tuned for updates, and thank you for your understanding.
+                                </p>
+                            </div>}
                     </div>
                 </div>
-                <ul className="pagination pagination-circle pagination-outline mt-5">
-                    <li className="page-item first disabled m-1">
+
+                {products.length > 0 && <ul className="pagination pagination-circle pagination-outline mt-5">
+                    <li key={1} className="page-item first disabled m-1">
                         <a href="#" className="page-link px-0">
                             <i className="ki-duotone ki-double-left fs-2x"><span className="path1"></span><span
                                 className="path2"></span></i>
                         </a>
                     </li>
-                    <li className="page-item m-1 active"><a href="#" className="page-link fs-2">1</a></li>
-                    <li className="page-item last disabled m-1">
+                    <li key={2} className="page-item m-1 active"><a href="#" className="page-link fs-2">1</a></li>
+                    <li key={3} className="page-item last disabled m-1">
                         <a href="#" className="page-link px-0">
                             <i className="ki-duotone ki-double-right fs-2x"><span className="path1"></span><span
                                 className="path2"></span></i>
                         </a>
                     </li>
-                </ul>
+                </ul>}
+
             </div>
             {/* end::Row */}
     </>
