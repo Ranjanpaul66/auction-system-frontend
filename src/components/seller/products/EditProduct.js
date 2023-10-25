@@ -96,7 +96,7 @@ const EditProductPage = () => {
         formData["bidDueDate"] = formattedUtcDate;
         formData["biddingPaymentDueDate"] = formattedUtcDate2;
         editProduct(formData).then((res) => {
-            setSuccessMessage("Registration Successfully Done!")
+            setSuccessMessage("Product Update Successfully Done!")
             navigate("/products")
         }).finally(() => {
             setLoading(false)

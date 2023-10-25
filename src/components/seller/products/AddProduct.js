@@ -4,8 +4,10 @@ import {Link, useNavigate} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {addProduct, addUploadImage, fetchCategories} from "../_requests";
 import serialize from "form-serialize";
+import {useSuccessMessage} from "../../auth/AuthProvider";
 
 const AddProductPage = () => {
+    const {setSuccessMessage} = useSuccessMessage();
     const navigate = useNavigate()
     const formRef = useRef();
     const imagesRef = useRef();
@@ -16,6 +18,7 @@ const AddProductPage = () => {
     let status = "Saved"
 
     useEffect(() => {
+        setSuccessMessage(null);
         window.$(".date-time").flatpickr({
             enableTime: true,
             altInput: true,
@@ -59,7 +62,7 @@ const AddProductPage = () => {
                 addUploadImage(res.data.data.id, fileFomData).then((res) => {
                 })
             })
-
+            setSuccessMessage("Product Added Successfully Done!")
             navigate("/products")
         }).finally(() => {
             setLoading(false)

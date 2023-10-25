@@ -62,7 +62,6 @@ export function Registration() {
                 setLoading(false)
                 setSuccessMessage("Registration Successfully Done!")
                 navigate('/auth/login');
-                // SuccessMessage("Registration Successfully Done!")
 
 
             }).catch(error => {
