@@ -5,15 +5,12 @@ import {useEffect, useRef, useState} from "react";
 import {editProduct, fetchCategories} from "../_requests";
 import serialize from "form-serialize";
 import {apiGet} from "../../common/apiService";
-import {useSuccessMessage} from "../../auth/AuthProvider";
 
 const EditProductPage = () => {
-    const {setSuccessMessage} = useSuccessMessage();
     const navigate = useNavigate()
     const formRef = useRef();
     const submitRef = useRef();
     const [categories, setCategories] = useState([])
-    const [selectedCategories, setSelectedCategories] = useState([])
     const [loading, setLoading] = useState(false)
     const {id} = useParams();
 
@@ -41,16 +38,12 @@ const EditProductPage = () => {
     useEffect(() => {
         apiGet(`/products/${id}`).then((response) => {
             const res = response.data.data
-            const categoryIds = res.categories.map(category => category.id)
-            res["categoryIds"] = categoryIds
+            res["categoryIds"] = res.categories.map(category => category.id)
             setFormData(res);
-
-
         })
             .catch((error) => {
                 console.error('Error fetching data:', error);
             });
-
     }, [])
 
     useEffect(() => {
@@ -75,7 +68,7 @@ const EditProductPage = () => {
     }
 
     function submitForRelease() {
-        status = "Release"
+        status = "Running"
         submitRef.current.click();
     }
 
@@ -96,7 +89,6 @@ const EditProductPage = () => {
         formData["bidDueDate"] = formattedUtcDate;
         formData["biddingPaymentDueDate"] = formattedUtcDate2;
         editProduct(formData).then((res) => {
-            setSuccessMessage("Product Update Successfully Done!")
             navigate("/products")
         }).finally(() => {
             setLoading(false)

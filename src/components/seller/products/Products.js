@@ -3,8 +3,8 @@ import {KTIcon} from "../../../_metronic/helpers";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import clsx from "clsx";
-import {apiGet} from "../../common/apiService";
-import {API_URL, PRODUCTS_URL} from "../../common/apiUrl";
+import {apiDelete, apiGet} from "../../common/apiService";
+import {API_URL, DELETE_PRODUCT_URL, PRODUCTS_URL} from "../../common/apiUrl";
 import {useSuccessMessage} from "../../auth/AuthProvider";
 
 const ProductsPage = () => {
@@ -48,6 +48,21 @@ const ProductsPage = () => {
             setLoading(false)
             setIsFiltering(false)
         });
+    }
+
+    function deleteProduct(object) {
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm(`Do you really want to delete "${object.name}" ?`)) {
+            apiDelete(DELETE_PRODUCT_URL.replace("{id}", object.id))
+                .then((response) => {
+                    console.log(response)
+                    fetchProducts()
+                })
+                .catch((error) => {
+                    console.error('Error fetching data:', error);
+                }).finally(() => {
+            });
+        }
     }
 
     return <>
@@ -205,31 +220,26 @@ const ProductsPage = () => {
                                         })}
 
                                     </td>
-                                    <td className="text-end">
-                                        <button
-                                            className="btn btn-sm btn-light btn-flex btn-center btn-active-light-success"
-                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                            Actions
-                                            <i className="ki-duotone ki-down fs-5 ms-1"></i>
-                                        </button>
-                                        <div
-                                            className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
-                                            data-kt-menu="true">
-                                            {
-                                                object.status === "Saved" &&
-                                                <div className="menu-item px-3">
-                                                    <Link to={`/products/${object.id}/edit`} className="menu-link px-3">
-                                                        Edit
-                                                    </Link>
-                                                </div>
-                                            }
+                                    <td className="text-center">
+                                        <Link to={`/products/${object.id}`}
+                                              className="btn btn-icon btn-sm btn-light-success me-5">
+                                            <KTIcon iconType="duotone" iconName="eye" className="fs-2x "/>
+                                        </Link>
 
-                                            <div className="menu-item px-3">
-                                                <Link to={`/products/${object.id}`} className="menu-link px-3">
-                                                    View
-                                                </Link>
-                                            </div>
-                                        </div>
+                                        {object.status === "Saved" &&
+                                            <Link to={`/products/${object.id}/edit`}
+                                                  className="btn btn-icon btn-sm btn-light-primary me-5">
+                                                <KTIcon iconType="duotone" iconName="notepad-edit" className="fs-2x"/>
+                                            </Link>
+                                        }
+
+                                        {object.status === "Saved" &&
+                                            <button onClick={() => {
+                                                deleteProduct(object)
+                                            }}
+                                                    className="btn btn-icon btn-sm btn-light-danger me-5">
+                                                <KTIcon iconType="duotone" iconName="trash" className="fs-2x "/>
+                                            </button>}
                                     </td>
                                 </tr>
                             </>

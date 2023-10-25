@@ -20,5 +20,9 @@ export const apiPut = (url, data) => {
     return axiosInstance.put(url, data);
 };
 
+export const apiDelete = (url) => {
+    return axiosInstance.delete(url);
+};
+
 // You can add more functions for other HTTP methods (PUT, DELETE, etc.) as needed
 export default axiosInstance;

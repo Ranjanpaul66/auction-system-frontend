@@ -1,12 +1,12 @@
 import {PageTitle} from "../../../_metronic/layout/core";
 import {useEffect, useRef, useState} from "react";
-import {Link, useNavigate, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import "@pqina/flip/dist/flip.min.css";
 import CountDown from "../../CountDown";
 import clsx from "clsx";
 import {KTIcon} from "../../../_metronic/helpers";
 import {apiGet, apiPost} from "../../common/apiService";
-import {useAuth, useSuccessMessage} from "../../auth/AuthProvider";
+import {useAuth} from "../../auth/AuthProvider";
 import {API_URL, DASHBOARD_URL} from "../../common/apiUrl";
 import timeAgo from "../../common/timeAgo";
 import {UserBalanceCountUp} from "../../UserBalanceCountUp";
@@ -35,13 +35,11 @@ const ShowProductPage = () => {
     const [isBiddersAnimInitiated, setIsBiddersAnimInitiated] = useState(false)
 
     const [bidders, setBidders] = useState([]);
-    const {setSuccessMessage} = useSuccessMessage();
 
     const [bidError, setBidError] = useState(null);
 
     const [isMakingFullPayment, setIsMakingFullPayment] = useState(false)
 
-    const navigate = useNavigate();
 
     useEffect(() => {
         initHighestBidAmountCountUp()
@@ -553,10 +551,10 @@ const ShowProductPage = () => {
                                 </div>}
 
                             <button onClick={handleFullPayment} type="submit"
-                                    disabled={userBalance < bidPaymentRemainingAmount}
+                                    disabled={isMakingFullPayment || userBalance < bidPaymentRemainingAmount}
                                     className="btn btn-success btn-lg rounded-0 mt-5 col-md-12">
-                                {!loading && <span className='indicator-label'>Make the payment</span>}
-                                {loading && (
+                                {!isMakingFullPayment && <span className='indicator-label'>Make the payment</span>}
+                                {isMakingFullPayment && (
                                     <span className='indicator-progress' style={{display: 'block'}}>
                                         Submitting...
                                         <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
@@ -602,7 +600,8 @@ const ShowProductPage = () => {
                                 </div>}
                             </div>
 
-                            <button type="submit" className="btn btn-light-success btn-lg rounded-0 col-md-12">
+                            <button disabled={loading} type="submit"
+                                    className="btn btn-light-success btn-lg rounded-0 col-md-12">
                                 {!loading && <span className='indicator-label'>Bid Now</span>}
                                 {loading && (
                                     <span className='indicator-progress' style={{display: 'block'}}>
@@ -615,7 +614,7 @@ const ShowProductPage = () => {
                     </div>
                 </div>}
 
-                {product.status !== "Closed" && <div className="card me-md-6">
+                {product.highestBidAmount > 0 && <div className="card me-md-6">
                     <div className="card-body text-center d-flex flex-column justify-content-center">
                         <div ref={biddersRef} className="fs-6x fw-bold">0</div>
                         <div
