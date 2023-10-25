@@ -451,7 +451,7 @@ const ShowProductPage = () => {
                     </div>
                 </div>
 
-                <div className="card mb-5">
+                {product.status === "Running" && <div className="card mb-5">
                     <div className="card-body text-center d-flex flex-column justify-content-center">
                         <form action="" onSubmit={onSubmit}>
                             <div className="col-md-12 fv-row mb-5">
@@ -490,7 +490,7 @@ const ShowProductPage = () => {
                             </button>
                         </form>
                     </div>
-                </div>
+                </div>}
 
                 <div className="card me-md-6">
                     <div className="card-body text-center d-flex flex-column justify-content-center">
