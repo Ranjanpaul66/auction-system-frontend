@@ -398,7 +398,7 @@ const ShowProductPage = () => {
                                                     </span>
                                                     </a>
 
-                                                    <div className="">
+                                                    <div className="ms-5">
                                                         <a href="#"
                                                            className="text-start text-gray-800 text-hover-primary fs-3 fw-normal"
                                                            data-kt-ecommerce-product-filter="product_name">
