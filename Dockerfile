@@ -4,8 +4,8 @@ WORKDIR /app
 
 RUN yarn global add pnpm
 
-RUN groupmod -g 1001 node
-RUN usermod -u 1001 -g node node
+RUN groupmod -g 1000 node
+RUN usermod -u 1000 -g node node
 
 RUN chown node:node -R /app
 
